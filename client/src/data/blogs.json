@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Rob Enderle's 2025 Tech Product of the Year",
+    "description": "An in-depth review of the standout tech products that defined 2025, as chosen by industry expert Rob Enderle, highlighting their features and impact.",
+    "cover_image_url": "https://www.technewsworld.com/wp-content/uploads/sites/3/2025/12/standout-tech-products-of-2025.jpg",
+    "createdAt": "2023-12-05T09:15:00Z"
+  },
+  {
+    "title": "The $5 Trillion House of Cards: How Spectral Is About to Topple Nvidia",
+    "cover_image_url": "https://www.technewsworld.com/wp-content/uploads/sites/3/2025/12/Nvidia-house-of-cards.jpg",
+    "description": "An analysis of how Spectral's innovations are challenging Nvidia's dominance in the AI chip market, potentially reshaping the industry's future landscape.",
+    "createdAt": "2023-12-05T09:15:00Z"
+  },
+  {
+    "title": "The New Hollywood: Inside GenAI's Coming Shakeup of Film and TV",
+    "description": "Exploring how generative AI is set to revolutionize the film and television industry, from production to storytelling, and what this means for creators and audiences alike.",
+    "cover_image_url": "https://www.technewsworld.com/wp-content/uploads/sites/3/2025/12/filmmaking-set.jpg",
+    "createdAt": "2023-12-05T09:15:00Z"
+  }
+]

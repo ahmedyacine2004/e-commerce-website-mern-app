@@ -1,0 +1,10 @@
+/* ==================== Product Title Styling ==================== */
+.title {
+  line-height: 25px; /* Set consistent line height for titles */
+}
+
+/* ==================== Active State Styling ==================== */
+.active {
+  background-color: #2300bd !important; /* Active background color */
+  color: white !important; /* Active text color */
+}

@@ -1,0 +1,11 @@
+.MuiTabs-indicator {
+  background-color: #2300bd !important;
+  /* Customize the indicator color */
+}
+.MuiTab-textColorPrimary.Mui-selected {
+  color: #2300bd !important; /* Customize the selected tab text color */
+}
+
+.MuiButtonBase-root {
+  text-transform: none !important;
+}

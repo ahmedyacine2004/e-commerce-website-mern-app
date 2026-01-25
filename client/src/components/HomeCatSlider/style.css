@@ -1,0 +1,50 @@
+/* ==================== HomeCatSlider Navigation Buttons ==================== */
+.HomeCatSlider .swiper-button-prev,
+.HomeCatSlider .swiper-button-next {
+  width: 30px;
+  height: 30px;
+  transition: all;
+}
+
+/* Hover effect for navigation buttons */
+.HomeCatSlider .swiper-button-prev:hover,
+.HomeCatSlider .swiper-button-next:hover {
+  background-color: #2300bd;
+}
+
+/* Position adjustments for navigation buttons */
+.HomeCatSlider .swiper-button-next {
+  right: -10px;
+}
+
+.HomeCatSlider .swiper-button-prev {
+  left: -10px;
+}
+
+/* ==================== Swiper Container ==================== */
+.mySwiperCat {
+  overflow: visible !important;
+}
+
+/* ==================== Slider Items ==================== */
+.HomeCatSlider .item {
+  border: 1px solid #ddd;
+}
+
+/* Hover effect on slider items images */
+.HomeCatSlider .item:hover img {
+  transform: scale(1.1);
+}
+
+/* ==================== Swiper Navigation Icons ==================== */
+.HomeCatSlider .swiper-navigation-icon {
+  height: 15px !important;
+  width: 7px !important;
+  color: black;
+}
+
+/* Hover effect for navigation icons */
+.HomeCatSlider .swiper-button-prev:hover .swiper-navigation-icon,
+.HomeCatSlider .swiper-button-next:hover .swiper-navigation-icon {
+  color: white;
+}

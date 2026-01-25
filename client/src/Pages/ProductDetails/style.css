@@ -1,0 +1,10 @@
+.btn-primary {
+    background-color: #2300bd !important;
+    color: white !important;
+    padding: 12px 24px !important;
+}
+
+.btn-primary:hover {
+    background-color: white !important;
+    color: #2300bd !important;
+}

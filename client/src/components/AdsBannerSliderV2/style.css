@@ -1,0 +1,41 @@
+/* -------------------------------
+   Ads Slider V2 Styles (.mySwiperAdsV2)
+---------------------------------*/
+
+/* Slider Images */
+.mySwiperAdsV2 img {
+  height: 220px; /* Set height for all slider images */
+}
+
+/* Individual Slide Styling */
+.mySwiperAdsV2 .swiper-slide {
+  border-radius: 8px !important; /* Rounded corners */
+  overflow: hidden !important; /* Hide overflow */
+  border: 1px solid #e0e0e0 !important; /* Light border */
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1) !important; /* Subtle shadow */
+}
+
+/* Navigation Buttons Size */
+.mySwiperAdsV2 .swiper-button-prev,
+.mySwiperAdsV2 .swiper-button-next {
+  width: 30px;
+  height: 30px;
+}
+
+/* Navigation Arrow Icon Styling */
+.mySwiperAdsV2 .swiper-navigation-icon {
+  height: 15px !important;
+  width: 7px !important;
+  color: black;
+}
+
+/* Hover Effects on Navigation Buttons */
+.mySwiperAdsV2 .swiper-button-prev:hover,
+.mySwiperAdsV2 .swiper-button-next:hover {
+  background-color: #2300bd; /* Blue background on hover */
+}
+
+.mySwiperAdsV2 .swiper-button-prev:hover .swiper-navigation-icon,
+.mySwiperAdsV2 .swiper-button-next:hover .swiper-navigation-icon {
+  color: white; /* White arrows on hover */
+}

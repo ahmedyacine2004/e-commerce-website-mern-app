@@ -1,0 +1,29 @@
+/* ===========================
+   Input Placeholder Styles
+   ---------------------------
+   Styles for newsletter form input placeholder
+=========================== */
+footer form input::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+/* ===========================
+   Checkbox Styles
+   ---------------------------
+   Styles for checked and indeterminate MUI checkboxes
+=========================== */
+.css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root.Mui-checked,
+.css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: #2300bd !important; /* Brand color for checked state */
+}
+
+/* ===========================
+   FormControlLabel Styles
+   ---------------------------
+   Styles for MUI FormControlLabel text
+=========================== */
+.MuiFormControlLabel-label {
+  font-size: 14px !important;
+  color: #555 !important;
+}

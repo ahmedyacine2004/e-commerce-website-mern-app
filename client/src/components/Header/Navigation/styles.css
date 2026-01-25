@@ -1,0 +1,42 @@
+/* ==================== CATEGORY PANEL BUTTON ==================== */
+.categoryPanel button {
+  text-transform: capitalize !important;
+}
+
+/* ==================== SUBMENU BASE ==================== */
+.submenu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+/* ==================== FIRST LEVEL SUBMENU ==================== */
+.nav > li {
+  position: relative;
+}
+
+.nav > li:hover > .submenu,
+.nav > li > .submenu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ==================== INNER SUBMENU ==================== */
+.nav > li > .submenu > ul > li {
+  position: relative;
+}
+
+.nav > li > .submenu > ul > li:hover > .submenu,
+.nav > li > .submenu > ul > li > .submenu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ==================== HOVER COLORS ==================== */
+.nav li .submenu button:hover {
+  color: #2300bd !important;
+}

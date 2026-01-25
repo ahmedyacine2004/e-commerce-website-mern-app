@@ -1,0 +1,28 @@
+/* ==================== Material UI Checkbox ==================== */
+.MuiCheckbox-root {
+  padding: 6px !important;
+}
+
+/* ==================== Sidebar Scrollable Area ==================== */
+.sidebar .scroll {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ==================== React Collapse Transition ==================== */
+.ReactCollapse--collapse {
+  transition: height 400ms;
+}
+
+/* ==================== Range Slider Thumb ==================== */
+.range-slider__thumb {
+  width: 16px !important;
+  height: 16px !important;
+  background-color: #2300bd !important;
+}
+
+/* ==================== Range Slider Track/Range ==================== */
+.range-slider__range {
+  background-color: #2300bd !important;
+}
