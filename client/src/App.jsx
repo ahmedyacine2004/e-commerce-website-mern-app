@@ -27,6 +27,7 @@ import Modal from "./components/Modal";
 import CartDrawer from "./components/CartDrawer";
 import Toast from "./components/Toast";
 import ForgotPassword from "./Pages/ForgotPassword";
+import Checkout from "./Pages/Checkout";
 
 function App() {
   // Extract modal-related state and handlers from ModalContext
@@ -61,6 +62,7 @@ function App() {
           <Route path={"/cart"} element={<Cart />} />
           <Route path={"/verify"} element={<Verify />} />
           <Route path={"/forgot-password"} element={<ForgotPassword />} />
+          <Route path={"/checkout"} element={<Checkout />} />
           <Route path={"/*"} element={<NotFound />} />
         </Routes>
 
