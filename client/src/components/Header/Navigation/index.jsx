@@ -34,7 +34,7 @@ function Navigation() {
               <FaAngleDown className="text-[13px] ml-auto font-bold cursor-pointer" />
             </Button>
           </div>
-          
+          {/* TODO: Check the AI work right here */}
           {/* ==================== MIDDLE PART ==================== */}
           <div className="col-2 w-[60%]">
             <ul className="flex items-center gap-1 nav">

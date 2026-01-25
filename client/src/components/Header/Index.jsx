@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Components & Icons
@@ -12,10 +12,18 @@ import { Button } from "@mui/material";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoGitCompareOutline } from "react-icons/io5";
 import { FaRegHeart, FaMoon, FaSun } from "react-icons/fa";
+import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
 
 // ==================== Contexts ====================
 import { ThemeContext } from "../../Contexts/ThemeContext";
 import DrawerContext from "../../Contexts/DrawerContext";
+import UserContext from "../../Contexts/UserContext";
+
+// TODO: Look at that
+import { Menu, MenuItem, Divider, Avatar } from "@mui/material";
+import { FaUser, FaShoppingBag, FaHeart, FaSignOutAlt } from "react-icons/fa";
+import { ListItemIcon } from "@mui/material";
 
 // ==================== STYLED COMPONENT ====================
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -30,8 +38,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 // ==================== HEADER COMPONENT ====================
 const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+
   // ==================== Contexts destructing ====================
   const { orders } = useContext(DrawerContext);
+  const { user, logout } = useContext(UserContext);
 
   return (
     <header className="bg-white">
@@ -107,21 +118,127 @@ const Header = () => {
           <div className="col-3 w-[40%] flex items-center">
             <ul className="flex items-center justify-end gap-3 w-full">
               {/* Login/Register Links */}
-              <li className="list-none">
-                <Link
-                  to={"/login"}
-                  className="link transition text-[15px] font-[500] pl-7"
-                >
-                  Login
-                </Link>{" "}
-                &nbsp;| &nbsp;
-                <Link
-                  to={"/register"}
-                  className="link transition text-[15px] font-[500]"
-                >
-                  Register
-                </Link>
-              </li>
+              {user.isLogged === false ? (
+                <li className="list-none">
+                  <Link
+                    to={"/login"}
+                    className="link transition text-[15px] font-[500] pl-7"
+                  >
+                    Login
+                  </Link>{" "}
+                  &nbsp;| &nbsp;
+                  <Link
+                    to={"/register"}
+                    className="link transition text-[15px] font-[500]"
+                  >
+                    Register
+                  </Link>
+                </li>
+              ) : (
+                <li className="list-none">
+                  <div className="flex">
+                    <IconButton
+                      onClick={(e) => setAnchorEl(e.currentTarget)}
+                      size="small"
+                    >
+                      <Avatar
+                        src={user.pfp}
+                        alt="pfp"
+                        sx={{
+                          width: 35,
+                          height: 35,
+                          border: "1px solid #2300bd",
+                        }}
+                      />
+                    </IconButton>
+                    {/* User info */}
+                    <Box sx={{ px: 1, py: 1.5 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {user.name || "User"}
+                      </Typography>
+
+                      <Typography
+                        sx={{
+                          fontSize: "11px",
+                          color: "text.secondary",
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {user.email || "user@email.com"}
+                      </Typography>
+                    </Box>
+                  </div>
+
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={() => setAnchorEl(null)}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                    transformOrigin={{ vertical: "top", horizontal: "left" }}
+                    PaperProps={{
+                      elevation: 3,
+                      sx: {
+                        mt: 1,
+                        minWidth: 190,
+                      },
+                    }}
+                  >
+                    <MenuItem
+                      component={Link}
+                      to="/profile"
+                      onClick={() => setAnchorEl(null)}
+                    >
+                      <ListItemIcon>
+                        <FaUser size={16} />
+                      </ListItemIcon>
+                      My Profile
+                    </MenuItem>
+
+                    <MenuItem
+                      component={Link}
+                      to="/cart"
+                      onClick={() => setAnchorEl(null)}
+                    >
+                      <ListItemIcon>
+                        <FaShoppingBag size={16} />
+                      </ListItemIcon>
+                      My Orders
+                    </MenuItem>
+
+                    <MenuItem
+                      component={Link}
+                      to="/my-list"
+                      onClick={() => setAnchorEl(null)}
+                    >
+                      <ListItemIcon>
+                        <FaHeart size={16} />
+                      </ListItemIcon>
+                      My List
+                    </MenuItem>
+
+                    <Divider />
+
+                    <MenuItem
+                      onClick={() => {
+                        logout();
+                        setAnchorEl(null);
+                      }}
+                      sx={{ color: "error.main" }}
+                    >
+                      <ListItemIcon sx={{ color: "error.main" }}>
+                        <FaSignOutAlt size={16} />
+                      </ListItemIcon>
+                      Logout
+                    </MenuItem>
+                  </Menu>
+                </li>
+              )}
 
               {/* Compare */}
               <li>
@@ -154,7 +271,6 @@ const Header = () => {
                 <Tooltip title="Cart">
                   <IconButton aria-label="cart">
                     <StyledBadge
-               
                       badgeContent={orders.list.reduce((sum, order) => {
                         return sum + order.qty;
                       }, 0)}

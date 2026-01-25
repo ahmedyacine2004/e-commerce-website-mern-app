@@ -21,6 +21,7 @@ import Verify from "./Pages/Verify";
 import { useContext } from "react";
 import ModalContext from "./Contexts/ModalContext";
 import DrawerContext from "./Contexts/DrawerContext";
+import UserContext from "./Contexts/UserContext";
 
 // Import components
 import Modal from "./components/Modal";
@@ -28,6 +29,7 @@ import CartDrawer from "./components/CartDrawer";
 import Toast from "./components/Toast";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Checkout from "./Pages/Checkout";
+import Profile from "./Pages/Profile";
 
 function App() {
   // Extract modal-related state and handlers from ModalContext
@@ -40,6 +42,7 @@ function App() {
   } = useContext(ModalContext);
 
   const { drawer, orders } = useContext(DrawerContext);
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -64,6 +67,7 @@ function App() {
           <Route path={"/forgot-password"} element={<ForgotPassword />} />
           <Route path={"/checkout"} element={<Checkout />} />
           <Route path={"/*"} element={<NotFound />} />
+          {user.isLogged && <Route path={"/profile"} element={<Profile />} />}
         </Routes>
 
         {/* App footer */}
