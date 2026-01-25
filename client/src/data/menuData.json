@@ -1,0 +1,123 @@
+[
+  {
+    "title": "Home",
+    "link": "/"
+  },
+  {
+    "title": "Fashion",
+    "link": "/product-listing",
+    "submenu": [
+      {
+        "title": "Men",
+        "link": "/men",
+        "submenu": [
+          "T-shirt",
+          "Jeans",
+          "Footwear",
+          "Watch",
+          "Pants",
+          "Shirts",
+          "Jackets",
+          "Suits"
+        ]
+      },
+      {
+        "title": "Women",
+        "link": "/women",
+        "submenu": [
+          "Dresses",
+          "Tops",
+          "Jeans",
+          "Footwear",
+          "Handbags",
+          "Jewellery",
+          "Lingerie"
+        ]
+      },
+      {
+        "title": "Kids",
+        "link": "/kids",
+        "submenu": ["T-shirts", "Shorts", "Shoes", "Toys", "School Supplies"]
+      },
+      {
+        "title": "Girls",
+        "link": "/girls",
+        "submenu": ["Dresses", "Tops", "Footwear", "Accessories"]
+      },
+      {
+        "title": "Boys",
+        "link": "/boys",
+        "submenu": ["Shirts", "Pants", "Footwear", "Sportswear"]
+      }
+    ]
+  },
+  {
+    "title": "Electronics",
+    "link": "/electronics",
+    "submenu": [
+      {
+        "title": "Mobile Phones",
+        "link": "/electronics/mobile",
+        "submenu": ["Smartphones", "Feature Phones", "Accessories", "Chargers"]
+      },
+      {
+        "title": "Laptops",
+        "link": "/electronics/laptops",
+        "submenu": ["Gaming Laptops", "Ultrabooks", "Accessories"]
+      },
+      {
+        "title": "Cameras",
+        "link": "/electronics/cameras",
+        "submenu": ["DSLR", "Mirrorless", "Action Cameras", "Drones"]
+      }
+    ]
+  },
+  {
+    "title": "Bags",
+    "link": "/bags",
+    "submenu": ["Handbags", "Backpacks", "Wallets", "Travel Bags"]
+  },
+  {
+    "title": "Footwear",
+    "link": "/footwear",
+    "submenu": [
+      "Men Shoes",
+      "Women Shoes",
+      "Kids Shoes",
+      "Sports Shoes",
+      "Boots",
+      "Sandals"
+    ]
+  },
+  {
+    "title": "Groceries",
+    "link": "/groceries",
+    "submenu": [
+      "Fruits & Vegetables",
+      "Dairy",
+      "Snacks",
+      "Beverages",
+      "Staples"
+    ]
+  },
+  {
+    "title": "Beauty",
+    "link": "/beauty",
+    "submenu": ["Makeup", "Skincare", "Haircare", "Fragrances", "Nail Care"]
+  },
+  {
+    "title": "Wellness",
+    "link": "/wellness",
+    "submenu": [
+      "Supplements",
+      "Fitness Equipment",
+      "Yoga & Meditation",
+      "Personal Care"
+    ]
+  },
+  {
+    "title": "Jewellery",
+    "link": "/jewellery",
+    "submenu": ["Rings", "Necklaces", "Earrings", "Bracelets", "Watches"]
+  }
+]

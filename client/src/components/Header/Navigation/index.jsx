@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { IoRocketSharp } from "react-icons/io5";
 import CategoryPanel from "./CategoryPanel";
 import { useState } from "react";
+import menuData from "../../../data/menuData.json"; // your JSON
+
 import "./styles.css";
 
 function Navigation() {
@@ -32,85 +34,59 @@ function Navigation() {
               <FaAngleDown className="text-[13px] ml-auto font-bold cursor-pointer" />
             </Button>
           </div>
-
+          
           {/* ==================== MIDDLE PART ==================== */}
           <div className="col-2 w-[60%]">
             <ul className="flex items-center gap-1 nav">
-              <li className="list-none text-[14px]">
-                <Link to="/" className="link transition">
-                  <Button className="!font-[400] !text-[rgba(0,0,0,0.8)] hover:!text-[#2300bd]">
-                    Home
-                  </Button>
-                </Link>
-              </li>
-
-              <li className="list-none text-[14px] relative">
-                <Link to="/product-listing">
-                  <Button className="!font-[400] !text-[rgba(0,0,0,0.8)] hover:!text-[#2300bd]">
-                    Fashion
-                  </Button>
-                </Link>
-
-                {/* ==================== SUBMENU ==================== */}
-                <div className="submenu absolute top-full left-0 min-w-[150px] bg-white shadow-md">
-                  <ul>
-                    <li className="list-none relative">
-                      <Link to="/">
-                        <Button className="w-full !text-left !justify-start !rounded-none !text-black">
-                          Men
-                        </Button>
-                      </Link>
-
-                      {/* ==================== INNER SUBMENU ==================== */}
-                      <div className="submenu absolute top-0 left-full min-w-[150px] bg-white shadow-md">
-                        <ul>
-                          {[
-                            "T-shirt",
-                            "Jeans",
-                            "Footwear",
-                            "Watch",
-                            "Pants",
-                          ].map((item) => (
-                            <li key={item}>
-                              <Link to="/">
-                                <Button className="w-full !text-left !justify-start !rounded-none !text-black">
-                                  {item}
-                                </Button>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </li>
-
-                    {["Women", "Kids", "Girls", "Boys"].map((item) => (
-                      <li key={item}>
-                        <Link to="/">
-                          <Button className="w-full !text-left !justify-start !rounded-none !text-black">
-                            {item}
-                          </Button>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-
-              {[
-                "Electronics",
-                "Bags",
-                "Footwear",
-                "Groceries",
-                "Beauty",
-                "Wellness",
-                "Jewellery",
-              ].map((item) => (
-                <li key={item} className="list-none text-[14px]">
-                  <Link to="/">
+              {menuData.map((menuItem) => (
+                <li
+                  key={menuItem.title}
+                  className="list-none text-[14px] relative"
+                >
+                  <Link to={menuItem.link}>
                     <Button className="!font-[400] !text-[rgba(0,0,0,0.8)] hover:!text-[#2300bd]">
-                      {item}
+                      {menuItem.title}
                     </Button>
                   </Link>
+
+                  {/* Render submenu if exists */}
+                  {menuItem.submenu && (
+                    <div className="submenu absolute top-full left-0 min-w-[150px] bg-white shadow-md">
+                      <ul>
+                        {menuItem.submenu.map((sub) => (
+                          <li
+                            key={sub.title || sub}
+                            className="list-none relative"
+                          >
+                            <Link to={sub.link || "/"}>
+                              <Button className="w-full !text-left !justify-start !rounded-none !text-black">
+                                {sub.title || sub}
+                              </Button>
+                            </Link>
+
+                            {/* Render inner submenu if it's array of strings */}
+                            {sub.submenu &&
+                              Array.isArray(sub.submenu) &&
+                              typeof sub.submenu[0] === "string" && (
+                                <div className="submenu absolute top-0 left-full min-w-[150px] bg-white shadow-md">
+                                  <ul>
+                                    {sub.submenu.map((inner) => (
+                                      <li key={inner}>
+                                        <Link to="/">
+                                          <Button className="w-full !text-left !justify-start !rounded-none !text-black">
+                                            {inner}
+                                          </Button>
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

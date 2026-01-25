@@ -1,3 +1,5 @@
+// TODO: This is AI generated you need to understand it
+
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { Button } from "@mui/material";
@@ -132,24 +134,29 @@ const categoriesData = [
 ];
 
 function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
-  // Track open submenu and inner submenu
+  // Track open submenu per category
   const [openSubmenuIndex, setOpenSubmenuIndex] = useState(null);
-  const [openInnerIndex, setOpenInnerIndex] = useState(null);
+
+  // Track open inner submenu per category
+  const [openInnerIndex, setOpenInnerIndex] = useState({});
 
   const toggleSubmenu = (index) => {
     setOpenSubmenuIndex(openSubmenuIndex === index ? null : index);
-    setOpenInnerIndex(null); // close inner when switching submenu
+    // Reset inner submenu when switching submenu
+    setOpenInnerIndex((prev) => ({ ...prev, [index]: null }));
   };
 
-  const toggleInner = (index) => {
-    setOpenInnerIndex(openInnerIndex === index ? null : index);
+  const toggleInner = (catIndex, subIndex) => {
+    setOpenInnerIndex((prev) => ({
+      ...prev,
+      [catIndex]: prev[catIndex] === subIndex ? null : subIndex,
+    }));
   };
 
   // ==================== Drawer Content ====================
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" className="categoryPanel">
       {/* Header */}
-
       <h3 className="p-3 text-[18px] font-[500] flex items-center justify-between">
         Shopping by Categories
         <IoClose
@@ -177,51 +184,52 @@ function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
               {/* Toggle Icon */}
               {openSubmenuIndex === catIndex ? (
                 <FaRegSquareMinus
-                  className="absolute top-[10px] right-[15px] cursor-pointer"
+                  className="absolute top-[15px] right-[15px] cursor-pointer"
                   onClick={() => toggleSubmenu(catIndex)}
                 />
               ) : (
                 <FaRegPlusSquare
-                  className="absolute top-[10px] right-[15px] cursor-pointer"
+                  className="absolute top-[15px] right-[15px] cursor-pointer"
                   onClick={() => toggleSubmenu(catIndex)}
                 />
               )}
 
               {/* Submenus */}
               {openSubmenuIndex === catIndex && (
-                <ul className="submenu w-full pl-3">
+                <ul className="submenuDrawer w-full pl-3">
                   {category.submenus.map((submenu, subIndex) => (
                     <li key={subIndex} className="list-none relative">
-                      <Link className="w-full" to="/">
-                        <Button className="w-full !justify-start !px-3 !text-black">
+                      <div className="relative w-full">
+                        {/* Submenu Button */}
+                        <Button
+                          className="w-full !justify-start !px-3 !text-black"
+                          onClick={() => toggleInner(catIndex, subIndex)}
+                        >
                           {submenu.title}
                         </Button>
-                      </Link>
 
-                      {/* Inner toggle */}
-                      {openInnerIndex === subIndex ? (
-                        <FaRegSquareMinus
-                          className="absolute top-[10px] right-[15px] cursor-pointer"
-                          onClick={() => toggleInner(subIndex)}
-                        />
-                      ) : (
-                        <FaRegPlusSquare
-                          className="absolute top-[10px] right-[15px] cursor-pointer"
-                          onClick={() => toggleInner(subIndex)}
-                        />
-                      )}
+                        {/* Toggle Icon */}
+                        {openInnerIndex[catIndex] === subIndex ? (
+                          <FaRegSquareMinus
+                            className="absolute top-[10px] right-[15px] cursor-pointer"
+                            onClick={() => toggleInner(catIndex, subIndex)}
+                          />
+                        ) : (
+                          <FaRegPlusSquare
+                            className="absolute top-[10px] right-[15px] cursor-pointer"
+                            onClick={() => toggleInner(catIndex, subIndex)}
+                          />
+                        )}
+                      </div>
 
                       {/* Inner submenu items */}
-                      {openInnerIndex === subIndex && (
-                        <ul className="inner-submenu w-full pl-3 transition text-[14px] font-[500]">
+                      {openInnerIndex[catIndex] === subIndex && (
+                        <ul className="inner-submenu w-full pl-5 mt-1 text-[14px] font-[500]">
                           {submenu.inner.map((item, innerIndex) => (
-                            <li
-                              key={innerIndex}
-                              className="list-none relative py-2"
-                            >
+                            <li key={innerIndex} className="py-1">
                               <Link
                                 to="/"
-                                className="link w-full !justify-start !px-3"
+                                className="w-full !justify-start block px-2 py-1 hover:bg-gray-100 rounded"
                               >
                                 {item}
                               </Link>
@@ -237,7 +245,6 @@ function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
           ))}
         </ul>
       </div>
-      
     </Box>
   );
 
