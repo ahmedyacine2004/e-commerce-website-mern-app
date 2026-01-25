@@ -11,7 +11,8 @@
     "selectedColor": "purple",
     "colors": ["red", "black", "yellow", "purple"],
     "sizes": ["Medium", "Large", "Small"],
-    "selectedSize": "Large"
+    "selectedSize": "Large",
+    "rating": 4
   },
   {
     "id": 21,
@@ -25,6 +26,7 @@
     "selectedColor": "black",
     "colors": ["red", "black", "purple"],
     "sizes": ["Medium", "Large", "Small"],
-    "selectedSize": "Medium"
+    "selectedSize": "Medium",
+    "rating": 5
   }
 ]

@@ -15,15 +15,18 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import NotFound from "./Pages/NotFound";
 import Cart from "./Pages/Cart";
+import Verify from "./Pages/Verify";
 
 // Import React hooks and context
 import { useContext } from "react";
 import ModalContext from "./Contexts/ModalContext";
 import DrawerContext from "./Contexts/DrawerContext";
 
-// Import modal and drawer components
+// Import components
 import Modal from "./components/Modal";
 import CartDrawer from "./components/CartDrawer";
+import Toast from "./components/Toast";
+import ForgotPassword from "./Pages/ForgotPassword";
 
 function App() {
   // Extract modal-related state and handlers from ModalContext
@@ -56,6 +59,8 @@ function App() {
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Signup />} />
           <Route path={"/cart"} element={<Cart />} />
+          <Route path={"/verify"} element={<Verify />} />
+          <Route path={"/forgot-password"} element={<ForgotPassword />} />
           <Route path={"/*"} element={<NotFound />} />
         </Routes>
 
@@ -75,6 +80,7 @@ function App() {
           onClose={drawer.close}
           orders={orders.list}
         />
+        <Toast position="bottom-center" />
       </BrowserRouter>
     </>
   );

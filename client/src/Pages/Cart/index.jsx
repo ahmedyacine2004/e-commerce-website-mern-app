@@ -8,6 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
+import Rating from "@mui/material/Rating";
 
 // ==================== Menu ====================
 import { styled, alpha } from "@mui/material/styles";
@@ -161,6 +162,7 @@ function Cart() {
                             {order.name}
                           </span>
                         </Link>
+                        <Rating size="small" className="mb-1" value={order.rating}/>
                         {/* // TODO: READ THIS AI GENERATED CODE AGAIN AND LEARN
                         FROM IT */}
                         <div className="flex gap-3 mt-1">

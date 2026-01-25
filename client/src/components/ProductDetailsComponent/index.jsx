@@ -8,6 +8,7 @@ import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import QtyBox from "../QtyBox";
 import DrawerContext from "../../Contexts/DrawerContext";
+import ModalContext from "../../Contexts/ModalContext";
 
 function ProductDetailsComponent({ selectedProduct }) {
   // ==================== Guard Clause ====================
@@ -22,6 +23,7 @@ function ProductDetailsComponent({ selectedProduct }) {
 
   // ==================== Context Destruction ====================
   const { orders } = useContext(DrawerContext);
+  const { handleCloseProductDetailsModal } = useContext(ModalContext);
 
   // ==================== Set default color & size on product change ====================
   useEffect(() => {
@@ -154,14 +156,15 @@ function ProductDetailsComponent({ selectedProduct }) {
         />
         <div className="cta">
           <Button
-            onClick={() =>
+            onClick={() => {
               orders.addAndOpen(selectedProduct, {
                 amount: orderInfo.amount,
                 color: orderInfo.selectedColor,
                 size: orderInfo.selectedSize,
                 category: selectedProduct.category,
-              })
-            }
+              });
+              handleCloseProductDetailsModal();
+            }}
             startIcon={<MdOutlineShoppingCart />}
             className="!h-auto !w-auto !min-w-auto !py-[12px] !px-[24px] !bg-primary !text-white"
           >

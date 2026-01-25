@@ -147,7 +147,7 @@ function ProductItemListView({ product }) {
         <Stack spacing={1}>
           <Rating
             name="size-small"
-            defaultValue={1}
+            defaultValue={product.info.rating}
             size="small"
             readOnly={true}
           />

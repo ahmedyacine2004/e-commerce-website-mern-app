@@ -2,11 +2,27 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { notify } from "../../utils/toastUtils";
 
 function Login() {
   const [visibility, setVisibility] = useState(false);
+  const [inputFields, setInputFields] = useState({ email: "", password: "" });
+
+  const handleClearInputs = () => {
+    setInputFields({ email: "", password: "" });
+  };
+
+  const history = useNavigate();
+
+  const forgetPassword = () => {
+    if (inputFields.email === "") {
+      handleClearInputs();
+      history("/verify");
+      notify("OTP sent!","success");
+    }
+  };
 
   return (
     <section className="section py-10">
@@ -16,7 +32,6 @@ function Login() {
             Sign in to your account
           </h3>
           <form className="w-full mt-3">
-          
             <div className="form-group mb-5">
               <TextField
                 id="email"
@@ -24,6 +39,10 @@ function Login() {
                 variant="outlined"
                 type="email"
                 className="w-full"
+                value={inputFields.email}
+                onChange={(e) => {
+                  setInputFields({ ...inputFields, email: e.target.value });
+                }}
               />
             </div>
             <div className="form-group mb-5 relative">
@@ -33,6 +52,10 @@ function Login() {
                 variant="outlined"
                 type={`${visibility ? "text" : "password"}`}
                 className="w-full"
+                value={inputFields.password}
+                onChange={(e) => {
+                  setInputFields({ ...inputFields, password: e.target.value });
+                }}
               />
               <Button
                 className="!absolute translate-y-[25%] !right-[5px] !min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-primary"
@@ -45,7 +68,12 @@ function Login() {
                 {visibility ? <FaRegEye /> : <FaRegEyeSlash />}
               </Button>
             </div>
-            <a className="link cursor-pointer text-[14px] font-[500]">
+            <a
+              onClick={() => {
+                forgetPassword();
+              }}
+              className="link cursor-pointer text-[14px] font-[500]"
+            >
               Forget Password ?
             </a>
             <div className="flex items-center w-full my-3">
@@ -61,6 +89,7 @@ function Login() {
               Or continue with social media
             </p>
             <Button
+              type="submit"
               startIcon={<FcGoogle size={20} />}
               className="btn-lg w-full !text-black !bg-[#f1f1f1]"
             >

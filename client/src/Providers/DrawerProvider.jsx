@@ -58,6 +58,7 @@ function DrawerProvider({ children }) {
         selectedSize: object.size,
         colors: orderToAdd.info.colors,
         category: object.category,
+        rating: orderToAdd.info.rating,
       };
 
       return [...prevOrders, newCartItem];
