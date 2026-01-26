@@ -202,24 +202,24 @@ const Header = () => {
 
                     <MenuItem
                       component={Link}
-                      to="/cart"
+                      to="/list"
                       onClick={() => setAnchorEl(null)}
                     >
                       <ListItemIcon>
                         <FaShoppingBag size={16} />
                       </ListItemIcon>
-                      My Orders
+                      My List
                     </MenuItem>
 
                     <MenuItem
                       component={Link}
-                      to="/my-list"
+                      to="/wishlist"
                       onClick={() => setAnchorEl(null)}
                     >
                       <ListItemIcon>
                         <FaHeart size={16} />
                       </ListItemIcon>
-                      My List
+                      Wishlist
                     </MenuItem>
 
                     <Divider />

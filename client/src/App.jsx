@@ -16,6 +16,8 @@ import Signup from "./Pages/Signup";
 import NotFound from "./Pages/NotFound";
 import Cart from "./Pages/Cart";
 import Verify from "./Pages/Verify";
+import ProductList from "./Pages/List";
+import Profile from "./Pages/Profile";
 
 // Import React hooks and context
 import { useContext } from "react";
@@ -29,7 +31,6 @@ import CartDrawer from "./components/CartDrawer";
 import Toast from "./components/Toast";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Checkout from "./Pages/Checkout";
-import Profile from "./Pages/Profile";
 
 function App() {
   // Extract modal-related state and handlers from ModalContext
@@ -66,6 +67,7 @@ function App() {
           <Route path={"/verify"} element={<Verify />} />
           <Route path={"/forgot-password"} element={<ForgotPassword />} />
           <Route path={"/checkout"} element={<Checkout />} />
+          <Route path={"/list"} element={<ProductList />} />
           <Route path={"/*"} element={<NotFound />} />
           {user.isLogged && <Route path={"/profile"} element={<Profile />} />}
         </Routes>
