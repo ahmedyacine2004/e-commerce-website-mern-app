@@ -17,7 +17,6 @@ import ProfileSidebar from "../../components/ProfileSidebar";
 function Profile() {
   const { user, updateUser, logout } = useContext(UserContext);
 
-  const [activeTab, setActiveTab] = useState("profile"); // ✅ track active tab
   // Local state for the form
   const [formData, setFormData] = useState({
     name: "",
@@ -44,7 +43,7 @@ function Profile() {
 
     const imageUrl = URL.createObjectURL(file);
     updateUser({ pfp: imageUrl });
-    notify("Profile Picture saved","success")
+    notify("Profile Picture saved", "success");
   };
 
   // Handle input changes
@@ -68,10 +67,10 @@ function Profile() {
         <div className="col-1 w-[20%]">
           <ProfileSidebar
             user={user}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
             handlePfpChange={handlePfpChange}
             logout={logout}
+            isPfpEdit={true}
+            activeTab="profile"
           />
         </div>
         <div className="col-2 w-[80%]">
@@ -128,7 +127,11 @@ function Profile() {
                 </Select>
               </FormControl>
 
-              <Button variant="contained" className="!bg-primary" onClick={handleSave}>
+              <Button
+                variant="contained"
+                className="!bg-primary"
+                onClick={handleSave}
+              >
                 Save
               </Button>
             </Stack>

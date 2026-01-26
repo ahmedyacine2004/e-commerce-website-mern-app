@@ -24,6 +24,7 @@ import UserContext from "../../Contexts/UserContext";
 import { Menu, MenuItem, Divider, Avatar } from "@mui/material";
 import { FaUser, FaShoppingBag, FaHeart, FaSignOutAlt } from "react-icons/fa";
 import { ListItemIcon } from "@mui/material";
+import { ListContext } from "../../Contexts/ListContext";
 
 // ==================== STYLED COMPONENT ====================
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -42,6 +43,7 @@ const Header = () => {
 
   // ==================== Contexts destructing ====================
   const { orders } = useContext(DrawerContext);
+  const { products } = useContext(ListContext);
   const { user, logout } = useContext(UserContext);
 
   return (
@@ -206,20 +208,20 @@ const Header = () => {
                       onClick={() => setAnchorEl(null)}
                     >
                       <ListItemIcon>
-                        <FaShoppingBag size={16} />
+                        <FaHeart size={16} />
                       </ListItemIcon>
-                      My List
+                      Wishlist
                     </MenuItem>
 
                     <MenuItem
                       component={Link}
-                      to="/wishlist"
+                      to="/orders"
                       onClick={() => setAnchorEl(null)}
                     >
                       <ListItemIcon>
-                        <FaHeart size={16} />
+                        <FaShoppingBag size={16} />
                       </ListItemIcon>
-                      Wishlist
+                      My orders
                     </MenuItem>
 
                     <Divider />
@@ -254,11 +256,18 @@ const Header = () => {
               {/* Wishlist */}
               <li>
                 <Tooltip title="Wishlist">
-                  <IconButton aria-label="wishlist">
-                    <StyledBadge badgeContent={4} color="secondary">
-                      <FaRegHeart />
-                    </StyledBadge>
-                  </IconButton>
+                  <Link to={"/list"}>
+                    <IconButton aria-label="wishlist">
+                      <StyledBadge
+                        badgeContent={products.reduce((sum, order) => {
+                          return sum + order.qty;
+                        }, 0)}
+                        color="secondary"
+                      >
+                        <FaRegHeart />
+                      </StyledBadge>
+                    </IconButton>
+                  </Link>
                 </Tooltip>
               </li>
 

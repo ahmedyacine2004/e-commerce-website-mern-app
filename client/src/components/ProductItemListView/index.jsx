@@ -162,15 +162,24 @@ function ProductItemListView({ product }) {
             ${product.info.newPrice}
           </span>
         </div>
+        <div className="w-full flex items-center justify-center gap-4">
+          {/* Add to List */}
+          <Button
+            variant="outlined"
+            className="!text-primary !border-primary mb-2 flex-1"
+          >
+            Add to List
+          </Button>
 
-        {/* Add to Cart */}
-        <Button
-          startIcon={<MdOutlineShoppingCart />}
-          variant="outlined"
-          className="!text-primary !border-primary"
-        >
-          Add to Cart
-        </Button>
+          {/* Add to Cart */}
+          <Button
+            startIcon={<MdOutlineShoppingCart />}
+            variant="outlined"
+            className="!text-white !bg-primary !border-primary flex-1"
+          >
+            Add to Cart
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -12,6 +12,8 @@ import { IoGitCompareOutline } from "react-icons/io5";
 import { MdOutlineZoomOutMap } from "react-icons/md";
 import { RiShareCircleLine } from "react-icons/ri";
 
+import { MdOutlineShoppingCart } from "react-icons/md";
+
 import ModalContext from "../../Contexts/ModalContext";
 
 import "./style.css";
@@ -164,6 +166,24 @@ function ProductItem({ product }) {
           <span className="text-[22px] font-[600] mt-1 text-primary mr-2">
             ${product.info.newPrice}
           </span>
+        </div>
+        <div className="w-full flex flex-col items-center justify-center gap-1">
+          {/* Add to List */}
+          <Button
+            variant="outlined"
+            className="!text-primary !border-primary mb-2 w-full"
+          >
+            Add to List
+          </Button>
+
+          {/* Add to Cart */}
+          <Button
+            startIcon={<MdOutlineShoppingCart />}
+            variant="outlined"
+            className="!text-white !bg-primary !border-primary w-full"
+          >
+            Add to Cart
+          </Button>
         </div>
       </div>
     </div>

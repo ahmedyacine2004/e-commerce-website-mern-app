@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import DrawerContext from "../../Contexts/DrawerContext";
 import { Button } from "@mui/material";
-import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -49,7 +48,6 @@ function ProductList() {
   const { orders } = useContext(DrawerContext);
   const { user, logout } = useContext(UserContext);
   const { products, updateColor, updateSize, clearList } = useList();
-  const [activeTab, setActiveTab] = useState("list");
 
   // ==================== Menu State ====================
   const [menuState, setMenuState] = useState({
@@ -120,8 +118,7 @@ function ProductList() {
         <div className="col-1 w-[20%]">
           <ProfileSidebar
             user={user}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            activeTab="list"
             logout={logout}
             isPfpEdit={false}
           />

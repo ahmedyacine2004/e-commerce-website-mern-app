@@ -75,14 +75,14 @@ function ProfileSidebar({
                   : "!text-[rgba(0,0,0,0.7)]"
               }`}
             >
-              My List
+              Wishlist
             </Button>
           </Link>
         </li>
 
         {/* My Orders */}
         <li className="w-full">
-          <Link to="/cart">
+          <Link to="/orders">
             <Button
               startIcon={<FaShoppingBag size={16} />}
               onClick={() => setActiveTab("orders")}

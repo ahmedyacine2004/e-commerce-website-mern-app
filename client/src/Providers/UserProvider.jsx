@@ -3,6 +3,7 @@ import UserContext from "../Contexts/UserContext";
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
+    id: "USER_123",
     isLogged: true,
     name: "Ahmed Yassine Abbane",
     email: "ahmedyacineabbane@gmail.com",

@@ -6,23 +6,26 @@ import { ThemeProvider } from "./Providers/ThemeProvider.jsx";
 import ToastProvider from "./Providers/ToastProvider.jsx";
 import UserProvider from "./Providers/UserProvider.jsx";
 import ListProvider from "./Providers/ListProvider.jsx";
+import OrdersProvider from "./Providers/OrdersProvider.jsx";
 import "./index.css";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <UserProvider>
-      <ListProvider>
-        <ToastProvider>
-          <ThemeProvider>
-            <DrawerProvider>
-              <ModalProvider>
-                <App />
-              </ModalProvider>
-            </DrawerProvider>
-          </ThemeProvider>
-        </ToastProvider>
-      </ListProvider>
+      <OrdersProvider>
+        <ListProvider>
+          <ToastProvider>
+            <ThemeProvider>
+              <DrawerProvider>
+                <ModalProvider>
+                  <App />
+                </ModalProvider>
+              </DrawerProvider>
+            </ThemeProvider>
+          </ToastProvider>
+        </ListProvider>
+      </OrdersProvider>
     </UserProvider>
   </StrictMode>,
 );
