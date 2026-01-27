@@ -1,0 +1,112 @@
+[
+  {
+    "title": "Fashion",
+    "icon": "FaTshirt",
+    "submenus": [
+      {
+        "title": "Apparel",
+        "inner": ["T-Shirts", "Shirts", "Jeans", "Dresses"]
+      },
+      {
+        "title": "Accessories",
+        "inner": ["Bags", "Belts", "Hats", "Scarves"]
+      },
+      {
+        "title": "Shoes",
+        "inner": ["Sneakers", "Boots", "Formal Shoes", "Sandals"]
+      }
+    ]
+  },
+  {
+    "title": "Electronics",
+    "icon": "FaLaptop",
+    "submenus": [
+      {
+        "title": "Laptops",
+        "inner": ["MacBook", "Dell XPS", "HP Spectre", "Lenovo ThinkPad"]
+      },
+      {
+        "title": "Mobiles",
+        "inner": ["iPhone", "Samsung Galaxy", "Pixel", "OnePlus"]
+      },
+      {
+        "title": "Accessories",
+        "inner": ["Chargers", "Headphones", "Power Banks"]
+      }
+    ]
+  },
+  {
+    "title": "Bags",
+    "icon": "FaShoppingBag",
+    "submenus": [
+      {
+        "title": "Backpacks",
+        "inner": ["Travel Backpack", "Laptop Backpack", "School Bag"]
+      },
+      {
+        "title": "Handbags",
+        "inner": ["Clutch", "Shoulder Bag", "Tote Bag"]
+      }
+    ]
+  },
+  {
+    "title": "Footwear",
+    "icon": "FaShoePrints",
+    "submenus": [
+      {
+        "title": "Men",
+        "inner": ["Sneakers", "Formal Shoes", "Sandals"]
+      },
+      {
+        "title": "Women",
+        "inner": ["Heels", "Flats", "Boots"]
+      }
+    ]
+  },
+  {
+    "title": "Groceries",
+    "icon": "FaAppleAlt",
+    "submenus": [
+      {
+        "title": "Fruits",
+        "inner": ["Apple", "Banana", "Orange", "Berries"]
+      },
+      {
+        "title": "Vegetables",
+        "inner": ["Carrot", "Tomato", "Spinach", "Potato"]
+      },
+      {
+        "title": "Beverages",
+        "inner": ["Juice", "Milk", "Coffee", "Tea"]
+      }
+    ]
+  },
+  {
+    "title": "Beauty",
+    "icon": "FaHeart",
+    "submenus": [
+      {
+        "title": "Skincare",
+        "inner": ["Creams", "Serums", "Masks"]
+      },
+      {
+        "title": "Makeup",
+        "inner": ["Lipstick", "Foundation", "Mascara"]
+      }
+    ]
+  },
+  {
+    "title": "Jewellery",
+    "icon": "FaGem",
+    "submenus": [
+      {
+        "title": "Rings",
+        "inner": ["Gold Rings", "Silver Rings", "Diamond Rings"]
+      },
+      {
+        "title": "Necklaces",
+        "inner": ["Gold Necklaces", "Silver Necklaces", "Pearl Necklaces"]
+      }
+    ]
+  }
+]

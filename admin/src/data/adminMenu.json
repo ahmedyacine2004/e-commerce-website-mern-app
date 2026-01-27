@@ -1,0 +1,51 @@
+[
+  {
+    "label": "Dashboard",
+    "icon": "MdSpaceDashboard",
+    "path": "/"
+  },
+  {
+    "label": "Home Slides",
+    "icon": "MdHome",
+    "path": "/home-slides",
+    "children": [
+      { "label": "Home banners List", "path": "/home-slides/1" },
+      { "label": "Add Home Banner Slide", "path": "/home-slides/2" }
+    ]
+  },
+  {
+    "label": "Users",
+    "icon": "MdPeople",
+    "path": "/users"
+  },
+  {
+    "label": "Products",
+    "icon": "MdShoppingCart",
+    "path": "/products",
+    "children": [
+      { "label": "Product List", "path": "/products/all" },
+      { "label": "Product upload", "path": "/products/add" }
+    ]
+  },
+  {
+    "label": "Category",
+    "icon": "MdCategory",
+    "path": "/category",
+    "children": [
+      { "label": "Category List", "path": "/home-slides/1" },
+      { "label": "Add a category", "path": "/home-slides/2" },
+      { "label": "Sub Category List", "path": "/home-slides/2" },
+      { "label": "Add a Sub Category", "path": "/home-slides/2" }
+    ]
+  },
+  {
+    "label": "Orders",
+    "icon": "MdReceipt",
+    "path": "/orders"
+  },
+  {
+    "label": "Logout",
+    "icon": "MdLogout",
+    "path": "/logout"
+  }
+]
