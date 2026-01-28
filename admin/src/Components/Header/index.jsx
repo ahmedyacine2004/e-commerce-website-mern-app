@@ -8,8 +8,7 @@ import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { styled } from "@mui/material/styles";
 
-import { RiMenu2Line } from "react-icons/ri";
-import { SlMagnifier } from "react-icons/sl";
+import { RiMenu2Line, RiMenu3Line  } from "react-icons/ri";
 import { MdShowChart } from "react-icons/md";
 
 import { FaBell, FaUser, FaSignOutAlt } from "react-icons/fa";
@@ -57,11 +56,7 @@ function Header({ onToggleSidebar, sidebarOpen }) {
           onClick={onToggleSidebar}
           className="!w-[40px] !min-w-[40px] !h-[40px] !rounded-full !text-[rgba(0,0,0,0.7)] !shadow-md flex items-center justify-center"
         >
-          <RiMenu2Line size={18} />
-        </Button>
-
-        <Button className="!w-[40px] !min-w-[40px] !h-[40px] !rounded-full !text-[rgba(0,0,0,0.7)] !shadow-md flex items-center justify-center">
-          <SlMagnifier size={18} />
+          {sidebarOpen ? <RiMenu3Line size={18} /> : <RiMenu2Line size={18} />}
         </Button>
       </div>
 
