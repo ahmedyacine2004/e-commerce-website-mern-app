@@ -28,7 +28,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-function Header() {
+function Header({ onToggleSidebar, sidebarOpen }) {
   const { admin } = useContext(AdminContext); // pull admin info from context
 
   // Profile menu state
@@ -48,10 +48,15 @@ function Header() {
   const handleCloseBell = () => setBellAnchor(null);
 
   return (
-    <header className="w-full bg-[#f1f1f1] pl-64 pr-7 flex items-center justify-between py-3 shadow-md">
+    <header
+      className={`w-full bg-[#f1f1f1] ${sidebarOpen ? "pl-64" : "pl-7"} pr-7 flex items-center justify-between py-4 shadow-md`}
+    >
       {/* LEFT */}
       <div className="part-1 flex items-center gap-2">
-        <Button className="!w-[40px] !min-w-[40px] !h-[40px] !rounded-full !text-[rgba(0,0,0,0.7)] !shadow-md flex items-center justify-center">
+        <Button
+          onClick={onToggleSidebar}
+          className="!w-[40px] !min-w-[40px] !h-[40px] !rounded-full !text-[rgba(0,0,0,0.7)] !shadow-md flex items-center justify-center"
+        >
           <RiMenu2Line size={18} />
         </Button>
 

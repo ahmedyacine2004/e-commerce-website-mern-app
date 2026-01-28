@@ -14,7 +14,7 @@ import {
 } from "react-icons/md";
 import menuData from "../../data/adminMenu.json";
 
-function Sidebar() {
+function Sidebar({ open }) {
   const [openMenus, setOpenMenus] = useState({});
 
   const toggleMenu = (label) => {
@@ -32,14 +32,15 @@ function Sidebar() {
   };
 
   return (
-    <aside className="w-[220px] fixed top-0 left-0 bg-white h-screen border-r border-gray-200 py-4 px-3 overflow-y-auto">
+    <aside
+      className={`fixed top-0 left-0 h-screen bg-white border-r transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"} w-[18%] px-3 py-3 rounded-r-[16px] shadow-md`}
+    >
       <div className="mb-6 flex items-center gap-2">
         <Link to="/">
           <img src="/images/logo.png" alt="logo" className="h-[50px]" />
         </Link>
         <h1 className="text-[18px] font-[700] ">Admin Panel</h1>
       </div>
-
       <ul className="list-none">
         {menuData.map((item) => (
           <li key={item.label} className="mb-1">

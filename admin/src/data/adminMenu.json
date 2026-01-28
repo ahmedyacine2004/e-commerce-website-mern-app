@@ -9,8 +9,8 @@
     "icon": "MdHome",
     "path": "/home-slides",
     "children": [
-      { "label": "Home banners List", "path": "/home-slides/1" },
-      { "label": "Add Home Banner Slide", "path": "/home-slides/2" }
+      { "label": "Home Banners List", "path": "/home-slides" },
+      { "label": "Add Home Banner Slide", "path": "/home-slides/create" }
     ]
   },
   {
@@ -23,19 +23,25 @@
     "icon": "MdShoppingCart",
     "path": "/products",
     "children": [
-      { "label": "Product List", "path": "/products/all" },
-      { "label": "Product upload", "path": "/products/add" }
+      { "label": "Product List", "path": "/products" },
+      { "label": "Product Upload", "path": "/products/create" }
     ]
   },
   {
-    "label": "Category",
+    "label": "Categories",
     "icon": "MdCategory",
-    "path": "/category",
+    "path": "/categories",
     "children": [
-      { "label": "Category List", "path": "/home-slides/1" },
-      { "label": "Add a category", "path": "/home-slides/2" },
-      { "label": "Sub Category List", "path": "/home-slides/2" },
-      { "label": "Add a Sub Category", "path": "/home-slides/2" }
+      { "label": "Category List", "path": "/categories" },
+      { "label": "Add Category", "path": "/categories/create" },
+      {
+        "label": "Sub Category List",
+        "path": "/categories/subcategories"
+      },
+      {
+        "label": "Add Sub Category",
+        "path": "/categories/subcategories/create"
+      }
     ]
   },
   {

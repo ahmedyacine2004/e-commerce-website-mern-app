@@ -53,8 +53,6 @@ function Orders() {
                       <TableCell />
                       <TableCell>Order ID</TableCell>
                       <TableCell>Payment</TableCell>
-                      <TableCell>User</TableCell>
-                      <TableCell>Email</TableCell>
                       <TableCell>Date</TableCell>
                       <TableCell>Status</TableCell>
                       <TableCell>Total</TableCell>
@@ -83,8 +81,6 @@ function Orders() {
 
                           <TableCell>{order.id}</TableCell>
                           <TableCell>{order.paymentId}</TableCell>
-                          <TableCell>{order.name}</TableCell>
-                          <TableCell>{order.email}</TableCell>
                           <TableCell>
                             {new Date(order.orderDate).toLocaleDateString()}
                           </TableCell>
