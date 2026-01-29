@@ -41,12 +41,12 @@ function DashboardBoxes() {
     >
       {/* New Orders */}
       <SwiperSlide>
-        <div className="box p-4 border border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
+        <div className="box p-4 border bg-white border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
           <div className="flex items-center">
             <div className="flex-1 flex items-center gap-4">
               <GiftIcon width={30} height={30} color="#2300bd" />
               <div>
-                <h3 className="text-sm text-gray-500">New Orders</h3>
+                <h3 className="text-s text-gray-500 whitespace-nowrap truncate">New Orders</h3>
                 <b className="text-xl">1,390</b>
               </div>
             </div>
@@ -68,7 +68,7 @@ function DashboardBoxes() {
 
       {/* Sales */}
       <SwiperSlide>
-        <div className="box p-4 border border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
+        <div className="box p-4 border bg-white border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
           <div className="flex items-center">
             <div className="flex-1 flex items-center gap-4">
               <MoneyIcon width={30} height={30} color="#2300bd" />
@@ -95,7 +95,7 @@ function DashboardBoxes() {
 
       {/* Revenue */}
       <SwiperSlide>
-        <div className="box p-4 border border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
+        <div className="box p-4 border bg-white border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
           <div className="flex items-center">
             <div className="flex-1 flex items-center gap-4">
               <RevenueIcon width={30} height={30} color="#2300bd" />
@@ -122,7 +122,7 @@ function DashboardBoxes() {
 
       {/* Total Products */}
       <SwiperSlide>
-        <div className="box p-4 border border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
+        <div className="box p-4 border bg-white border-[rgba(0,0,0,0.1)] rounded-md flex flex-col justify-between hover:bg-[rgba(0,0,0,0.05)] transition-all">
           <div className="flex items-center">
             <div className="flex-1 flex items-center gap-4">
               <BoxIcon width={30} height={30} color="#2300bd" />

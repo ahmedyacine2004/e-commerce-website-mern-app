@@ -2,37 +2,37 @@ import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 
 /**
- * Creates generic row actions
+ * Creates generic row actions config array (for TableActions)
  * param updateFn function(rowId, actionType)
  * param options optional object to hide some buttons
  */
-export const createRowActions =
-  (updateFn, options = {}) =>
-  (row) => (
-    <div className="flex gap-2">
-      {options.determine !== false && (
-        <Button
-          size="small"
-          variant="outlined"
-          disabled={row.status !== "pending"}
-          onClick={() => updateFn(row.id, "determined")}
-        >
-          Determine
-        </Button>
-      )}
-      {options.cancel !== false && (
-        <Button
-          size="small"
-          variant="outlined"
-          color="error"
-          disabled={row.status !== "pending"}
-          onClick={() => updateFn(row.id, "cancelled")}
-        >
-          Cancel
-        </Button>
-      )}
-    </div>
-  );
+export const createRowActions = (updateFn, options = {}) => (row) => {
+  const actions = [];
+
+  if (options.determine !== false) {
+    actions.push({
+      type: "button",
+      label: "Determine",
+      onClick: () => updateFn(row.id, "determined"),
+      variant: "outlined",
+      disabled: row.status !== "pending",
+    });
+  }
+
+  if (options.cancel !== false) {
+    actions.push({
+      type: "button",
+      label: "Cancel",
+      onClick: () => updateFn(row.id, "cancelled"),
+      variant: "outlined",
+      color: "error",
+      disabled: row.status !== "pending",
+    });
+  }
+
+  return actions;
+};
+
 
 /**
  * Creates expandable row renderer for products

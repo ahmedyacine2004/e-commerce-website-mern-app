@@ -1,12 +1,21 @@
-// src/constants/tableColumns.js
 import StatusBadge from "../components/StatusBadge";
 import { Rating } from "@mui/material";
 
+/* ===================== ORDERS TABLE ===================== */
+
 export const ordersTableColumns = [
-  { header: "Order ID", accessor: "id" },
+  {
+    header: "Order ID",
+    accessor: "id",
+    width: 120,
+  },
+
   {
     header: "Customer",
     accessor: "user",
+    filter: "text",
+    width: 260,
+    filterValue: (user) => `${user.fullName} ${user.email}`,
     render: (user) => (
       <div className="flex items-center gap-2">
         <img
@@ -21,21 +30,41 @@ export const ordersTableColumns = [
       </div>
     ),
   },
-  { header: "Payment", accessor: "paymentId" },
+
+  {
+    header: "Payment",
+    accessor: "paymentId",
+    filter: "text",
+    width: 180,
+  },
+
   {
     header: "Date",
     accessor: "orderDate",
+    filter: "date",
+    width: 140,
     render: (date) => new Date(date).toLocaleDateString(),
   },
+
   {
     header: "Status",
     accessor: "status",
+    filter: "select",
+    width: 130,
     render: (status) => <StatusBadge status={status} />,
   },
-  { header: "Total", accessor: "totalAmount", render: (amt) => `$${amt}` },
+
+  {
+    header: "Total",
+    accessor: "totalAmount",
+    width: 120,
+    render: (amt) => `$${amt}`,
+  },
+
   {
     header: "Products",
     accessor: "products",
+    width: 140,
     render: (products, row) => (
       <span
         className="cursor-pointer text-blue-600 underline"
@@ -47,10 +76,14 @@ export const ordersTableColumns = [
   },
 ];
 
+/* ===================== PRODUCTS TABLE ===================== */
+
 export const productsTableColumns = [
   {
     header: "Product",
     accessor: "name",
+    filter: "text",
+    width: 220,
     render: (name, row) => (
       <div className="flex items-center gap-2">
         <img src={row.img} alt={name} className="w-8 h-8 rounded" />
@@ -58,10 +91,27 @@ export const productsTableColumns = [
       </div>
     ),
   },
-  { header: "Category", accessor: "category" },
+
+  {
+    header: "Category",
+    accessor: "category",
+    filter: "select",
+    width: 160,
+  },
+
+  {
+    header: "Subcategory",
+    accessor: "subcategory",
+    filter: "select",
+    width: 160,
+    render: (value) => value || "_",
+  },
+
   {
     header: "Colors",
     accessor: "colors",
+    filter: "select",
+    width: 200,
     render: (colors) =>
       colors && colors.length > 0 ? (
         <div className="flex flex-wrap gap-1">
@@ -75,9 +125,12 @@ export const productsTableColumns = [
         "—"
       ),
   },
+
   {
     header: "Sizes",
     accessor: "sizes",
+    filter: "select",
+    width: 180,
     render: (sizes) =>
       sizes && sizes.length > 0 ? (
         <div className="flex flex-wrap gap-1">
@@ -95,11 +148,25 @@ export const productsTableColumns = [
       ),
   },
 
-  { header: "Qty", accessor: "qty", render: (qty) => `x${qty}` },
-  { header: "Price", accessor: "newPrice", render: (price) => `$${price}` },
+  {
+    header: "Qty",
+    accessor: "qty",
+    width: 90,
+    render: (qty) => `x${qty}`,
+  },
+
+  {
+    header: "Price",
+    accessor: "newPrice",
+    width: 120,
+    render: (price) => `$${price}`,
+  },
+
   {
     header: "Rating",
     accessor: "rating",
+    filter: "select",
+    width: 150,
     render: (rating) => (
       <Rating value={rating} precision={0.5} size="small" readOnly />
     ),

@@ -29,7 +29,7 @@ function Layout() {
 
         <div className="rightPart w-full">
           <div
-            className={`transition-all duration-300
+            className={`transition-all duration-300 bg-[#f1f1f1]
             ${sidebarOpen ? "pl-64" : "pl-7"} pr-7 py-3`}
           >
             <Outlet />

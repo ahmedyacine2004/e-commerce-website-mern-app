@@ -48,7 +48,7 @@ function Header({ onToggleSidebar, sidebarOpen }) {
 
   return (
     <header
-      className={`w-full bg-[#f1f1f1] ${sidebarOpen ? "pl-64" : "pl-7"} pr-7 flex items-center justify-between py-4 shadow-md`}
+      className={`w-full ${sidebarOpen ? "pl-64" : "pl-7"} pr-7 flex items-center justify-between py-4 shadow-md`}
     >
       {/* LEFT */}
       <div className="part-1 flex items-center gap-2">

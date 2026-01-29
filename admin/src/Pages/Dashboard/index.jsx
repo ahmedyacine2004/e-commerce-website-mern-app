@@ -13,6 +13,9 @@ import {
   productsTableColumns,
 } from "../../constants/tableColumns";
 import productsData from "../../data/products.json";
+import TableActions from "../../Components/Table/TableActions";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Dashboard() {
   const { orders, updateOrderStatus } = useContext(OrdersContext);
@@ -31,9 +34,9 @@ function Dashboard() {
   }));
 
   return (
-    <section className="p-8 w-full">
+    <section className="w-full">
       {/* Welcome Banner */}
-      <div className="w-full p-5 pb-2 border border-[rgba(0,0,0,0.1)] flex items-center gap-8 mb-5 rounded-lg">
+      <div className="w-full p-5 pb-2 border bg-white border-[rgba(0,0,0,0.1)] flex items-center gap-8 mb-5 rounded-lg">
         <div className="flex items-start justify-between w-full">
           <div className="info">
             <h1 className="text-[28px] font-[600]">
@@ -65,34 +68,47 @@ function Dashboard() {
       <DashboardBoxes />
 
       {/* Products Table */}
-      <div className="w-full p-5 border border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
+      <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
         <h2 className="text-[18px] font-[600] text-primary">Products</h2>
 
         <GenericTable
           columns={productsTableColumns}
           data={products}
-          // Optional: row actions for products
           renderRowActions={(product) => (
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={() => alert(`Edit ${product.name}`)}
-            >
-              Edit
-            </Button>
+            <TableActions
+              actions={[
+                {
+                  type: "icon",
+                  icon: <EditIcon fontSize="small" />,
+                  label: "Edit",
+                  onClick: () => alert(`Edit ${product.name}`),
+                },
+                {
+                  type: "icon",
+                  icon: <DeleteIcon fontSize="small" />,
+                  label: "Delete",
+                  color: "error.main",
+                  onClick: () => alert(`Delete ${product.name}`),
+                },
+              ]}
+            />
           )}
-          // No expandable rows for this table
         />
       </div>
 
       {/* Recent Orders Table */}
-      <div className="w-full p-5 border border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
+      <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
         <h2 className="text-[18px] font-[600] text-primary">Recent Orders</h2>
-        {/* Orders Table */}
+
         <GenericTable
           columns={ordersTableColumns}
           data={orders}
-          renderRowActions={createRowActions(updateOrderStatus)}
+          renderRowActions={(order) => {
+            // Get the action configs from your existing function
+            const actions = createRowActions(updateOrderStatus)(order);
+            // Wrap them in TableActions
+            return <TableActions actions={actions} />;
+          }}
           renderExpandable={(row) =>
             createExpandableProducts(row.products)(row)
           }
