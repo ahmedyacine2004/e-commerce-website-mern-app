@@ -4,7 +4,10 @@ import { LinearProgress } from "@mui/material";
 import TableActions from "../Components/Table/TableActions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { createRowActions } from "../utils/Table/tableUtils";
+
+/* ===================== RECENT ORDERS TABLE ===================== */
 
 export const ordersTableColumns = (updateOrderStatus) => [
   {
@@ -76,12 +79,13 @@ export const ordersTableColumns = (updateOrderStatus) => [
     header: "Actions",
     accessor: "actions",
     width: 200,
-    render: (_,row) => {
+    render: (_, row) => {
       const actions = createRowActions(updateOrderStatus)(row);
       return <TableActions actions={actions} />;
     },
   },
 ];
+
 /* ===================== PRODUCTS TABLE ===================== */
 
 export const productsTableColumns = [
@@ -234,12 +238,21 @@ export const productsTableColumns = [
     ),
   },
   {
-    header: "Actions", // title will show in table
-    accessor: "actions", // not used, just a placeholder
+    header: "Actions",
+    accessor: "actions",
     width: 150,
-    render: (row) => (
+    render: (
+      cell,
+      row, // row here is the full row object
+    ) => (
       <TableActions
         actions={[
+          {
+            type: "icon",
+            icon: <VisibilityIcon fontSize="small" />,
+            label: "View",
+            onClick: () => alert(`View ${row.name}`),
+          },
           {
             type: "icon",
             icon: <EditIcon fontSize="small" />,

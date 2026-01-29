@@ -6,15 +6,21 @@ import Rating from "@mui/material/Rating";
  * param options optional object to hide some buttons
  */
 export const createRowActions = (updateFn, options = {}) => (row) => {
+  // Order is final once it is NOT pending
+  const isFinal =
+    row?.status === "determined" || row?.status === "cancelled";
+
   const actions = [];
 
   if (options.determine !== false) {
     actions.push({
       type: "button",
       label: "Determine",
-      onClick: () => updateFn(row.id, "determined"),
       variant: "outlined",
-      disabled: row.status !== "pending",
+      disabled: isFinal,
+      onClick: () => {
+        if (!isFinal) updateFn(row.id, "determined");
+      },
     });
   }
 
@@ -22,15 +28,18 @@ export const createRowActions = (updateFn, options = {}) => (row) => {
     actions.push({
       type: "button",
       label: "Cancel",
-      onClick: () => updateFn(row.id, "cancelled"),
       variant: "outlined",
       color: "error",
-      disabled: row.status !== "pending",
+      disabled: isFinal,
+      onClick: () => {
+        if (!isFinal) updateFn(row.id, "cancelled");
+      },
     });
   }
 
   return actions;
 };
+
 
 
 /**

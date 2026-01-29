@@ -20,6 +20,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { isSameDay } from "date-fns";
 import { getUniqueOptions } from "../../utils/Table/tableFilters";
+import { FiEye, FiEyeOff } from "react-icons/fi"; // <-- new
 
 export default function GenericTable({
   columns,
@@ -38,6 +39,7 @@ export default function GenericTable({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selected, setSelected] = useState([]);
+  const [expandedRows, setExpandedRows] = useState([]); // <-- new
 
   const openFilterMenu = (e, col) => {
     if (!col.filter) return;
@@ -54,6 +56,12 @@ export default function GenericTable({
     setFilters((prev) => ({ ...prev, [accessor]: value }));
     setPage(0);
     if (shouldClose) closeMenu();
+  };
+
+  const toggleRow = (id) => {
+    setExpandedRows((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+    );
   };
 
   const filteredData = useMemo(() => {
@@ -97,13 +105,10 @@ export default function GenericTable({
     const allSelected = pageIds.every((id) => selected.includes(id));
 
     if (allSelected) {
-      // All on page are selected → deselect all on page
       setSelected((prev) => prev.filter((id) => !pageIds.includes(id)));
     } else if (someSelected) {
-      // Some on page are selected (indeterminate state) → deselect all on page
       setSelected((prev) => prev.filter((id) => !pageIds.includes(id)));
     } else {
-      // None on page are selected → select all on page
       setSelected((prev) => {
         const newSelected = new Set(prev);
         pageIds.forEach((id) => newSelected.add(id));
@@ -192,29 +197,56 @@ export default function GenericTable({
             </TableRow>
           )}
 
-          {paginated.map((row) => (
-            <Fragment key={row.id}>
-              <TableRow hover>
-                {renderExpandable && <TableCell />}
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={isSelected(row.id)}
-                    onChange={() => toggleRowSelection(row.id)}
-                  />
-                </TableCell>
-                {columns.map((col) => (
-                  <TableCell key={col.accessor}>
-                    {col.render
-                      ? col.render(row[col.accessor], row)
-                      : row[col.accessor]}
+          {paginated.map((row) => {
+            const rowWithToggle = {
+              ...row,
+              isExpanded: expandedRows.includes(row.id),
+              toggleRow,
+            };
+
+            return (
+              <Fragment key={row.id}>
+                <TableRow hover>
+                  {renderExpandable && (
+                    <TableCell>
+                      <Button
+                        size="small"
+                        onClick={() => rowWithToggle.toggleRow(row.id)}
+                        className="!text-black"
+                        sx={{ minWidth: 0, padding: "4px" }}
+                      >
+                        {rowWithToggle.isExpanded ? <FiEyeOff /> : <FiEye />}
+                      </Button>
+                    </TableCell>
+                  )}
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected(row.id)}
+                      onChange={() => toggleRowSelection(row.id)}
+                    />
                   </TableCell>
-                ))}
-                {renderRowActions && (
-                  <TableCell>{renderRowActions(row)}</TableCell>
+                  {columns.map((col) => (
+                    <TableCell key={col.accessor}>
+                      {col.render
+                        ? col.render(row[col.accessor], rowWithToggle)
+                        : row[col.accessor]}
+                    </TableCell>
+                  ))}
+                  {renderRowActions && (
+                    <TableCell>{renderRowActions(rowWithToggle)}</TableCell>
+                  )}
+                </TableRow>
+
+                {rowWithToggle.isExpanded && renderExpandable && (
+                  <TableRow>
+                    <TableCell colSpan={columns.length + 2}>
+                      {renderExpandable(rowWithToggle)}
+                    </TableCell>
+                  </TableRow>
                 )}
-              </TableRow>
-            </Fragment>
-          ))}
+              </Fragment>
+            );
+          })}
         </TableBody>
       </Table>
 
