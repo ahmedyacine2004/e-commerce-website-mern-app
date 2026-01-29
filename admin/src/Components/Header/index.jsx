@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { styled } from "@mui/material/styles";
 
-import { RiMenu2Line, RiMenu3Line  } from "react-icons/ri";
+import { RiMenu2Line, RiMenu3Line } from "react-icons/ri";
 import { MdShowChart } from "react-icons/md";
 
 import { FaBell, FaUser, FaSignOutAlt } from "react-icons/fa";
@@ -48,7 +48,7 @@ function Header({ onToggleSidebar, sidebarOpen }) {
 
   return (
     <header
-      className={`w-full ${sidebarOpen ? "pl-64" : "pl-7"} pr-7 flex items-center justify-between py-4 shadow-md`}
+      className={`fixed top-0 left-0 w-full bg-white index50 ${sidebarOpen ? "pl-[270px]" : "pl-[100px]"} pr-7 flex items-center justify-between py-4 shadow-md`}
     >
       {/* LEFT */}
       <div className="part-1 flex items-center gap-2">

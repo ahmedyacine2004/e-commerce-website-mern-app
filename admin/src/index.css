@@ -119,3 +119,11 @@
 .link:hover {
   color: #2300bd;
 }
+
+.index50 {
+  z-index: 50;
+}
+
+.index100 {
+  z-index: 100;
+}

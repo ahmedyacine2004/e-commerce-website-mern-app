@@ -33,77 +33,119 @@ function Sidebar({ open }) {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen bg-white border-r transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"} w-[18%] px-3 py-3 rounded-r-[16px] shadow-md`}
+      className={`fixed top-0 left-0  index100 h-screen bg-white border-r shadow-md
+      transition-all duration-300
+      ${open ? "w-64 px-3" : "w-[80px] px-2"} py-3 rounded-r-[16px]`}
     >
-      <div className="mb-6 flex items-center gap-2">
-        <Link to="/">
-          <img src="/images/logo.png" alt="logo" className="h-[50px]" />
+      {/* Logo */}
+      <div
+        className={`mb-6 flex items-center transition-all duration-300 ${
+          open ? "justify-start" : "justify-center"
+        }`}
+      >
+        <Link
+          to="/"
+          className={`flex items-center transition-all duration-300 ${
+            open ? "justify-start" : "justify-center"
+          }`}
+        >
+          <img
+            src="/images/logo.png"
+            alt="logo"
+            className={`transition-all duration-300 ${
+              open ? "h-[50px] w-[50px]" : "h-[40px] w-[40px]"
+            }`}
+          />
+          <h1
+            className={`transition-all duration-300 overflow-hidden whitespace-nowrap text-[18px] font-[700] ml-2
+    ${open ? "opacity-100 w-auto" : "opacity-0 absolute"} `}
+          >
+            Admin Panel
+          </h1>
         </Link>
-        <h1 className="text-[18px] font-[700] ">Admin Panel</h1>
       </div>
+
       <ul className="list-none">
         {menuData.map((item) => (
           <li key={item.label} className="mb-1">
             {item.children ? (
               <>
-                {/* Parent item */}
+                {/* Parent with children */}
                 <button
                   onClick={() => toggleMenu(item.label)}
-                  className="w-full flex items-center justify-between px-3 py-3 text-gray-700 font-medium hover:bg-gray-100 rounded"
+                  className={`w-full flex items-center px-3 py-3
+                  text-gray-700 font-medium hover:bg-gray-100 rounded
+                  ${open ? "justify-between" : "justify-center"}`}
                 >
-                  <div className="flex items-center gap-3">
-                    {iconsMap[item.icon]}
-                    <span>{item.label}</span>
-                  </div>
-                  <MdKeyboardArrowDown
-                    className={`transition-transform duration-200 ${
-                      openMenus[item.label] ? "rotate-180" : ""
+                  <div
+                    className={`flex items-center transition-all duration-300 ${
+                      open ? "gap-3" : "justify-center gap-0"
                     }`}
-                  />
+                  >
+                    {iconsMap[item.icon]}
+                    <span
+                      className={`transition-all duration-300 overflow-hidden whitespace-nowrap
+                      ${open ? "opacity-100 ml-3 w-auto" : "opacity-0 ml-0 w-0"}`}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+
+                  {open && (
+                    <MdKeyboardArrowDown
+                      className={`transition-transform duration-200 ${
+                        openMenus[item.label] ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
                 </button>
 
                 {/* Children */}
-                {openMenus[item.label] && (
-                  <ul className="pl-10 mt-1 flex flex-col gap-1">
-                    {item.children.map((child) => (
-                      <li key={child.label}>
-                        <Link to={child.path} className="block">
-                          <Button
-                            startIcon={<MdFiberManualRecord size={8} />}
-                            fullWidth
-                            sx={{
-                              justifyContent: "flex-start",
-                              alignItems: "flex-baseline", // 👈 key line
-                              textTransform: "none",
-                              fontSize: "12px",
-                              paddingY: "4px",
-                              paddingX: "8px",
-                              color: "#4B5563",
-                              borderRadius: "6px",
-                              "& .MuiButton-startIcon": {
-                                marginTop: "2px", // 👈 fine-tune dot position
-                              },
-                              "&:hover": {
-                                backgroundColor: "#F3F4F6",
-                              },
-                            }}
-                          >
-                            <span className="text-start leading-snug">
-                              {child.label}
-                            </span>
-                          </Button>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ul
+                  className={`pl-10 mt-1 flex flex-col gap-1 transition-all duration-300
+                  ${open && openMenus[item.label] ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0 overflow-hidden"}`}
+                >
+                  {item.children.map((child) => (
+                    <li key={child.label}>
+                      <Link to={child.path} className="block">
+                        <Button
+                          startIcon={<MdFiberManualRecord size={8} />}
+                          fullWidth
+                          sx={{
+                            justifyContent: "flex-start",
+                            textTransform: "none",
+                            fontSize: "12px",
+                            paddingY: "4px",
+                            paddingX: "8px",
+                            color: "#4B5563",
+                            borderRadius: "6px",
+                            "&:hover": {
+                              backgroundColor: "#F3F4F6",
+                            },
+                          }}
+                        >
+                          {child.label}
+                        </Button>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </>
             ) : (
               /* Parent without children */
               <Link to={item.path}>
-                <button className="w-full flex items-center gap-3 px-3 py-3 text-gray-700 font-medium hover:bg-gray-100 rounded">
+                <button
+                  className={`w-full flex items-center px-3 py-3
+                  text-gray-700 font-medium hover:bg-gray-100 rounded
+                  ${open ? "justify-start gap-3" : "justify-center"}`}
+                >
                   {iconsMap[item.icon]}
-                  <span>{item.label}</span>
+                  <span
+                    className={`transition-all duration-300 overflow-hidden whitespace-nowrap
+                    ${open ? "opacity-100 ml-3 w-auto" : "opacity-0 ml-0 w-0"}`}
+                  >
+                    {item.label}
+                  </span>
                 </button>
               </Link>
             )}

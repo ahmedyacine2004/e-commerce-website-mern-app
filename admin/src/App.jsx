@@ -12,9 +12,8 @@ import Slides from "./Pages/Slides";
 import Users from "./Pages/Users";
 import Products from "./Pages/Products";
 
-
 function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev);
@@ -27,10 +26,10 @@ function Layout() {
       <div className="contentMain flex">
         <Sidebar open={sidebarOpen} />
 
-        <div className="rightPart w-full">
+        <div className="rightPart w-full ">
           <div
-            className={`transition-all duration-300 bg-[#f1f1f1]
-            ${sidebarOpen ? "pl-64" : "pl-7"} pr-7 py-3`}
+            className={`transition-all duration-300 bg-[#f1f1f1] pt-[90px] z-50
+            ${sidebarOpen ? "pl-[270px]" : "pl-[100px]"} pr-7 py-3`}
           >
             <Outlet />
           </div>
@@ -45,20 +44,20 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { index: true, element: <Dashboard /> }, // /
+      { index: true, element: <Dashboard /> },
 
-      { path: "slides", element: <Slides /> }, // /slides
+      { path: "slides", element: <Slides /> },
       { path: "slides/create", element: <Slides /> },
 
-      { path: "users", element: <Users /> }, // /users
+      { path: "users", element: <Users /> },
 
-      { path: "products", element: <Products /> }, // /products
+      { path: "products", element: <Products /> },
       { path: "products/create", element: <Products /> },
 
-      { path: "categories", element: <Categories /> }, // /categories
+      { path: "categories", element: <Categories /> },
       { path: "categories/create", element: <Categories /> },
 
-      { path: "orders", element: <Orders /> }, // /orders
+      { path: "orders", element: <Orders /> },
     ],
   },
 ]);
