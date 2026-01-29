@@ -11,6 +11,10 @@ import {
   MenuItem,
   TextField,
   TablePagination,
+  Checkbox,
+  Toolbar,
+  Typography,
+  Button,
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -22,18 +26,18 @@ export default function GenericTable({
   data,
   renderExpandable,
   renderRowActions,
+  selectionActions,
 }) {
   const [filters, setFilters] = useState(() =>
     Object.fromEntries(
       columns.filter((c) => c.filter).map((c) => [c.accessor, "all"]),
     ),
   );
-
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeColumn, setActiveColumn] = useState(null);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [selected, setSelected] = useState([]);
 
   const openFilterMenu = (e, col) => {
     if (!col.filter) return;
@@ -49,38 +53,25 @@ export default function GenericTable({
   const updateFilter = (accessor, value, shouldClose = true) => {
     setFilters((prev) => ({ ...prev, [accessor]: value }));
     setPage(0);
-
-    if (shouldClose) {
-      closeMenu();
-    }
+    if (shouldClose) closeMenu();
   };
 
   const filteredData = useMemo(() => {
     return data.filter((row) =>
       columns.every((col) => {
         if (!col.filter) return true;
-
         const filterValue = filters[col.accessor];
         if (filterValue === "all" || filterValue == null) return true;
 
         let cellValue = row[col.accessor];
+        if (col.filterValue) cellValue = col.filterValue(cellValue, row);
 
-        if (col.filterValue) {
-          cellValue = col.filterValue(cellValue, row);
-        }
-
-        // DATE FILTER
-        if (col.filter === "date") {
-          if (!cellValue) return false;
-          return isSameDay(new Date(cellValue), new Date(filterValue));
-        }
-
-        // ARRAY FILTER
-        if (Array.isArray(cellValue)) {
+        if (col.filter === "date")
+          return (
+            cellValue && isSameDay(new Date(cellValue), new Date(filterValue))
+          );
+        if (Array.isArray(cellValue))
           return cellValue.map(String).includes(String(filterValue));
-        }
-
-        // TEXT / SELECT
         return String(cellValue ?? "")
           .toLowerCase()
           .includes(String(filterValue).toLowerCase());
@@ -92,13 +83,77 @@ export default function GenericTable({
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage,
   );
+  const isSelected = (id) => selected.includes(id);
+
+  const toggleRowSelection = (id) => {
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+    );
+  };
+
+  const toggleAllOnPage = () => {
+    const pageIds = paginated.map((row) => row.id);
+    const someSelected = pageIds.some((id) => selected.includes(id));
+    const allSelected = pageIds.every((id) => selected.includes(id));
+
+    if (allSelected) {
+      // All on page are selected → deselect all on page
+      setSelected((prev) => prev.filter((id) => !pageIds.includes(id)));
+    } else if (someSelected) {
+      // Some on page are selected (indeterminate state) → deselect all on page
+      setSelected((prev) => prev.filter((id) => !pageIds.includes(id)));
+    } else {
+      // None on page are selected → select all on page
+      setSelected((prev) => {
+        const newSelected = new Set(prev);
+        pageIds.forEach((id) => newSelected.add(id));
+        return Array.from(newSelected);
+      });
+    }
+  };
+
+  const isAllOnPageSelected = paginated.every((row) =>
+    selected.includes(row.id),
+  );
+  const isSomeOnPageSelected =
+    paginated.some((row) => selected.includes(row.id)) && !isAllOnPageSelected;
 
   return (
     <TableContainer component={Paper}>
+      {selected.length > 0 && selectionActions && (
+        <Toolbar
+          sx={{ bgcolor: "action.hover", justifyContent: "space-between" }}
+        >
+          <Typography variant="subtitle1">
+            {selected.length} selected
+          </Typography>
+          <div>
+            {selectionActions.map((action) => (
+              <Button
+                key={action.label}
+                size="small"
+                variant="contained"
+                sx={{ ml: 1 }}
+                onClick={() => action.onClick(selected)}
+              >
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        </Toolbar>
+      )}
+
       <Table>
         <TableHead>
           <TableRow>
             {renderExpandable && <TableCell />}
+            <TableCell padding="checkbox">
+              <Checkbox
+                indeterminate={isSomeOnPageSelected}
+                checked={isAllOnPageSelected}
+                onClick={toggleAllOnPage}
+              />
+            </TableCell>
             {columns.map((col) => (
               <TableCell
                 key={col.accessor}
@@ -128,7 +183,7 @@ export default function GenericTable({
           {paginated.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={columns.length + 2}
+                colSpan={columns.length + 3}
                 align="center"
                 sx={{ py: 4, color: "text.secondary" }}
               >
@@ -141,6 +196,12 @@ export default function GenericTable({
             <Fragment key={row.id}>
               <TableRow hover>
                 {renderExpandable && <TableCell />}
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={isSelected(row.id)}
+                    onChange={() => toggleRowSelection(row.id)}
+                  />
+                </TableCell>
                 {columns.map((col) => (
                   <TableCell key={col.accessor}>
                     {col.render
@@ -157,7 +218,6 @@ export default function GenericTable({
         </TableBody>
       </Table>
 
-      {/* FILTER MENU */}
       <Menu
         anchorEl={menuAnchor}
         open={Boolean(menuAnchor)}
@@ -166,18 +226,13 @@ export default function GenericTable({
           sx: {
             minWidth: 170,
             maxHeight: 260,
-            "& .MuiMenuItem-root": {
-              fontSize: "0.8rem",
-              py: 0.5,
-            },
+            "& .MuiMenuItem-root": { fontSize: "0.8rem", py: 0.5 },
           },
         }}
       >
-        {/* SELECT FILTER */}
         {activeColumn?.filter === "select" &&
           (() => {
             const options = getUniqueOptions(data, activeColumn.accessor);
-
             return [
               <MenuItem
                 key="all"
@@ -186,7 +241,6 @@ export default function GenericTable({
               >
                 All
               </MenuItem>,
-
               options.length === 0 ? (
                 <MenuItem key="none" disabled>
                   No options available
@@ -205,7 +259,6 @@ export default function GenericTable({
             ];
           })()}
 
-        {/* TEXT FILTER */}
         {activeColumn?.filter === "text" && (
           <TextField
             autoFocus
@@ -220,14 +273,13 @@ export default function GenericTable({
               updateFilter(
                 activeColumn.accessor,
                 e.target.value || "all",
-                false, // 👈 DO NOT close menu while typing
+                false,
               )
             }
             sx={{ m: 1 }}
           />
         )}
 
-        {/* DATE FILTER */}
         {activeColumn?.filter === "date" && (
           <DatePicker
             value={
@@ -242,10 +294,7 @@ export default function GenericTable({
               )
             }
             slotProps={{
-              textField: {
-                size: "small",
-                sx: { m: 1, width: 180 },
-              },
+              textField: { size: "small", sx: { m: 1, width: 180 } },
             }}
           />
         )}

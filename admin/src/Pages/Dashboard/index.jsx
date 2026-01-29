@@ -93,6 +93,16 @@ function Dashboard() {
               ]}
             />
           )}
+          selectionActions={[
+            {
+              label: "Delete",
+              onClick: (selectedIds) => console.log(selectedIds),
+            },
+            {
+              label: "Export",
+              onClick: (selectedIds) => console.log(selectedIds),
+            },
+          ]}
         />
       </div>
 
@@ -112,6 +122,16 @@ function Dashboard() {
           renderExpandable={(row) =>
             createExpandableProducts(row.products)(row)
           }
+          selectionActions={[
+            {
+              label: "Delete",
+              onClick: (selectedIds) => console.log(selectedIds),
+            },
+            {
+              label: "Export",
+              onClick: (selectedIds) => console.log(selectedIds),
+            },
+          ]}
         />
       </div>
     </section>
