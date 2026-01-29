@@ -19,7 +19,7 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { isSameDay } from "date-fns";
-import { getUniqueOptions } from "../../utils/tableFilters";
+import { getUniqueOptions } from "../../utils/Table/tableFilters";
 
 export default function GenericTable({
   columns,

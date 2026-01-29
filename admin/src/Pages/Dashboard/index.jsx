@@ -4,39 +4,23 @@ import DashboardBoxes from "../../Components/DashboardBoxes";
 import Button from "@mui/material/Button";
 import { FaPlus } from "react-icons/fa6";
 import GenericTable from "../../Components/Table";
-import {
-  createRowActions,
-  createExpandableProducts,
-} from "../../utils/tableUtils";
+import { createExpandableProducts } from "../../utils/Table/tableUtils";
 import {
   ordersTableColumns,
   productsTableColumns,
 } from "../../constants/tableColumns";
 import productsData from "../../data/products.json";
 import TableActions from "../../Components/Table/TableActions";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { mapProductsData } from "../../utils/Table/productAdapter";
 
 function Dashboard() {
   const { orders, updateOrderStatus } = useContext(OrdersContext);
-
-  // Flatten the JSON to match the table columns
-  const products = productsData.map((p) => ({
-    id: p.id,
-    name: p.info.name,
-    category: p.info.category,
-    colors: p.info.colors || [], // keep all colors
-    sizes: p.info.sizes || [], // keep all sizes
-    qty: 1, // default quantity
-    newPrice: p.info.newPrice,
-    rating: p.info.rating,
-    img: p.img.url1 || "/placeholder.png",
-  }));
+  const products = mapProductsData(productsData);
 
   return (
     <section className="w-full">
       {/* Welcome Banner */}
-      <div className="w-full p-5 pb-2 border bg-white border-[rgba(0,0,0,0.1)] flex items-center gap-8 mb-5 rounded-lg">
+      <div className="w-full p-5 pb-2 border bg-[#2600ff17] border-[rgba(0,0,0,0.1)] flex items-center gap-8 mb-5 rounded-lg">
         <div className="flex items-start justify-between w-full">
           <div className="info">
             <h1 className="text-[28px] font-[600]">
@@ -74,25 +58,6 @@ function Dashboard() {
         <GenericTable
           columns={productsTableColumns}
           data={products}
-          renderRowActions={(product) => (
-            <TableActions
-              actions={[
-                {
-                  type: "icon",
-                  icon: <EditIcon fontSize="small" />,
-                  label: "Edit",
-                  onClick: () => alert(`Edit ${product.name}`),
-                },
-                {
-                  type: "icon",
-                  icon: <DeleteIcon fontSize="small" />,
-                  label: "Delete",
-                  color: "error.main",
-                  onClick: () => alert(`Delete ${product.name}`),
-                },
-              ]}
-            />
-          )}
           selectionActions={[
             {
               label: "Delete",
@@ -111,14 +76,8 @@ function Dashboard() {
         <h2 className="text-[18px] font-[600] text-primary">Recent Orders</h2>
 
         <GenericTable
-          columns={ordersTableColumns}
+          columns={ordersTableColumns(updateOrderStatus)}
           data={orders}
-          renderRowActions={(order) => {
-            // Get the action configs from your existing function
-            const actions = createRowActions(updateOrderStatus)(order);
-            // Wrap them in TableActions
-            return <TableActions actions={actions} />;
-          }}
           renderExpandable={(row) =>
             createExpandableProducts(row.products)(row)
           }

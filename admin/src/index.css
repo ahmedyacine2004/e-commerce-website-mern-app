@@ -115,3 +115,7 @@
 * {
   font-family: "Roboto";
 }
+
+.link:hover {
+  color: #2300bd;
+}

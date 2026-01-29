@@ -1,15 +1,17 @@
 import StatusBadge from "../components/StatusBadge";
 import { Rating } from "@mui/material";
+import { LinearProgress } from "@mui/material";
+import TableActions from "../Components/Table/TableActions";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { createRowActions } from "../utils/Table/tableUtils";
 
-/* ===================== ORDERS TABLE ===================== */
-
-export const ordersTableColumns = [
+export const ordersTableColumns = (updateOrderStatus) => [
   {
     header: "Order ID",
     accessor: "id",
     width: 120,
   },
-
   {
     header: "Customer",
     accessor: "user",
@@ -30,14 +32,12 @@ export const ordersTableColumns = [
       </div>
     ),
   },
-
   {
     header: "Payment",
     accessor: "paymentId",
     filter: "text",
     width: 180,
   },
-
   {
     header: "Date",
     accessor: "orderDate",
@@ -45,7 +45,6 @@ export const ordersTableColumns = [
     width: 140,
     render: (date) => new Date(date).toLocaleDateString(),
   },
-
   {
     header: "Status",
     accessor: "status",
@@ -53,14 +52,12 @@ export const ordersTableColumns = [
     width: 130,
     render: (status) => <StatusBadge status={status} />,
   },
-
   {
     header: "Total",
     accessor: "totalAmount",
     width: 120,
     render: (amt) => `$${amt}`,
   },
-
   {
     header: "Products",
     accessor: "products",
@@ -74,8 +71,17 @@ export const ordersTableColumns = [
       </span>
     ),
   },
+  // ✅ New Actions Column
+  {
+    header: "Actions",
+    accessor: "actions",
+    width: 200,
+    render: (_,row) => {
+      const actions = createRowActions(updateOrderStatus)(row);
+      return <TableActions actions={actions} />;
+    },
+  },
 ];
-
 /* ===================== PRODUCTS TABLE ===================== */
 
 export const productsTableColumns = [
@@ -87,7 +93,7 @@ export const productsTableColumns = [
     render: (name, row) => (
       <div className="flex items-center gap-2">
         <img src={row.img} alt={name} className="w-8 h-8 rounded" />
-        <span>{name}</span>
+        <span className="link font-[500] cursor-pointer">{name}</span>
       </div>
     ),
   },
@@ -147,14 +153,70 @@ export const productsTableColumns = [
         "—"
       ),
   },
-
   {
     header: "Qty",
-    accessor: "qty",
-    width: 90,
-    render: (qty) => `x${qty}`,
-  },
+    accessor: "stock",
+    width: 120,
+    render: (qty) => {
+      const maxQty = 100;
+      const percentage = Math.min((qty / maxQty) * 100, 100);
 
+      let barColor;
+      if (percentage <= 20) barColor = "error.main";
+      else if (percentage <= 50) barColor = "warning.main";
+      else if (percentage <= 70) barColor = "info.main";
+      else barColor = "success.main";
+
+      return (
+        <div className="flex flex-col gap-1">
+          <span className="text-xs">{`x${qty}`}</span>
+          <LinearProgress
+            variant="determinate"
+            value={percentage}
+            sx={{
+              height: 8,
+              borderRadius: 2,
+              "& .MuiLinearProgress-bar": { bgcolor: barColor },
+            }}
+          />
+        </div>
+      );
+    },
+  },
+  {
+    header: "Sales",
+    accessor: "sales",
+    width: 140,
+    render: (sales) => {
+      const maxSales = 250; // adjust based on your max sales range
+      const percentage = Math.min((sales / maxSales) * 100, 100);
+
+      // dynamic color logic
+      let barColor;
+      if (percentage <= 20)
+        barColor = "error.main"; // red
+      else if (percentage <= 50)
+        barColor = "warning.main"; // orange
+      else if (percentage <= 70)
+        barColor = "info.main"; // yellow-ish
+      else barColor = "success.main"; // green
+
+      return (
+        <div className="flex flex-col gap-1">
+          <span className="text-xs">{sales}</span>
+          <LinearProgress
+            variant="determinate"
+            value={percentage}
+            sx={{
+              height: 8,
+              borderRadius: 2,
+              "& .MuiLinearProgress-bar": { bgcolor: barColor },
+            }}
+          />
+        </div>
+      );
+    },
+  },
   {
     header: "Price",
     accessor: "newPrice",
@@ -169,6 +231,30 @@ export const productsTableColumns = [
     width: 150,
     render: (rating) => (
       <Rating value={rating} precision={0.5} size="small" readOnly />
+    ),
+  },
+  {
+    header: "Actions", // title will show in table
+    accessor: "actions", // not used, just a placeholder
+    width: 150,
+    render: (row) => (
+      <TableActions
+        actions={[
+          {
+            type: "icon",
+            icon: <EditIcon fontSize="small" />,
+            label: "Edit",
+            onClick: () => alert(`Edit ${row.name}`),
+          },
+          {
+            type: "icon",
+            icon: <DeleteIcon fontSize="small" />,
+            label: "Delete",
+            color: "error.main",
+            onClick: () => alert(`Delete ${row.name}`),
+          },
+        ]}
+      />
     ),
   },
 ];
