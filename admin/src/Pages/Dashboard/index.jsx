@@ -10,7 +10,7 @@ import {
   productsTableColumns,
 } from "../../constants/tableColumns";
 import productsData from "../../data/products.json";
-import TableActions from "../../Components/Table/TableActions";
+import { FaFileExport } from "react-icons/fa6";
 import { mapProductsData } from "../../utils/Table/productAdapter";
 
 function Dashboard() {
@@ -53,11 +53,32 @@ function Dashboard() {
 
       {/* Products Table */}
       <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
-        <h2 className="text-[18px] font-[600] text-primary">Products</h2>
-
+        <div className="w-full flex items-center justify-between py-1">
+          <h2 className="text-[18px] font-[600] text-primary">Products</h2>
+          <div className="flex gap-3">
+            <Button
+              startIcon={<FaFileExport size={16} />}
+              className="!bg-primary !text-white !px-4"
+            >
+              Export All
+            </Button>
+            <Button
+              startIcon={<FaPlus size={16} />}
+              className="!bg-primary !text-white !px-4"
+            >
+              Create Product
+            </Button>
+          </div>
+        </div>
         <GenericTable
           columns={productsTableColumns}
           data={products}
+          categoryColumns={productsTableColumns.filter(
+            (c) =>
+              c.accessor !== "id" &&
+              c.accessor !== "actions" &&
+              ["category", "subcategory"].includes(c.accessor), // only logical grouping columns
+          )}
           selectionActions={[
             {
               label: "Delete",
@@ -73,11 +94,26 @@ function Dashboard() {
 
       {/* Recent Orders Table */}
       <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
-        <h2 className="text-[18px] font-[600] text-primary">Recent Orders</h2>
-
+        <div className="w-full flex items-center justify-between py-1">
+          <h2 className="text-[18px] font-[600] text-primary">Recent Orders</h2>
+          <div className="flex gap-3">
+            <Button
+              startIcon={<FaFileExport size={16} />}
+              className="!bg-primary !text-white !px-4"
+            >
+              Export All
+            </Button>
+          </div>
+        </div>
         <GenericTable
           columns={ordersTableColumns(updateOrderStatus)}
           data={orders}
+          categoryColumns={ordersTableColumns(updateOrderStatus).filter(
+            (c) =>
+              c.accessor !== "id" &&
+              c.accessor !== "actions" &&
+              ["status", "paymentId", "orderDate"].includes(c.accessor), // only logical grouping columns
+          )}
           renderExpandable={(row) =>
             createExpandableProducts(row.products)(row)
           }

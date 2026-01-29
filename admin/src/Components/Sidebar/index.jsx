@@ -14,11 +14,14 @@ import {
 } from "react-icons/md";
 import menuData from "../../data/adminMenu.json";
 
-function Sidebar({ open }) {
+function Sidebar({ open, toggleSidebar }) {
   const [openMenus, setOpenMenus] = useState({});
 
   const toggleMenu = (label) => {
     setOpenMenus((prev) => ({ ...prev, [label]: !prev[label] }));
+    if(!open){
+    toggleSidebar();
+    }
   };
 
   const iconsMap = {
@@ -43,12 +46,7 @@ function Sidebar({ open }) {
           open ? "justify-start" : "justify-center"
         }`}
       >
-        <Link
-          to="/"
-          className={`flex items-center transition-all duration-300 ${
-            open ? "justify-start" : "justify-center"
-          }`}
-        >
+        <Link to="/" className="flex items-center transition-all duration-300">
           <img
             src="/images/logo.png"
             alt="logo"
@@ -56,12 +54,11 @@ function Sidebar({ open }) {
               open ? "h-[50px] w-[50px]" : "h-[40px] w-[40px]"
             }`}
           />
-          <h1
-            className={`transition-all duration-300 overflow-hidden whitespace-nowrap text-[18px] font-[700] ml-2
-    ${open ? "opacity-100 w-auto" : "opacity-0 absolute"} `}
-          >
-            Admin Panel
-          </h1>
+          {open && (
+            <span className="ml-2 whitespace-nowrap font-bold text-[18px] overflow-hidden transition-all duration-300">
+              Admin Panel
+            </span>
+          )}
         </Link>
       </div>
 

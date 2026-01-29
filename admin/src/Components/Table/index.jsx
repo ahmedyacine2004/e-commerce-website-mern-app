@@ -20,7 +20,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { isSameDay } from "date-fns";
 import { getUniqueOptions } from "../../utils/Table/tableFilters";
-import { FiEye, FiEyeOff } from "react-icons/fi"; // <-- new
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function GenericTable({
   columns,
@@ -28,6 +28,7 @@ export default function GenericTable({
   renderExpandable,
   renderRowActions,
   selectionActions,
+  categoryColumns,
 }) {
   const [filters, setFilters] = useState(() =>
     Object.fromEntries(
@@ -39,7 +40,9 @@ export default function GenericTable({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selected, setSelected] = useState([]);
-  const [expandedRows, setExpandedRows] = useState([]); // <-- new
+  const [expandedRows, setExpandedRows] = useState([]);
+  const [categoryAnchor, setCategoryAnchor] = useState(null);
+  const [categoryColumn, setCategoryColumn] = useState(null);
 
   const openFilterMenu = (e, col) => {
     if (!col.filter) return;
@@ -50,6 +53,14 @@ export default function GenericTable({
   const closeMenu = () => {
     setMenuAnchor(null);
     setActiveColumn(null);
+  };
+
+  const openCategoryMenu = (e) => setCategoryAnchor(e.currentTarget);
+  const closeCategoryMenu = () => setCategoryAnchor(null);
+  const selectCategoryColumn = (col) => {
+    setCategoryColumn(col);
+    setPage(0);
+    closeCategoryMenu();
   };
 
   const updateFilter = (accessor, value, shouldClose = true) => {
@@ -70,10 +81,8 @@ export default function GenericTable({
         if (!col.filter) return true;
         const filterValue = filters[col.accessor];
         if (filterValue === "all" || filterValue == null) return true;
-
         let cellValue = row[col.accessor];
         if (col.filterValue) cellValue = col.filterValue(cellValue, row);
-
         if (col.filter === "date")
           return (
             cellValue && isSameDay(new Date(cellValue), new Date(filterValue))
@@ -87,12 +96,38 @@ export default function GenericTable({
     );
   }, [data, columns, filters]);
 
-  const paginated = filteredData.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage,
-  );
-  const isSelected = (id) => selected.includes(id);
+  const groupedData = useMemo(() => {
+    if (!categoryColumn) return { All: filteredData };
+    const groups = {};
+    filteredData.forEach((row) => {
+      const key = row[categoryColumn.accessor] ?? "Undefined";
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(row);
+    });
+    return groups;
+  }, [filteredData, categoryColumn]);
 
+  const flattenedRows = useMemo(
+    () => Object.values(groupedData).flat(),
+    [groupedData],
+  );
+
+  const paginatedRows = useMemo(() => {
+    const start = page * rowsPerPage;
+    const end = start + rowsPerPage;
+    return flattenedRows.slice(start, end);
+  }, [flattenedRows, page, rowsPerPage]);
+
+  const groupedPaginatedData = useMemo(() => {
+    const groups = {};
+    Object.entries(groupedData).forEach(([key, rows]) => {
+      const filteredRows = rows.filter((row) => paginatedRows.includes(row));
+      if (filteredRows.length > 0) groups[key] = filteredRows;
+    });
+    return groups;
+  }, [groupedData, paginatedRows]);
+
+  const isSelected = (id) => selected.includes(id);
   const toggleRowSelection = (id) => {
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
@@ -100,13 +135,10 @@ export default function GenericTable({
   };
 
   const toggleAllOnPage = () => {
-    const pageIds = paginated.map((row) => row.id);
+    const pageIds = paginatedRows.map((row) => row.id);
     const someSelected = pageIds.some((id) => selected.includes(id));
     const allSelected = pageIds.every((id) => selected.includes(id));
-
-    if (allSelected) {
-      setSelected((prev) => prev.filter((id) => !pageIds.includes(id)));
-    } else if (someSelected) {
+    if (allSelected || someSelected) {
       setSelected((prev) => prev.filter((id) => !pageIds.includes(id)));
     } else {
       setSelected((prev) => {
@@ -117,14 +149,56 @@ export default function GenericTable({
     }
   };
 
-  const isAllOnPageSelected = paginated.every((row) =>
+  const isAllOnPageSelected = paginatedRows.every((row) =>
     selected.includes(row.id),
   );
   const isSomeOnPageSelected =
-    paginated.some((row) => selected.includes(row.id)) && !isAllOnPageSelected;
+    paginatedRows.some((row) => selected.includes(row.id)) &&
+    !isAllOnPageSelected;
 
   return (
     <TableContainer component={Paper}>
+      <Toolbar sx={{ justifyContent: "flex-start", gap: 2, flexWrap: "wrap" }}>
+        <Button
+          className="!border-black !text-black"
+          variant="outlined"
+          onClick={openCategoryMenu}
+          endIcon={<ArrowDropDownIcon />}
+        >
+          Category By: {categoryColumn?.header ?? "None"}
+        </Button>
+        <Menu
+          anchorEl={categoryAnchor}
+          open={Boolean(categoryAnchor)}
+          onClose={closeCategoryMenu}
+          PaperProps={{
+            sx: {
+              width: categoryAnchor?.offsetWidth || "auto", // match button width
+              borderRadius: 2, // rounded corners
+              "& .MuiMenuItem-root": { fontSize: "0.85rem" }, // smaller text
+            },
+          }}
+        >
+          <MenuItem
+            selected={!categoryColumn}
+            onClick={() => selectCategoryColumn(null)}
+          >
+            None
+          </MenuItem>
+          {(categoryColumns ?? columns.filter((c) => c.accessor !== "id")).map(
+            (col) => (
+              <MenuItem
+                key={col.accessor}
+                selected={categoryColumn?.accessor === col.accessor}
+                onClick={() => selectCategoryColumn(col)}
+              >
+                {col.header}
+              </MenuItem>
+            ),
+          )}
+        </Menu>
+      </Toolbar>
+
       {selected.length > 0 && selectionActions && (
         <Toolbar
           sx={{ bgcolor: "action.hover", justifyContent: "space-between" }}
@@ -151,7 +225,7 @@ export default function GenericTable({
       <Table>
         <TableHead>
           <TableRow>
-            {renderExpandable && <TableCell />}
+            {columns.some((c) => c.renderExpandable) && <TableCell />}
             <TableCell padding="checkbox">
               <Checkbox
                 indeterminate={isSomeOnPageSelected}
@@ -171,7 +245,7 @@ export default function GenericTable({
                   whiteSpace: "nowrap",
                 }}
               >
-                {col.header}
+                {col.header}{" "}
                 {col.filter && (
                   <ArrowDropDownIcon
                     fontSize="small"
@@ -185,7 +259,7 @@ export default function GenericTable({
         </TableHead>
 
         <TableBody>
-          {paginated.length === 0 && (
+          {Object.keys(groupedPaginatedData).length === 0 && (
             <TableRow>
               <TableCell
                 colSpan={columns.length + 3}
@@ -197,56 +271,72 @@ export default function GenericTable({
             </TableRow>
           )}
 
-          {paginated.map((row) => {
-            const rowWithToggle = {
-              ...row,
-              isExpanded: expandedRows.includes(row.id),
-              toggleRow,
-            };
-
-            return (
-              <Fragment key={row.id}>
-                <TableRow hover>
-                  {renderExpandable && (
-                    <TableCell>
-                      <Button
-                        size="small"
-                        onClick={() => rowWithToggle.toggleRow(row.id)}
-                        className="!text-black"
-                        sx={{ minWidth: 0, padding: "4px" }}
-                      >
-                        {rowWithToggle.isExpanded ? <FiEyeOff /> : <FiEye />}
-                      </Button>
-                    </TableCell>
-                  )}
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected(row.id)}
-                      onChange={() => toggleRowSelection(row.id)}
-                    />
+          {Object.entries(groupedPaginatedData).map(([groupName, rows]) => (
+            <Fragment key={groupName}>
+              {categoryColumn && (
+                <TableRow sx={{ backgroundColor: "#f0f0f0" }}>
+                  <TableCell
+                    colSpan={columns.length + 3}
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {groupName}
                   </TableCell>
-                  {columns.map((col) => (
-                    <TableCell key={col.accessor}>
-                      {col.render
-                        ? col.render(row[col.accessor], rowWithToggle)
-                        : row[col.accessor]}
-                    </TableCell>
-                  ))}
-                  {renderRowActions && (
-                    <TableCell>{renderRowActions(rowWithToggle)}</TableCell>
-                  )}
                 </TableRow>
+              )}
+              {rows.map((row) => {
+                const rowWithToggle = {
+                  ...row,
+                  isExpanded: expandedRows.includes(row.id),
+                  toggleRow,
+                };
+                return (
+                  <Fragment key={row.id}>
+                    <TableRow hover>
+                      {columns.some((c) => c.renderExpandable) && (
+                        <TableCell>
+                          <Button
+                            size="small"
+                            onClick={() => rowWithToggle.toggleRow(row.id)}
+                            sx={{ minWidth: 0, padding: "4px" }}
+                          >
+                            {rowWithToggle.isExpanded ? (
+                              <FiEyeOff />
+                            ) : (
+                              <FiEye />
+                            )}
+                          </Button>
+                        </TableCell>
+                      )}
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isSelected(row.id)}
+                          onChange={() => toggleRowSelection(row.id)}
+                        />
+                      </TableCell>
+                      {columns.map((col) => (
+                        <TableCell key={col.accessor}>
+                          {col.render
+                            ? col.render(row[col.accessor], rowWithToggle)
+                            : row[col.accessor]}
+                        </TableCell>
+                      ))}
+                      {renderRowActions && (
+                        <TableCell>{renderRowActions(rowWithToggle)}</TableCell>
+                      )}
+                    </TableRow>
 
-                {rowWithToggle.isExpanded && renderExpandable && (
-                  <TableRow>
-                    <TableCell colSpan={columns.length + 2}>
-                      {renderExpandable(rowWithToggle)}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </Fragment>
-            );
-          })}
+                    {rowWithToggle.isExpanded && renderExpandable && (
+                      <TableRow>
+                        <TableCell colSpan={columns.length + 2}>
+                          {renderExpandable(rowWithToggle)}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Fragment>
+                );
+              })}
+            </Fragment>
+          ))}
         </TableBody>
       </Table>
 
@@ -334,7 +424,7 @@ export default function GenericTable({
 
       <TablePagination
         component="div"
-        count={filteredData.length}
+        count={flattenedRows.length}
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25, 50]}

@@ -107,7 +107,7 @@ const Header = () => {
           {/* Logo */}
           <div className="col-1 w-[25%]">
             <Link to={"/"}>
-              <img src="/images/logo.png" alt="logo" />
+              <img src="/images/logo.png" alt="logo" className="w-[222px]"/>
             </Link>
           </div>
 

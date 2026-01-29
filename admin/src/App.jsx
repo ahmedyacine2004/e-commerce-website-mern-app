@@ -24,7 +24,7 @@ function Layout() {
       <Header onToggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
 
       <div className="contentMain flex">
-        <Sidebar open={sidebarOpen} />
+        <Sidebar open={sidebarOpen } toggleSidebar={toggleSidebar} />
 
         <div className="rightPart w-full ">
           <div
