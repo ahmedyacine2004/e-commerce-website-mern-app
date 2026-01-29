@@ -12,9 +12,12 @@ import {
 import productsData from "../../data/products.json";
 import { FaFileExport } from "react-icons/fa6";
 import { mapProductsData } from "../../utils/Table/productAdapter";
+import { LineChartComponent } from "../../Components/Charts/Line";
+import { useSales } from "../../Contexts/SalesContext";
 
 function Dashboard() {
   const { orders, updateOrderStatus } = useContext(OrdersContext);
+  const { sales } = useSales(); // get from context
   const products = mapProductsData(productsData);
 
   return (
@@ -128,6 +131,25 @@ function Dashboard() {
             },
           ]}
         />
+      </div>
+
+      {/* Users and sales report */}
+      <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5">
+        <div className="w-full flex items-center justify-between py-1">
+          <h2 className="text-[18px] font-[600] text-primary">Total users & total sales</h2>
+          <div className="flex gap-3">
+            <Button
+              startIcon={<FaFileExport size={16} />}
+              className="!bg-primary !text-white !px-4"
+            >
+              Export
+            </Button>
+          </div>
+        </div>
+
+        <div className="w-full h-96">
+          <LineChartComponent data={sales} />
+        </div>
       </div>
     </section>
   );

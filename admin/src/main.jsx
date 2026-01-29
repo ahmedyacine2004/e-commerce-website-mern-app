@@ -6,13 +6,16 @@ import AdminProvider from "./Providers/AdminProvider.jsx";
 import { OrdersProvider } from "./Providers/OrdersProvider.jsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { SalesProvider } from "./Providers/SalesProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <AdminProvider>
         <OrdersProvider>
-          <App />
+          <SalesProvider>
+            <App />
+          </SalesProvider>
         </OrdersProvider>
       </AdminProvider>
     </LocalizationProvider>
