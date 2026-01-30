@@ -5,6 +5,9 @@ import Wavify from "react-wavify";
 import Lottie from "lottie-react";
 import animationData from "../../assets/lottie/Login.json";
 
+import EmailPasswordStep from "./EmailPasswordStep";
+import OTPStep from "./OTPStep";
+
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const ALLOWED_EMAIL = import.meta.env.VITE_ALLOWED_EMAIL;
 
@@ -14,72 +17,14 @@ const Login = () => {
 
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
-  const [otp, setOTP] = useState("");
+  const [password, setPassword] = useState("");
+  const [otp, setOTP] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-  const sendOTP = async () => {
-    if (loading) return;
-    setError("");
-
-    if (!isValidEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
-
-    if (email !== ALLOWED_EMAIL) {
-      setError("This email is not authorized");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/auth/send-otp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to send OTP");
-
-      setStep(2);
-    } catch (err) {
-      setError(err.message || "Server not reachable");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const verifyOTP = async () => {
-    if (loading) return;
-    setError("");
-
-    if (!/^\d{6}$/.test(otp)) {
-      setError("OTP must be 6 digits");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/auth/verify-otp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Invalid OTP");
-
-      login({ adminData: data.admin, token: data.token });
-      navigate("/");
-    } catch (err) {
-      setError(err.message || "Verification failed");
-    } finally {
-      setLoading(false);
-    }
+  const handleLoginSuccess = (adminData, token) => {
+    login({ adminData, token });
+    navigate("/");
   };
 
   return (
@@ -113,48 +58,31 @@ const Login = () => {
           )}
 
           {step === 1 && (
-            <>
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="border px-3 py-2 rounded"
-              />
-              <button
-                onClick={sendOTP}
-                disabled={loading}
-                className="bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
-              >
-                {loading ? "Sending..." : "Send OTP"}
-              </button>
-            </>
+            <EmailPasswordStep
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              setError={setError}
+              setStep={setStep}
+              setLoading={setLoading}
+              loading={loading}
+              API_BASE={API_BASE}
+              ALLOWED_EMAIL={ALLOWED_EMAIL}
+            />
           )}
 
           {step === 2 && (
-            <>
-              <input
-                type="text"
-                placeholder="Enter OTP"
-                value={otp}
-                onChange={(e) => setOTP(e.target.value)}
-                className="border px-3 py-2 rounded"
-              />
-              <button
-                onClick={verifyOTP}
-                disabled={loading}
-                className="bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
-              >
-                {loading ? "Verifying..." : "Verify OTP"}
-              </button>
-
-              <button
-                onClick={() => setStep(1)}
-                className="text-xs text-purple-500 underline"
-              >
-                Change email
-              </button>
-            </>
+            <OTPStep
+              email={email}
+              otp={otp}
+              setOTP={setOTP}
+              setError={setError}
+              loading={loading}
+              setLoading={setLoading}
+              API_BASE={API_BASE}
+              handleLoginSuccess={handleLoginSuccess}
+            />
           )}
         </div>
       </div>

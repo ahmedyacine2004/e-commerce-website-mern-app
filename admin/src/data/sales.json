@@ -26,5 +26,5 @@
     { "date": "2026-01-08", "users": 95, "totalSales": 2800 },
     { "date": "2026-01-09", "users": 68, "totalSales": 2000 },
     { "date": "2026-01-10", "users": 85, "totalSales": 2500 }
-  ]
+  ] 
 }

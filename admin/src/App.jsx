@@ -5,7 +5,7 @@ import AdminProvider from "./Providers/AdminProvider";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from "./Pages/Login";
 
-import Header from "./Components/Header";
+import { Header } from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
 
 // Pages

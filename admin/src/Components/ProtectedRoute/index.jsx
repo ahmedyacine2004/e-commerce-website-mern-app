@@ -6,7 +6,6 @@ const ProtectedRoute = ({ children }) => {
   const { isLoggedIn } = useContext(AdminContext);
 
   if (!isLoggedIn) {
-    // Redirect to login page if not logged in
     return <Navigate to="/login" replace />;
   }
 

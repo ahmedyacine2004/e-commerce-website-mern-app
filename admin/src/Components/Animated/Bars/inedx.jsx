@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 function Bars({ color }) {
+  // useInView hook to detect when component is in viewport
   const { ref, inView } = useInView({ triggerOnce: true });
 
   // random heights generated once per mount
+  // useMemo ensures heights are stable across renders
   const heights = useMemo(
+    // create an array of 5 random heights between 20 and 55
     // eslint-disable-next-line react-hooks/purity
     () => Array.from({ length: 5 }, () => Math.floor(Math.random() * 35) + 20),
     [],
