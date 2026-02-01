@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "img": "banner1",
+    "link": "/"
+  },
+  {
+    "id": 2,
+    "img": "banner2",
+    "link": "/"
+  },
+  {
+    "id": 3,
+    "img": "banner3",
+    "link": "/"
+  },
+  {
+    "id": 4,
+    "img": "banner4",
+    "link": "/"
+  },
+  {
+    "id": 5,
+    "img": "banner5",
+    "link": "/"
+  },
+  {
+    "id": 6,
+    "img": "banner6",
+    "link": "/"
+  }
+]

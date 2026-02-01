@@ -1,17 +1,6 @@
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
-/**
- * BannerBoxV2 Component
- * ---------------------
- * Displays a product banner with image, overlay, and product info.
- *
- * Props:
- * - url: Image URL
- * - direction: "left" or "right" for info alignment
- * - productName: Name of the product
- * - productPrice: Price of the product
- */
 function BannerBoxV2({ url, direction, productName, productPrice }) {
   return (
     <div className="BannerBoxV2 w-full overflow-hidden rounded-md h-[50%] group relative">

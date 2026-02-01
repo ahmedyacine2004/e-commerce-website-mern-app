@@ -1,5 +1,3 @@
-// TODO: Read this AI generated component
-
 import { useRef, useState } from "react";
 
 const OTP_LENGTH = 6;

@@ -14,54 +14,31 @@ import { Navigation } from "swiper/modules";
 // Components
 import BannerBoxV2 from "../BannerBoxV2";
 
-/**
- * AdsBannerSliderV2 Component
- * ---------------------------
- * Displays a horizontal slider of product banners using Swiper.
- *
- * Props:
- * - items: Number of slides visible per view
- */
+// Data
+import adsBannersV2 from "../../data/adsBannersV2.json";
+
 function AdsBannerSliderV2({ items }) {
   return (
-    <>
-      {/* Full-width wrapper */}
-      <div className="w-full">
-        <Swiper
-          slidesPerView={items} // Number of slides per view from props
-          modules={[Navigation]} // Enable navigation module
-          className="mySwiperAdsV2" // Custom class for styling
-          spaceBetween={10} // Space between slides
-          navigation={true} // Enable navigation arrows
-        >
-          {/* Individual Slides */}
-          <SwiperSlide>
+    <div className="w-full">
+      <Swiper
+        slidesPerView={items}
+        modules={[Navigation]}
+        className="mySwiperAdsV2"
+        spaceBetween={10}
+        navigation={true}
+      >
+        {adsBannersV2.map((banner) => (
+          <SwiperSlide key={banner.id}>
             <BannerBoxV2
-              url={"/images/BannerBoxV2/01.jpg"}
-              productName={"Logitech VR Webcam"}
-              productPrice={"120$"}
-              direction="left"
+              url={banner.url}
+              productName={banner.productName}
+              productPrice={banner.productPrice}
+              direction={banner.direction}
             />
           </SwiperSlide>
-          <SwiperSlide>
-            <BannerBoxV2
-              url={"/images/BannerBoxV2/02.jpg"}
-              productName={"Luxury Desk Chair "}
-              productPrice={"190$"}
-              direction="left"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <BannerBoxV2
-              url={"/images/BannerBoxV2/03.avif"}
-              productName={"Samsung S23 ULTRA"}
-              productPrice={"550$"}
-              direction="left"
-            />
-          </SwiperSlide>
-        </Swiper>
-      </div>
-    </>
+        ))}
+      </Swiper>
+    </div>
   );
 }
 

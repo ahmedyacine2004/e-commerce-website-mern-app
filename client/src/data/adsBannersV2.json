@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "url": "/images/BannerBoxV2/01.jpg",
+    "productName": "Logitech VR Webcam",
+    "productPrice": "120$",
+    "direction": "left"
+  },
+  {
+    "id": 2,
+    "url": "/images/BannerBoxV2/02.jpg",
+    "productName": "Luxury Desk Chair",
+    "productPrice": "190$",
+    "direction": "left"
+  },
+  {
+    "id": 3,
+    "url": "/images/BannerBoxV2/03.avif",
+    "productName": "Samsung S23 ULTRA",
+    "productPrice": "550$",
+    "direction": "left"
+  }
+]

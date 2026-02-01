@@ -1,5 +1,3 @@
-// TODO: This is AI generated you need to understand it
-
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { Button } from "@mui/material";

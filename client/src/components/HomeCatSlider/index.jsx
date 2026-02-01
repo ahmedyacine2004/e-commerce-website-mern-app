@@ -8,18 +8,7 @@ import "./style.css";
 
 // ==================== Swiper Modules ====================
 import { Navigation } from "swiper/modules";
-
-// ==================== Slide Data ====================
-const sliderData = [
-  { id: 1, img: "/images/HomeCatSlider/dress.png", title: "Fashion" },
-  { id: 2, img: "/images/HomeCatSlider/gadgets.png", title: "Electronics" },
-  { id: 3, img: "/images/HomeCatSlider/handbag.png", title: "Bags" },
-  { id: 4, img: "/images/HomeCatSlider/sneakers.png", title: "Footwear" },
-  { id: 5, img: "/images/HomeCatSlider/shopping-bag.png", title: "Groceries" },
-  { id: 6, img: "/images/HomeCatSlider/makeup.png", title: "Beauty" },
-  { id: 7, img: "/images/HomeCatSlider/meditation.png", title: "Wellness" },
-  { id: 8, img: "/images/HomeCatSlider/jewelry.png", title: "Jewellery" },
-];
+import sliderData from "../../data/sliderData.json";
 
 // ==================== HomeCatSlider Component ====================
 function HomeCatSlider() {
