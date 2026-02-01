@@ -1,7 +1,3 @@
-import React from "react";
-
-const PASSWORD = import.meta.env.VITE_PASSWORD;
-
 const EmailPasswordStep = ({
   email,
   setEmail,
@@ -30,7 +26,7 @@ const EmailPasswordStep = ({
       return;
     }
 
-    if (password !== PASSWORD) {
+    if (password !== import.meta.env.VITE_PASSWORD) {
       setError("Invalid password");
       return;
     }

@@ -8,9 +8,6 @@ import animationData from "../../assets/lottie/Login.json";
 import EmailPasswordStep from "./EmailPasswordStep";
 import OTPStep from "./OTPStep";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const ALLOWED_EMAIL = import.meta.env.VITE_ALLOWED_EMAIL;
-
 const Login = () => {
   const { login } = useContext(AdminContext);
   const navigate = useNavigate();
@@ -67,8 +64,8 @@ const Login = () => {
               setStep={setStep}
               setLoading={setLoading}
               loading={loading}
-              API_BASE={API_BASE}
-              ALLOWED_EMAIL={ALLOWED_EMAIL}
+              API_BASE={import.meta.env.VITE_API_BASE_URL}
+              ALLOWED_EMAIL={import.meta.env.VITE_ALLOWED_EMAIL}
             />
           )}
 
@@ -80,7 +77,7 @@ const Login = () => {
               setError={setError}
               loading={loading}
               setLoading={setLoading}
-              API_BASE={API_BASE}
+              API_BASE={import.meta.env.VITE_API_BASE_URL}
               handleLoginSuccess={handleLoginSuccess}
             />
           )}
