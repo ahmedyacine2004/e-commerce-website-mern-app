@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 function MetricCells({ color = "#4ade80" }) {
-  const { ref, inView } = useInView({ triggerOnce: true });
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
 
   return (
     <div

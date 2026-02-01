@@ -14,13 +14,22 @@ import {
 } from "react-icons/md";
 import menuData from "../../data/adminMenu.json";
 
+// Import useLocation to get the current path
+import { useLocation } from "react-router-dom";
+
 function Sidebar({ open, toggleSidebar }) {
   const [openMenus, setOpenMenus] = useState({});
+  const location = useLocation();
+
+  // Helper functions to determine active states
+  const isActive = (path) => location.pathname === path;
+  const isChildActive = (children) =>
+    children?.some((child) => location.pathname === child.path);
 
   const toggleMenu = (label) => {
     setOpenMenus((prev) => ({ ...prev, [label]: !prev[label] }));
-    if(!open){
-    toggleSidebar();
+    if (!open) {
+      toggleSidebar();
     }
   };
 
@@ -70,9 +79,7 @@ function Sidebar({ open, toggleSidebar }) {
                 {/* Parent with children */}
                 <button
                   onClick={() => toggleMenu(item.label)}
-                  className={`w-full flex items-center px-3 py-3
-                  text-gray-700 font-medium hover:bg-gray-100 rounded
-                  ${open ? "justify-between" : "justify-center"}`}
+                  className={`w-full flex items-center px-3 py-3 font-medium rounded transition ${isChildActive(item.children) ? "bg-purple-100 text-purple-700" : "text-gray-700 hover:bg-gray-100"} ${open ? "justify-between" : "justify-center"}`}
                 >
                   <div
                     className={`flex items-center transition-all duration-300 ${
@@ -114,8 +121,11 @@ function Sidebar({ open, toggleSidebar }) {
                             fontSize: "12px",
                             paddingY: "4px",
                             paddingX: "8px",
-                            color: "#4B5563",
                             borderRadius: "6px",
+                            backgroundColor: isActive(child.path)
+                              ? "#EDE9FE"
+                              : "transparent",
+                            color: isActive(child.path) ? "#6D28D9" : "#4B5563",
                             "&:hover": {
                               backgroundColor: "#F3F4F6",
                             },
@@ -132,9 +142,7 @@ function Sidebar({ open, toggleSidebar }) {
               /* Parent without children */
               <Link to={item.path}>
                 <button
-                  className={`w-full flex items-center px-3 py-3
-                  text-gray-700 font-medium hover:bg-gray-100 rounded
-                  ${open ? "justify-start gap-3" : "justify-center"}`}
+                  className={`w-full flex items-center px-3 py-3 font-medium rounded transition ${isActive(item.path) ? "bg-purple-100 text-purple-700" : "text-gray-700 hover:bg-gray-100"} ${open ? "justify-start gap-3" : "justify-center"}`}
                 >
                   {iconsMap[item.icon]}
                   <span

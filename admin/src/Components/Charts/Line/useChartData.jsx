@@ -12,13 +12,15 @@ export const useChartData = (rawData) => {
 
   const numericKeys = useMemo(() => {
     if (rawData?.keys?.length) return rawData.keys;
-
     if (!chartData[0]) return [];
+    // Exclude "date" key
+    // Return all other keys as numeric keys
     return Object.keys(chartData[0])
       .filter((k) => k !== "date")
       .map((k) => ({ key: k, name: k, yAxis: "right" }));
   }, [chartData, rawData]);
 
+  // Filter and aggregate data based on date range and selected range
   const filteredData = useMemo(() => {
     const data =
       startDate && endDate

@@ -54,6 +54,20 @@ const OTPStep = ({
     }
   };
 
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace") {
+      if (otp[index]) {
+        // Clear current box
+        const newOTP = [...otp];
+        newOTP[index] = "";
+        setOTP(newOTP);
+      } else if (index > 0) {
+        // Move back if current is empty
+        inputsRef.current[index - 1].focus();
+      }
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between gap-2">
@@ -65,6 +79,7 @@ const OTPStep = ({
             maxLength={1}
             value={o}
             onChange={(e) => handleChange(i, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(i, e)}
             className="border w-10 h-10 text-center text-lg rounded"
           />
         ))}

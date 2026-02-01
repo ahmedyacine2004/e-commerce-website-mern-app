@@ -15,6 +15,7 @@ import Orders from "./Pages/Orders";
 import Slides from "./Pages/Slides";
 import Users from "./Pages/Users";
 import Products from "./Pages/Products";
+import NotFound from "./Pages/NotFound";
 
 // ---------- Layout ----------
 function Layout() {
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
       { path: "categories", element: <Categories /> },
       { path: "categories/create", element: <Categories /> },
       { path: "orders", element: <Orders /> },
+      { path: "/*", element: <NotFound /> },
     ],
   },
 ]);

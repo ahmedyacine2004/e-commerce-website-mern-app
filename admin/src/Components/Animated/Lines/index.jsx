@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 function LineChart({ color = "#2300bd" }) {
-  const { ref, inView } = useInView({ triggerOnce: true });
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.1 });
 
   const { path, points } = useMemo(() => {
     const values = Array.from(

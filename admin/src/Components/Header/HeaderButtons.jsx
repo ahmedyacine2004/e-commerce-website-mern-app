@@ -12,9 +12,17 @@ import { FaGear } from "react-icons/fa6";
 
 import AdminContext from "../../Contexts/AdminContext";
 import { StyledBadge } from "./StyledBadge";
+import { useNavigate } from "react-router-dom";
 
 export function HeaderButtons() {
-  const { admin } = useContext(AdminContext);
+  const { admin, logout } = useContext(AdminContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(); // clears state + localStorage
+    handleCloseProfile();
+    navigate("/login", { replace: true });
+  };
 
   // STATE
   const [profileAnchor, setProfileAnchor] = useState(null);
@@ -31,7 +39,6 @@ export function HeaderButtons() {
 
   return (
     <div className="part-2 flex items-center gap-2">
-
       {/* GEAR */}
       <div>
         <Button
@@ -119,8 +126,12 @@ export function HeaderButtons() {
               />
             </div>
             <div className="flex flex-col items-start justify-between">
-              <h2 className="text-[14px] font-[600]">{admin?.name || "Admin Name"}</h2>
-              <p className="text-[10px] font-[600]">{admin?.email || "admin@example.com"}</p>
+              <h2 className="text-[14px] font-[600]">
+                {admin?.name || "Admin Name"}
+              </h2>
+              <p className="text-[10px] font-[600]">
+                {admin?.email || "admin@example.com"}
+              </p>
             </div>
           </div>
         </MenuItem>
@@ -150,7 +161,7 @@ export function HeaderButtons() {
 
         <Divider />
 
-        <MenuItem onClick={handleCloseProfile} sx={{ color: "error.main" }}>
+        <MenuItem onClick={handleLogout} sx={{ color: "error.main" }}>
           <ListItemIcon sx={{ color: "error.main" }}>
             <FaSignOutAlt size={16} />
           </ListItemIcon>

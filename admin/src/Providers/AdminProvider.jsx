@@ -7,16 +7,21 @@ const AdminProvider = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Try to load from localStorage on mount
   useEffect(() => {
     const savedAdmin = localStorage.getItem("admin");
     const savedToken = localStorage.getItem("token");
+
     if (savedAdmin && savedToken) {
       setAdmin(JSON.parse(savedAdmin));
       setToken(savedToken);
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
+
+    setLoading(false);
   }, []);
 
   const login = ({ adminData, token }) => {
@@ -49,6 +54,7 @@ const AdminProvider = ({ children }) => {
         admin,
         isLoggedIn,
         token,
+        loading,
         login,
         logout,
         updateProfile,

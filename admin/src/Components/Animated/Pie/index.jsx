@@ -4,7 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useMemo, useEffect } from "react";
 
 function SweepPie({ color = "#2300bd" }) {
-  const { ref, inView } = useInView({ triggerOnce: true });
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.5 });
 
   const radius = 30;
   const center = 40;
