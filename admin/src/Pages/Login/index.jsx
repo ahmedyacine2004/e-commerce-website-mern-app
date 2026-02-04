@@ -26,6 +26,9 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen relative overflow-hidden">
+      <div className="absolute top-4 left-4 w-full z-50">
+        <img src="/images/logo.png" alt="" className="w-[40px]" />
+      </div>
       <Wavify
         className="absolute top-0 left-0 w-full h-full"
         fill="url(#gradient)"
@@ -46,12 +49,17 @@ const Login = () => {
         </div>
 
         <div className="bg-white p-8 rounded shadow-lg w-96 flex flex-col gap-4 backdrop-blur-md">
-          <h2 className="text-2xl font-bold text-center text-purple-700">
-            Admin Login
+          <h2 className="text-2xl font-bold text-start">
+            Welcome back ! <br />{" "}
+            <span className=" text-purple-700 font-[800] text-[32px]">Your Majesty</span>
           </h2>
 
           {error && (
-            <div className="text-red-600 text-sm text-center">{error}</div>
+            <div className="text-red-600 text-sm text-center">
+              {error === "Failed to fetch"
+                ? "Verify your internet connection"
+                : error}
+            </div>
           )}
 
           {step === 1 && (

@@ -1,4 +1,6 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
+import spinner from "../../assets/lottie/Loading animation blue.json";
+import Lottie from "lottie-react";
 
 const OTPStep = ({
   email,
@@ -90,7 +92,15 @@ const OTPStep = ({
         disabled={loading}
         className="bg-purple-600 text-white py-2 rounded mt-4 hover:bg-purple-700 transition"
       >
-        {loading ? "Verifying..." : "Verify OTP"}
+        {loading ? (
+          <Lottie
+            animationData={spinner}
+            className="w-[50px] !text-purple-500"
+            loop
+          />
+        ) : (
+          "Verify OTP"
+        )}
       </button>
     </>
   );

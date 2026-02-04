@@ -24,7 +24,8 @@
     "path": "/products",
     "children": [
       { "label": "Product List", "path": "/products" },
-      { "label": "Product Upload", "path": "/products/create" }
+      { "label": "Product Upload", "path": "/products/create" },
+      { "label": "Product Edit", "path": "/products/edit" }
     ]
   },
   {

@@ -16,6 +16,8 @@ import Slides from "./Pages/Slides";
 import Users from "./Pages/Users";
 import Products from "./Pages/Products";
 import NotFound from "./Pages/NotFound";
+import ProductsUpload from "./Pages/ProductsUpload";
+import ProductsEdit from "./Pages/ProductsEdit";
 
 // ---------- Layout ----------
 function Layout() {
@@ -56,7 +58,8 @@ const router = createBrowserRouter([
       { path: "slides/create", element: <Slides /> },
       { path: "users", element: <Users /> },
       { path: "products", element: <Products /> },
-      { path: "products/create", element: <Products /> },
+      { path: "products/create", element: <ProductsUpload /> },
+      { path: "products/edit", element: <ProductsEdit /> },
       { path: "categories", element: <Categories /> },
       { path: "categories/create", element: <Categories /> },
       { path: "orders", element: <Orders /> },

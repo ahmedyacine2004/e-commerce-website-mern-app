@@ -14,6 +14,8 @@ import { FaFileExport } from "react-icons/fa6";
 import { mapProductsData } from "../../utils/Table/productAdapter";
 import { LineChart as LineChartComponent } from "../../Components/Charts/Line";
 import { useSales } from "../../Contexts/SalesContext";
+import { Link } from "react-router-dom";
+import { exportToCSV } from "../../utils/Export/exportToCSV";
 
 function Dashboard() {
   const { orders, updateOrderStatus } = useContext(OrdersContext);
@@ -34,12 +36,14 @@ function Dashboard() {
               Here's what's happening on your store today. See the statistics at
               a glance.
             </p>
-            <Button
-              startIcon={<FaPlus />}
-              className="!bg-primary !py-2 !px-4 !text-white !mt-4"
-            >
-              Add Product
-            </Button>
+            <Link to="/products/create" style={{ textDecoration: "none" }}>
+              <Button
+                startIcon={<FaPlus />}
+                className="!bg-primary !py-2 !px-4 !text-white !mt-4"
+              >
+                Add Product
+              </Button>
+            </Link>
           </div>
           <div className="imgWrapper -mt-16">
             <img
@@ -62,26 +66,30 @@ function Dashboard() {
             <Button
               startIcon={<FaFileExport size={16} />}
               className="!bg-primary !text-white !px-4"
+              onClick={() =>
+                exportToCSV({
+                  data: products,
+                  columns: productsTableColumns,
+                  fileName: "all-products.csv",
+                })
+              }
             >
               Export All
             </Button>
-            <Button
-              startIcon={<FaPlus size={16} />}
-              className="!bg-primary !text-white !px-4"
-            >
-              Create Product
-            </Button>
+
+            <Link to="/products/create" style={{ textDecoration: "none" }}>
+              <Button
+                startIcon={<FaPlus size={16} />}
+                className="!bg-primary !text-white !px-4"
+              >
+                Create Product
+              </Button>
+            </Link>
           </div>
         </div>
         <GenericTable
           columns={productsTableColumns}
           data={products}
-          categoryColumns={productsTableColumns.filter(
-            (c) =>
-              c.accessor !== "id" &&
-              c.accessor !== "actions" &&
-              ["category", "subcategory"].includes(c.accessor), // only logical grouping columns
-          )}
           selectionActions={[
             {
               label: "Delete",
@@ -89,9 +97,21 @@ function Dashboard() {
             },
             {
               label: "Export",
-              onClick: (selectedIds) => console.log(selectedIds),
+              onClick: (selectedIds) =>
+                exportToCSV({
+                  data: products,
+                  columns: productsTableColumns,
+                  onlySelectedIds: selectedIds,
+                  fileName: "selected-products.csv",
+                }),
             },
           ]}
+          categoryColumns={productsTableColumns.filter(
+            (c) =>
+              c.accessor !== "id" &&
+              c.accessor !== "actions" &&
+              ["category", "subcategory"].includes(c.accessor), // only logical grouping columns
+          )}
         />
       </div>
 
@@ -136,7 +156,9 @@ function Dashboard() {
       {/* Users and sales report */}
       <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg mt-5 ">
         <div className="w-full flex items-center justify-between py-1">
-          <h2 className="text-[18px] font-[600] text-primary">Total users & total sales</h2>
+          <h2 className="text-[18px] font-[600] text-primary">
+            Total users & total sales
+          </h2>
           <div className="flex gap-3">
             <Button
               startIcon={<FaFileExport size={16} />}

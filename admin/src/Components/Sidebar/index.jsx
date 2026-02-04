@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { MdFiberManualRecord } from "react-icons/md";
@@ -13,12 +13,14 @@ import {
   MdKeyboardArrowDown,
 } from "react-icons/md";
 import menuData from "../../data/adminMenu.json";
+import AdminContext from "../../Contexts/AdminContext";
 
 // Import useLocation to get the current path
 import { useLocation } from "react-router-dom";
 
 function Sidebar({ open, toggleSidebar }) {
   const [openMenus, setOpenMenus] = useState({});
+  const { logout } = useContext(AdminContext);
   const location = useLocation();
 
   // Helper functions to determine active states
@@ -46,7 +48,7 @@ function Sidebar({ open, toggleSidebar }) {
   return (
     <aside
       className={`fixed top-0 left-0  index100 h-screen bg-white border-r shadow-md
-      transition-all duration-300
+      transition-all duration-300 overflow-auto
       ${open ? "w-64 px-3" : "w-[80px] px-2"} py-3 rounded-r-[16px]`}
     >
       {/* Logo */}
@@ -138,8 +140,8 @@ function Sidebar({ open, toggleSidebar }) {
                   ))}
                 </ul>
               </>
-            ) : (
-              /* Parent without children */
+            ) : /* Parent without children */
+            item.label !== "Logout" ? (
               <Link to={item.path}>
                 <button
                   className={`w-full flex items-center px-3 py-3 font-medium rounded transition ${isActive(item.path) ? "bg-purple-100 text-purple-700" : "text-gray-700 hover:bg-gray-100"} ${open ? "justify-start gap-3" : "justify-center"}`}
@@ -153,6 +155,23 @@ function Sidebar({ open, toggleSidebar }) {
                   </span>
                 </button>
               </Link>
+            ) : (
+              <> 
+                <button
+                  className={`w-full flex items-center px-3 py-3 font-medium rounded transition "text-gray-700 hover:bg-gray-100" ${open ? "justify-start gap-3" : "justify-center"}`}
+                  onClick={() => {
+                    logout();
+                  }}
+                >
+                  {iconsMap[item.icon]}
+                  <span
+                    className={`transition-all duration-300 overflow-hidden whitespace-nowrap
+                    ${open ? "opacity-100 ml-3 w-auto" : "opacity-0 ml-0 w-0"}`}
+                  >
+                    {item.label}
+                  </span>
+                </button>
+              </>
             )}
           </li>
         ))}
