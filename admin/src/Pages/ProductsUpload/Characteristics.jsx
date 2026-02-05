@@ -1,29 +1,49 @@
+import { useState } from "react";
 import { TextField, Button, IconButton } from "@mui/material";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import Card from "./Card";
 
 export default function Characteristics({ product, update }) {
+  // Start empty on page load
+  const [characteristics, setCharacteristics] = useState([]);
+
+  // Add a new empty characteristic
   const addCharacteristic = () => {
-    update("characteristics", [
-      ...(product.characteristics || []),
-      { name: "", value: "", description: "" },
-    ]);
+    const copy = [...characteristics, { name: "", value: "" }];
+    setCharacteristics(copy);
+    updateProductDetails(copy);
   };
 
+  // Update a characteristic field
   const updateCharacteristic = (index, key, value) => {
-    const copy = [...(product.characteristics || [])];
+    const copy = [...characteristics];
     copy[index][key] = value;
-    update("characteristics", copy);
+    setCharacteristics(copy);
+    updateProductDetails(copy);
   };
 
+  // Remove a characteristic
   const removeCharacteristic = (index) => {
-    const copy = [...(product.characteristics || [])];
+    const copy = [...characteristics];
     copy.splice(index, 1);
-    update("characteristics", copy);
+    setCharacteristics(copy);
+    updateProductDetails(copy);
+  };
+
+  // Convert array back to object for product.additionalInfo.productDetails
+  const updateProductDetails = (chars) => {
+    const details = {};
+    chars.forEach((c) => {
+      if (c.name) details[c.name] = c.value; // only include non-empty names
+    });
+    update("additionalInfo", {
+      ...product.additionalInfo,
+      productDetails: details,
+    });
   };
 
   return (
-    <Card title={<span className="text-primary">Characteristics</span>}>
+    <Card title={<span className="text-primary">Product Details</span>}>
       <Button
         size="small"
         variant="contained"
@@ -31,14 +51,14 @@ export default function Characteristics({ product, update }) {
         onClick={addCharacteristic}
         className="!text-white !bg-primary !py-2 !px-4 !mb-4"
       >
-        Add Characteristic
+        Add Detail
       </Button>
 
       <div className="flex flex-col gap-3">
-        {(product.characteristics || []).map((c, i) => (
+        {characteristics.map((c, i) => (
           <div
             key={i}
-            className="grid grid-cols-[2fr_2fr_3fr_40px] gap-3 items-center"
+            className="grid grid-cols-[2fr_2fr_40px] gap-3 items-center"
           >
             <TextField
               size="small"
@@ -52,15 +72,6 @@ export default function Characteristics({ product, update }) {
               label="Value"
               value={c.value}
               onChange={(e) => updateCharacteristic(i, "value", e.target.value)}
-              InputProps={{ style: { backgroundColor: "#ffffff" } }}
-            />
-            <TextField
-              size="small"
-              label="Description"
-              value={c.description}
-              onChange={(e) =>
-                updateCharacteristic(i, "description", e.target.value)
-              }
               InputProps={{ style: { backgroundColor: "#ffffff" } }}
             />
             <IconButton

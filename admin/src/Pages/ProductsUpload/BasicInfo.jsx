@@ -23,6 +23,20 @@ const brands = [
 ];
 
 export default function BasicInfo({ product, update }) {
+  // Handle SKU input
+  const handleSKUChange = (e) => {
+    let value = e.target.value;
+
+    // Remove the prefix if user types over it
+    value = value.replace(/^SKU-*/, "");
+
+    // Keep only numbers
+    value = value.replace(/\D/g, "");
+
+    // Re-add the prefix
+    update("sku", "SKU-" + value);
+  };
+
   return (
     <Card title={<span className="text-primary">Basic Information</span>}>
       <TextField
@@ -36,8 +50,8 @@ export default function BasicInfo({ product, update }) {
       <div className="grid grid-cols-2 gap-4 mt-4">
         <TextField
           label="SKU"
-          value={product.sku}
-          onChange={(e) => update("sku", e.target.value)}
+          value={product.sku || "SKU-"}
+          onChange={handleSKUChange}
           InputProps={{ style: { backgroundColor: "#ffffff" } }}
         />
         <TextField

@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { TextField, Chip, Box } from "@mui/material";
+import {
+  TextField,
+  Chip,
+  Box,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import Card from "./Card";
 
 const colorOptions = [
@@ -29,7 +37,7 @@ export default function ColorsSizes({ product, update }) {
   const removeColor = (c) => {
     update(
       "colors",
-      product.colors.filter((col) => col !== c)
+      product.colors.filter((col) => col !== c),
     );
   };
 
@@ -43,33 +51,41 @@ export default function ColorsSizes({ product, update }) {
   const removeSize = (s) => {
     update(
       "sizes",
-      product.sizes.filter((sz) => sz !== s)
+      product.sizes.filter((sz) => sz !== s),
     );
   };
 
   return (
     <Card title="Colors & Sizes">
       <Box className="mb-4">
-        <TextField
-          select
-          label="Add Color"
-          value={colorInput}
-          onChange={(e) => setColorInput(e.target.value)}
-          SelectProps={{ native: true }}
+        <FormControl
           fullWidth
+          variant="outlined"
+          sx={{ backgroundColor: "#ffffff" }}
         >
-          <option value="">Select color</option>
-          {colorOptions.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </TextField>
+          <InputLabel>Add Color</InputLabel>
+          <Select
+            value={colorInput}
+            onChange={(e) => setColorInput(e.target.value)}
+            label="Add Color"
+          >
+            <MenuItem value="">
+              <em>Select color</em>
+            </MenuItem>
+            {colorOptions.map((c) => (
+              <MenuItem key={c} value={c}>
+                {c}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <Box className="mt-2 flex flex-wrap gap-2">
           {product.colors.map((c) => (
             <Chip key={c} label={c} onDelete={() => removeColor(c)} />
           ))}
         </Box>
+
         <button
           type="button"
           onClick={addColor}
@@ -80,26 +96,34 @@ export default function ColorsSizes({ product, update }) {
       </Box>
 
       <Box>
-        <TextField
-          select
-          label="Add Size"
-          value={sizeInput}
-          onChange={(e) => setSizeInput(e.target.value)}
-          SelectProps={{ native: true }}
+        <FormControl
           fullWidth
+          variant="outlined"
+          sx={{ backgroundColor: "#ffffff" }}
         >
-          <option value="">Select size</option>
-          {sizeOptions.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </TextField>
+          <InputLabel>Add Size</InputLabel>
+          <Select
+            value={sizeInput}
+            onChange={(e) => setSizeInput(e.target.value)}
+            label="Add Size"
+          >
+            <MenuItem value="">
+              <em>Select size</em>
+            </MenuItem>
+            {sizeOptions.map((s) => (
+              <MenuItem key={s} value={s}>
+                {s}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <Box className="mt-2 flex flex-wrap gap-2">
           {product.sizes.map((s) => (
             <Chip key={s} label={s} onDelete={() => removeSize(s)} />
           ))}
         </Box>
+
         <button
           type="button"
           onClick={addSize}

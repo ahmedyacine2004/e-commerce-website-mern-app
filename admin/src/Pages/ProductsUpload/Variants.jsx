@@ -8,6 +8,19 @@ export default function Variants({
   addVariant,
   removeVariant,
 }) {
+  // Helper to enforce SKU prefix and numbers only
+  const handleSkuChange = (index, value) => {
+    // Remove any non-digit characters
+    const numeric = value.replace(/\D/g, "");
+    updateVariant(index, "sku", numeric ? `SKU-${numeric}` : "SKU-");
+  };
+
+  // Prevent negative values for number inputs
+  const handleNumberChange = (index, key, value) => {
+    const val = Math.max(0, Number(value) || 0);
+    updateVariant(index, key, val);
+  };
+
   return (
     <Card title={<span className="text-primary">Variants</span>}>
       <Button
@@ -39,8 +52,9 @@ export default function Variants({
               label="Price"
               type="number"
               value={v.price}
-              onChange={(e) => updateVariant(i, "price", e.target.value)}
+              onChange={(e) => handleNumberChange(i, "price", e.target.value)}
               InputProps={{ style: { backgroundColor: "#ffffff" } }}
+              inputProps={{ min: 0 }}
             />
 
             <TextField
@@ -48,15 +62,16 @@ export default function Variants({
               label="Stock"
               type="number"
               value={v.stock}
-              onChange={(e) => updateVariant(i, "stock", e.target.value)}
+              onChange={(e) => handleNumberChange(i, "stock", e.target.value)}
               InputProps={{ style: { backgroundColor: "#ffffff" } }}
+              inputProps={{ min: 0 }}
             />
 
             <TextField
               size="small"
               label="SKU"
               value={v.sku}
-              onChange={(e) => updateVariant(i, "sku", e.target.value)}
+              onChange={(e) => handleSkuChange(i, e.target.value)}
               InputProps={{ style: { backgroundColor: "#ffffff" } }}
             />
 

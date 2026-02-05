@@ -4,15 +4,15 @@ import BasicInfo from "./BasicInfo";
 import Description from "./Description";
 import MediaUpload from "./MediaUpload";
 import Variants from "./Variants";
-import Pricing from "./Pricing";
 import Tags from "./Tags";
 import Characteristics from "./Characteristics";
 import ColorsSizes from "./ColorsSizes";
+import PricingAndAdditionalInfo from "./PricingAndAdditionalInfo"; // updated import
 import * as productService from "../../services/product.service";
 
 const initialProduct = {
   name: "",
-  sku: "",
+  sku: "SKU-",
   category: "",
   brand: "",
   subcategory: "",
@@ -28,6 +28,15 @@ const initialProduct = {
   options: [{ name: "Size", values: ["S", "M"] }],
   variants: [],
   characteristics: [],
+  additionalInfo: {
+    alt: "",
+    desc: "",
+    oldPrice: 0,
+    discountAmount: 0,
+    shipPerUnit: 0,
+    available: true,
+  },
+  productDetails: {}, // for dynamic characteristics/details
 };
 
 export default function ProductsUpload() {
@@ -58,7 +67,6 @@ export default function ProductsUpload() {
   };
 
   const submitProduct = async () => {
-    // ✅ Ensure required fields
     if (!product.colors.length || !product.sizes.length) {
       return alert("Please add at least one color and size.");
     }
@@ -99,7 +107,7 @@ export default function ProductsUpload() {
       : product.stock;
 
   return (
-    <div className="min-h-screen p-6 border bg-white border-[rgba(0,0,0,0.1)]  rounded-lg">
+    <div className="min-h-screen p-6 border bg-white border-[rgba(0,0,0,0.1)] rounded-lg">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-primary">Create Product</h1>
         <Button
@@ -124,7 +132,7 @@ export default function ProductsUpload() {
         </div>
 
         <div className="lg:col-span-6 space-y-6">
-          <Pricing
+          <PricingAndAdditionalInfo
             product={{ ...product, stock: totalVariantStock }}
             update={update}
             hasVariants={product.variants.length > 0}

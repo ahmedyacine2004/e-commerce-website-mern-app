@@ -218,15 +218,19 @@ export const productsTableColumns = [
       return (
         <div className="flex flex-col gap-1">
           <span className="text-xs">x{sales}</span>
-          <LinearProgress
-            variant="determinate"
-            value={percentage}
-            sx={{
-              height: 8,
-              borderRadius: 2,
-              "& .MuiLinearProgress-bar": { bgcolor: barColor },
-            }}
-          />
+          {sales === 0 ? (
+            <span className="text-xs text-gray-500">No sales</span>
+          ) : (
+            <LinearProgress
+              variant="determinate"
+              value={percentage}
+              sx={{
+                height: 8,
+                borderRadius: 2,
+                "& .MuiLinearProgress-bar": { bgcolor: barColor },
+              }}
+            />
+          )}
         </div>
       );
     },
@@ -240,12 +244,15 @@ export const productsTableColumns = [
 
   {
     header: "Rating",
-    accessor: "rating",
+    accessor: "avgRating",
     filter: "select",
     width: 150,
-    render: (rating) => (
-      <Rating value={rating} precision={0.5} size="small" readOnly />
-    ),
+    render: (rating) =>
+      rating == null || rating === 0 ? ( // <- null or 0
+        <span className="text-xs text-gray-500">No reviews</span>
+      ) : (
+        <Rating value={rating} precision={0.5} size="small" readOnly />
+      ),
   },
   {
     header: "Actions",
