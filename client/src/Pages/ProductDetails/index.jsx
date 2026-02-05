@@ -10,32 +10,37 @@ import DescriptionTab from "./Tabs/DescriptionTab";
 import DetailsTab from "./Tabs/DetailsTab";
 import ReviewsTab from "./Tabs/ReviewsTab";
 import RelatedProducts from "./RelatedProducts";
-
-import products from "../../data/products.json";
-import itemDetails from "../../data/itemDetails.json";
 import NotFound from "../NotFound";
+import ModalContext from "../../Contexts/ModalContext";
+import products from "../../data/products.json";
 
 function ProductDetails() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("desc");
 
+  // Look up product based on route id
+  const productFromRoute = products.find((p) => p.id === Number(id));
+
+  // Scroll on route change
   useEffect(() => {
     window.scrollTo({ top: 200, behavior: "smooth" });
   }, [id]);
 
-  const productToShow = products.find((item) => item.id === Number(id));
-  if (!productToShow) return <NotFound />;
+  if (!productFromRoute) return <NotFound />;
 
-  const { productDetails, reviews } = itemDetails[0].info;
+  // Use the one from context (it’s guaranteed to be set now)
+  const product = productFromRoute;
+  const { productDetails, reviews, reviewsNmb } = productFromRoute.additionalInfo;
 
   return (
     <div className="py-5">
+      {/* Breadcrumbs */}
       <Stack spacing={2} className="container !mb-4">
-        <Breadcrumbs separator={"|"} aria-label="breadcrumb">
-          <Link color="inherit" to="/" className="link">
+        <Breadcrumbs separator="|" aria-label="breadcrumb">
+          <Link to="/" className="link">
             Home
           </Link>
-          <Link color="inherit" to="/" className="link">
+          <Link to="/" className="link">
             Fashion
           </Link>
           <Typography
@@ -48,17 +53,18 @@ function ProductDetails() {
       </Stack>
 
       <section className="bg-white py-5">
+        {/* Product main */}
         <div className="container flex items-center gap-5">
           <div className="productZoomContainer w-[40%]">
-            <ProductZoom />
+            <ProductZoom product={productFromRoute} />
           </div>
           <div className="productContent w-[60%] pr-20">
-            <ProductDetailsComponent selectedProduct={productToShow} />
+            <ProductDetailsComponent selectedProduct={productFromRoute} />
           </div>
         </div>
 
+        {/* Tabs */}
         <div className="container pt-10">
-          {/* Tabs */}
           <div className="flex items-center gap-8 mb-5">
             <span
               onClick={() => setActiveTab("desc")}
@@ -76,14 +82,14 @@ function ProductDetails() {
               onClick={() => setActiveTab("reviews")}
               className="link text-[18px] cursor-pointer font-[500]"
             >
-              Reviews ({itemDetails[0].info.reviewsNmb})
+              Reviews ({reviewsNmb})
             </span>
           </div>
 
           <div className="shadow-md w-[90%] py-5 px-8 rounded-md">
             {activeTab === "desc" && (
               <DescriptionTab
-                description={productToShow.info.description}
+                description={product.description}
                 activeTab={activeTab}
               />
             )}

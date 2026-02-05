@@ -11,19 +11,43 @@ function ProductList() {
   const { user, logout } = useContext(UserContext);
   const { products, updateColor, updateSize, clearList } = useList();
 
-  const [menuState, setMenuState] = useState({ anchorEl: null, type: null, productId: null });
+  const [menuState, setMenuState] = useState({
+    anchorEl: null,
+    type: null,
+    productId: null,
+  });
   const open = Boolean(menuState.anchorEl);
 
-  const openMenu = (e, type, productId) => setMenuState({ anchorEl: e.currentTarget, type, productId });
-  const closeMenu = () => setMenuState({ anchorEl: null, type: null, productId: null });
+  const openMenu = (e, type, productId) =>
+    setMenuState({ anchorEl: e.currentTarget, type, productId });
+  const closeMenu = () =>
+    setMenuState({ anchorEl: null, type: null, productId: null });
 
   const addAllToCart = () => {
     products.forEach((product) => {
       orders.addAndOpen(
-        { id: product.id, info: product, img: { url1: product.img } },
-        { amount: product.qty, color: product.selectedColor, size: product.selectedSize, category: product.category },
+        {
+          id: product.id,
+          name: product.name,
+          price: product.newPrice,
+          additionalInfo: {
+            oldPrice: product.oldPrice,
+            shipPerUnit: product.shipPerUnit,
+          },
+          media: [product.img],
+          sizes: product.sizes,
+          colors: product.colors,
+          rating: product.rating,
+        },
+        {
+          amount: product.qty,
+          color: product.selectedColor,
+          size: product.selectedSize,
+          category: product.category,
+        },
       );
     });
+
     clearList();
   };
 
@@ -31,13 +55,22 @@ function ProductList() {
     <section className="p-8 w-full">
       <div className="container flex gap-5">
         <div className="col-1 w-[20%]">
-          <ProfileSidebar user={user} activeTab="list" logout={logout} isPfpEdit={false} />
+          <ProfileSidebar
+            user={user}
+            activeTab="list"
+            logout={logout}
+            isPfpEdit={false}
+          />
         </div>
 
         <div className="col-2 w-[80%]">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-[18px] font-[600]">My List</h2>
-            <Button variant="contained" className="!bg-primary !font-[600]" onClick={addAllToCart}>
+            <Button
+              variant="contained"
+              className="!bg-primary !font-[600]"
+              onClick={addAllToCart}
+            >
               Add All to Cart
             </Button>
           </div>
@@ -52,7 +85,9 @@ function ProductList() {
             </div>
 
             {products.length === 0 ? (
-              <div className="py-10 text-center text-[14px] text-gray-500">No products available.</div>
+              <div className="py-10 text-center text-[14px] text-gray-500">
+                No products available.
+              </div>
             ) : (
               products.map((product) => (
                 <ProductRow

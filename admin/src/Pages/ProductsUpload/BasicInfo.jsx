@@ -1,7 +1,6 @@
 import { TextField, MenuItem } from "@mui/material";
 import Card from "./Card";
 
-// Example categories JSON
 const categories = [
   { id: 1, name: "Clothing" },
   { id: 2, name: "Electronics" },
@@ -9,7 +8,6 @@ const categories = [
   { id: 4, name: "Home & Kitchen" },
 ];
 
-// Example subcategories JSON
 const subcategories = [
   { id: 1, name: "Shirts" },
   { id: 2, name: "Pants" },
@@ -17,7 +15,6 @@ const subcategories = [
   { id: 4, name: "Cookware" },
 ];
 
-// Example brands JSON
 const brands = [
   { id: 1, name: "Nike" },
   { id: 2, name: "Apple" },
@@ -28,7 +25,6 @@ const brands = [
 export default function BasicInfo({ product, update }) {
   return (
     <Card title={<span className="text-primary">Basic Information</span>}>
-      {/* Product Name */}
       <TextField
         label="Product name"
         fullWidth
@@ -37,7 +33,6 @@ export default function BasicInfo({ product, update }) {
         InputProps={{ style: { backgroundColor: "#ffffff" } }}
       />
 
-      {/* SKU and Category */}
       <div className="grid grid-cols-2 gap-4 mt-4">
         <TextField
           label="SKU"
@@ -45,7 +40,6 @@ export default function BasicInfo({ product, update }) {
           onChange={(e) => update("sku", e.target.value)}
           InputProps={{ style: { backgroundColor: "#ffffff" } }}
         />
-
         <TextField
           select
           label="Category"
@@ -61,7 +55,6 @@ export default function BasicInfo({ product, update }) {
         </TextField>
       </div>
 
-      {/* Brand and Subcategory */}
       <div className="grid grid-cols-2 gap-4 mt-4">
         <TextField
           select

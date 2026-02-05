@@ -7,6 +7,8 @@ import Variants from "./Variants";
 import Pricing from "./Pricing";
 import Tags from "./Tags";
 import Characteristics from "./Characteristics";
+import ColorsSizes from "./ColorsSizes";
+import * as productService from "../../services/product.service";
 
 const initialProduct = {
   name: "",
@@ -14,13 +16,15 @@ const initialProduct = {
   category: "",
   brand: "",
   subcategory: "",
-  price: "",
-  comparePrice: "",
-  stock: "",
+  price: 0,
+  comparePrice: 0,
+  stock: 0,
   description: "",
   active: true,
   media: [],
   tags: [],
+  colors: [],
+  sizes: [],
   options: [{ name: "Size", values: ["S", "M"] }],
   variants: [],
   characteristics: [],
@@ -35,11 +39,7 @@ export default function ProductsUpload() {
   const handleMedia = (files) => {
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
-      reader.onload = () =>
-        setProduct((p) => ({
-          ...p,
-          media: [...p.media, reader.result],
-        }));
+      reader.onload = () => update("media", [...product.media, reader.result]);
       reader.readAsDataURL(file);
     });
   };
@@ -57,23 +57,29 @@ export default function ProductsUpload() {
     }
   };
 
-  const updateVariant = (i, key, value) => {
-    const copy = [...product.variants];
-    copy[i][key] = value;
-    update("variants", copy);
+  const submitProduct = async () => {
+    // ✅ Ensure required fields
+    if (!product.colors.length || !product.sizes.length) {
+      return alert("Please add at least one color and size.");
+    }
+    try {
+      console.log("Submitting product:", product);
+      await productService.createProduct(product);
+      alert("Product created successfully ✅");
+      setProduct(initialProduct);
+    } catch (err) {
+      console.error(err);
+      alert(err);
+    }
   };
 
-  const submitProduct = () => console.log("FINAL PRODUCT:", product);
-
-  // Add new empty variant
   const addVariant = () => {
     update("variants", [
       ...product.variants,
-      { title: "", price: "", stock: "", sku: "" },
+      { title: "", price: 0, stock: 0, sku: "" },
     ]);
   };
 
-  // Remove a variant by index
   const removeVariant = (i) => {
     update(
       "variants",
@@ -81,10 +87,16 @@ export default function ProductsUpload() {
     );
   };
 
+  const updateVariant = (i, key, value) => {
+    const copy = [...product.variants];
+    copy[i][key] = value;
+    update("variants", copy);
+  };
+
   const totalVariantStock =
     product.variants.length > 0
       ? product.variants.reduce((sum, v) => sum + Number(v.stock || 0), 0)
-      : product.stock; // fallback to top-level stock if no variants
+      : product.stock;
 
   return (
     <div className="min-h-screen p-6 border bg-white border-[rgba(0,0,0,0.1)]  rounded-lg">
@@ -123,6 +135,7 @@ export default function ProductsUpload() {
             addVariant={addVariant}
             removeVariant={removeVariant}
           />
+          <ColorsSizes product={product} update={update} />
           <Tags
             product={product}
             tagInput={tagInput}

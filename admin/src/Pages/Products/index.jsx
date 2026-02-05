@@ -3,15 +3,18 @@ import { Button } from "@mui/material";
 import { FaPlus, FaFileExport } from "react-icons/fa";
 import { productsTableColumns } from "../../constants/tableColumns";
 import GenericTable from "../../Components/Table";
-import productsData from "../../data/products.json";
-import { mapProductsData } from "../../utils/Table/productAdapter";
+import { mapProductsData } from "../../utils/adapters/productAdapter";
 import SearchBox from "../../Components/SearchBox";
+import { useProducts } from "../../hooks/useProducts";
+import { exportToCSV } from "../../utils/Export/exportToCSV";
 
 function Products() {
-  const products = mapProductsData(productsData);
-
-  // 🔍 SEARCH STATE
+  const { products, loading } = useProducts();
   const [search, setSearch] = useState("");
+
+  // Map raw products array to table data
+  const tableData = mapProductsData(products);
+
 
   return (
     <div className="min-h-screen">
@@ -29,13 +32,19 @@ function Products() {
             <Button
               startIcon={<FaFileExport size={16} />}
               className="!bg-primary !text-white !px-4"
+              onClick={() =>
+                exportToCSV({
+                  data: products,
+                  columns: productsTableColumns,
+                  fileName: "all-products.csv",
+                })
+              }
             >
               Export All
             </Button>
           </div>
         </div>
 
-        {/* Products Table */}
         <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col gap-2 mb-5 rounded-lg">
           <div className="w-full flex items-center justify-between py-1">
             <h2 className="text-[18px] font-[600] text-primary">
@@ -46,28 +55,32 @@ function Products() {
             </div>
           </div>
 
-          <GenericTable
-            columns={productsTableColumns}
-            data={products}
-            categoryColumns={productsTableColumns.filter(
-              (c) =>
-                c.accessor !== "id" &&
-                c.accessor !== "actions" &&
-                ["category", "subcategory"].includes(c.accessor),
-            )}
-            selectionActions={[
-              {
-                label: "Delete",
-                onClick: (selectedIds) => console.log(selectedIds),
-              },
-              {
-                label: "Export",
-                onClick: (selectedIds) => console.log(selectedIds),
-              },
-            ]}
-            search={search} // 🔍 connected
-            serachMetric={["name", "sku", "category", "subcategory"]}
-          />
+          {loading ? (
+            <p className="text-center text-gray-500">Loading products...</p>
+          ) : (
+            <GenericTable
+              columns={productsTableColumns}
+              data={tableData}
+              categoryColumns={productsTableColumns.filter(
+                (c) =>
+                  c.accessor !== "id" &&
+                  c.accessor !== "actions" &&
+                  ["category", "subcategory"].includes(c.accessor),
+              )}
+              selectionActions={[
+                {
+                  label: "Delete",
+                  onClick: (selectedIds) => console.log(selectedIds),
+                },
+                {
+                  label: "Export",
+                  onClick: (selectedIds) => console.log(selectedIds),
+                },
+              ]}
+              search={search}
+              serachMetric={["name", "sku", "category", "subcategory"]}
+            />
+          )}
         </div>
       </div>
     </div>

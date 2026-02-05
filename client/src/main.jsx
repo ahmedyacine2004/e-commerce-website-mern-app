@@ -12,20 +12,20 @@ import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <UserProvider>
-      <OrdersProvider>
-        <ListProvider>
-          <ToastProvider>
-            <ThemeProvider>
-              <DrawerProvider>
-                <ModalProvider>
+    <ModalProvider>
+      <UserProvider>
+        <OrdersProvider>
+          <ListProvider>
+            <ToastProvider>
+              <ThemeProvider>
+                <DrawerProvider>
                   <App />
-                </ModalProvider>
-              </DrawerProvider>
-            </ThemeProvider>
-          </ToastProvider>
-        </ListProvider>
-      </OrdersProvider>
-    </UserProvider>
+                </DrawerProvider>
+              </ThemeProvider>
+            </ToastProvider>
+          </ListProvider>
+        </OrdersProvider>
+      </UserProvider>
+    </ModalProvider>
   </StrictMode>,
 );

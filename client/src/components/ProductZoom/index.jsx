@@ -3,19 +3,16 @@
 import { useRef, useState } from "react";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/styles.min.css";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
-import itemDetails from "../../data/itemDetails.json";
 import "swiper/css";
 import "swiper/css/navigation";
 import "./style.css";
 
-// Get all product images as an array
-const images = Object.values(itemDetails[0].img);
 
-function ProductZoom() {
+function ProductZoom({ product }) {
+  const images = Object.values(product.media);
+
   // ==================== State ====================
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -54,7 +51,7 @@ function ProductZoom() {
                 >
                   <img
                     src={url}
-                    alt={itemDetails[0].alt}
+                    alt={product.media[0]}
                     className="!h-[95px] object-cover w-full transition-all group-hover:scale-105"
                   />
                 </div>

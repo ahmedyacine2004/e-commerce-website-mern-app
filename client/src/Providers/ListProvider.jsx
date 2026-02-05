@@ -3,7 +3,7 @@ import { ListContext } from "../Contexts/ListContext";
 
 const initialProducts = [
   {
-    id: 20,
+    id: 23,
     name: "Product One",
     category: "Electronics",
     qty: 1,
@@ -18,7 +18,7 @@ const initialProducts = [
     rating: 4,
   },
   {
-    id: 21,
+    id: 24,
     name: "Product Two",
     category: "Electronics",
     qty: 1,

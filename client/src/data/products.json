@@ -1,35 +1,38 @@
 [
   {
     "id": 0,
-    "img": {
-      "url1": "https://i.imgur.com/QkIa5tT.jpeg",
-      "url2": "https://m.media-amazon.com/images/I/B1pppR4gVKL._C…C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
+    "name": "Majestic Mountain",
+    "sku": "SKU-0000",
+    "category": "Graphic T-Shirt",
+    "subcategory": "",
+    "brand": "Inner Wolf",
+    "price": 35,
+    "comparePrice": 45,
+    "stock": 30,
+    "description": "<h4>Minimal Look</h4><p>Clean design with everyday appeal.</p><h4>Adjustable Fit</h4><p>Fits most head sizes comfortably.</p><h4>Lightweight Fabric</h4><p>Easy to wear all day.</p><h4>Versatile Accessory</h4><p>Pairs well with any outfit.</p><h4>Built to Last</h4><p>Durable stitching and materials.</p>",
+    "media": [
+      "https://m.media-amazon.com/images/I/614rbIVRUJL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61qW-ntuywL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61QhpXRIx1L._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61tVI9j0mmL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61SR+quC5OL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61tVI9j0mmL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61SR+quC5OL._AC_SX679_.jpg"
+    ],
+    "colors": ["black", "white", "gray"],
+    "sizes": ["S", "M", "L", "XL"],
+    "tags": [],
+    "options": [],
+    "variants": [],
+    "characteristics": [],
+    "sales": 0,
+    "rating": 4,
+    "active": true,
     "createdAt": "2023-10-10T10:00:00Z",
-    "alt": "Majestic Mountain Graphic T-Shirt",
-    "info": {
-      "name": "Majestic Mountain",
-      "category": "Graphic T-Shirt",
+    "updatedAt": "2023-10-10T10:00:00Z",
+    "additionalInfo": {
+      "alt": "Majestic Mountain Graphic T-Shirt",
       "desc": "A premium cotton graphic t-shirt featuring a bold mountain print. Designed for everyday comfort with a modern streetwear vibe.",
-
-      "description": {
-        "h4_1": "Premium Cotton Fabric",
-        "p_1": "Made from soft and breathable cotton for all-day comfort.",
-        "h4_2": "Classic Fit",
-        "p_2": "Relaxed silhouette suitable for everyday wear.",
-        "h4_3": "Bold Graphic Print",
-        "p_3": "Mountain design adds a modern streetwear edge.",
-        "h4_4": "Easy Styling",
-        "p_4": "Pairs well with jeans, joggers, or layered outfits.",
-        "h4_5": "Durable Construction",
-        "p_5": "Retains shape and color after multiple washes."
-      },
-
       "productDetails": {
         "material": "100% Cotton",
         "fabricWeight": "180 g/m²",
@@ -43,559 +46,43 @@
         "origin": "Imported",
         "packageType": "Single Item"
       },
-
       "oldPrice": "45",
       "shipPerUnit": 7,
-      "newPrice": "35",
       "discountAmount": "10",
-      "brand": "Inner Wolf",
-      "rating": 4,
       "available": true,
-      "stock": 30,
-      "colors": ["black", "white", "gray"],
-      "sizes": ["S", "M", "L", "XL"],
       "reviewsNmb": 2,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 1,
-    "img": {
-      "url1": "https://i.imgur.com/1twoaDy.jpeg",
-      "url2": "https://m.media-amazon.com/images/I/61MU+fuuavL._AC_SX679_.jpg",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-11-15T12:30:00Z",
-    "alt": "Classic Red Pullover Hoodie",
-    "info": {
-      "name": "Classic Red Pullover Hoodie",
-      "category": "Hoodie",
-      "desc": "A cozy pullover hoodie made with soft fleece fabric. Perfect for cold days while keeping a bold and clean look.",
-
-      "description": {
-        "h4_1": "Soft Fleece Lining",
-        "p_1": "Keeps you warm and comfortable in colder weather.",
-        "h4_2": "Relaxed Fit",
-        "p_2": "Designed for easy everyday wear.",
-        "h4_3": "Bold Red Color",
-        "p_3": "Adds confidence and personality to your outfit.",
-        "h4_4": "Functional Design",
-        "p_4": "Features a kangaroo pocket and adjustable hood.",
-        "h4_5": "Built to Last",
-        "p_5": "Durable stitching for long-term use."
-      },
-
-      "productDetails": {
-        "material": "Cotton & Polyester Blend",
-        "fabricWeight": "320 g/m²",
-        "fitType": "Regular Fit",
-        "neckStyle": "Hooded",
-        "sleeveType": "Long Sleeve",
-        "careInstructions": "Machine wash cold, do not bleach",
-        "printingCompatibility": "Screen printing, embroidery",
-        "season": "Fall/Winter",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "75",
-      "shipPerUnit": 7,
-      "newPrice": "60",
-      "discountAmount": "15",
-      "brand": "Inner Wolf",
-      "rating": 5,
-      "available": true,
-      "stock": 25,
-      "colors": ["red"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 1,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 2,
-    "img": {
-      "url1": "https://i.imgur.com/cHddUCu.jpeg",
-      "url2": "https://colorfulstandard.com/cdn/shop/files/classic-organic-hood-hoodie-heather-grey-male_2.heic?v=1745502948&width=800",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Heather Gray Hoodie",
-    "info": {
-      "name": "Classic Heather Gray Hoodie",
-      "category": "Hoodie",
-      "desc": "Minimalist heather gray hoodie with a relaxed fit. Ideal for layering or casual daily wear.",
-
-      "description": {
-        "h4_1": "Minimalist Look",
-        "p_1": "Clean design suitable for any outfit.",
-        "h4_2": "Comfort First",
-        "p_2": "Soft interior for all-day wear.",
-        "h4_3": "Versatile Style",
-        "p_3": "Works well in casual or streetwear fits.",
-        "h4_4": "Everyday Essential",
-        "p_4": "Perfect for daily use.",
-        "h4_5": "Reliable Quality",
-        "p_5": "Made to withstand frequent washing."
-      },
-
-      "productDetails": {
-        "material": "Cotton & Polyester Blend",
-        "fabricWeight": "300 g/m²",
-        "fitType": "Relaxed Fit",
-        "neckStyle": "Hooded",
-        "sleeveType": "Long Sleeve",
-        "careInstructions": "Machine wash cold, tumble dry low",
-        "printingCompatibility": "Screen printing, embroidery",
-        "season": "Fall/Winter",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "75",
-      "shipPerUnit": 7,
-      "newPrice": "60",
-      "discountAmount": "15",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 35,
-      "colors": ["heather gray"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 3,
-    "img": {
-      "url1": "https://i.imgur.com/R2PN9Wq.jpeg",
-      "url2": "https://img01.ztat.net/article/spp-media-p1/2e704221225f4c45b76e5809fb9d924d/bda4fb690cba417ca1cb30a0ef89126c.jpg?imwidth=1800",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Grey Hooded Sweatshirt",
-    "info": {
-      "name": "Classic Grey Hooded",
-      "category": "Sweatshirt",
-      "desc": "A versatile grey hooded sweatshirt built for comfort and durability. Perfect for both lounging and outdoor wear.",
-
-      "description": {
-        "h4_1": "Everyday Comfort",
-        "p_1": "Soft fabric designed for daily wear.",
-        "h4_2": "Durable Build",
-        "p_2": "Strong stitching for long-lasting use.",
-        "h4_3": "Neutral Color",
-        "p_3": "Easy to pair with any outfit.",
-        "h4_4": "Relaxed Fit",
-        "p_4": "Ideal for lounging or casual outings.",
-        "h4_5": "Cold Weather Ready",
-        "p_5": "Provides warmth without bulk."
-      },
-
-      "productDetails": {
-        "material": "Cotton & Polyester Blend",
-        "fabricWeight": "310 g/m²",
-        "fitType": "Regular Fit",
-        "neckStyle": "Hooded",
-        "sleeveType": "Long Sleeve",
-        "careInstructions": "Machine wash cold",
-        "printingCompatibility": "Screen printing",
-        "season": "Fall/Winter",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "70",
-      "shipPerUnit": 7,
-      "newPrice": "55",
-      "discountAmount": "15",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 40,
-      "colors": ["gray"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 4,
-    "img": {
-      "url1": "https://i.imgur.com/cSytoSD.jpeg",
-      "url2": "https://eliteelevensporting.com/cdn/shop/files/MENS92128.jpg?v=1758172616&width=1080",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Black Hooded Sweatshirt",
-    "info": {
-      "name": "Classic Black Hooded",
-      "category": "Sweatshirt",
-      "desc": "A timeless black hooded sweatshirt with a clean finish. Designed for maximum comfort and everyday style.",
-
-      "description": {
-        "h4_1": "Timeless Black Design",
-        "p_1": "Clean and minimal look that never goes out of style.",
-        "h4_2": "Soft Interior",
-        "p_2": "Comfortable fabric suitable for all-day wear.",
-        "h4_3": "Everyday Essential",
-        "p_3": "Perfect for casual and streetwear outfits.",
-        "h4_4": "Relaxed Fit",
-        "p_4": "Allows easy movement and layering.",
-        "h4_5": "Durable Construction",
-        "p_5": "Made to withstand frequent use and washing."
-      },
-
-      "productDetails": {
-        "material": "Cotton & Polyester Blend",
-        "fabricWeight": "310 g/m²",
-        "fitType": "Regular Fit",
-        "neckStyle": "Hooded",
-        "sleeveType": "Long Sleeve",
-        "careInstructions": "Machine wash cold",
-        "printingCompatibility": "Screen printing",
-        "season": "Fall/Winter",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "70",
-      "shipPerUnit": 7,
-      "newPrice": "55",
-      "discountAmount": "15",
-      "brand": "Inner Wolf",
-      "rating": 5,
-      "available": true,
-      "stock": 45,
-      "colors": ["black"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 5,
-    "img": {
-      "url1": "https://i.imgur.com/ZKGofuB.jpeg",
-      "url2": "https://m.media-amazon.com/images/I/71w+WgfSdsS._AC_SY879_.jpg",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Comfort Fit Joggers",
-    "info": {
-      "name": "Classic Comfort Fit Joggers",
-      "category": "Joggers",
-      "desc": "Comfort-fit joggers made with breathable fabric. Ideal for workouts, lounging, or casual streetwear looks.",
-
-      "description": {
-        "h4_1": "Breathable Fabric",
-        "p_1": "Keeps you comfortable during movement or rest.",
-        "h4_2": "Comfort Fit",
-        "p_2": "Designed for flexibility and ease.",
-        "h4_3": "Versatile Use",
-        "p_3": "Great for workouts or casual wear.",
-        "h4_4": "Elastic Waistband",
-        "p_4": "Secure fit with adjustable drawstring.",
-        "h4_5": "Everyday Durability",
-        "p_5": "Built for daily use."
-      },
-
-      "productDetails": {
-        "material": "Cotton & Polyester Blend",
-        "fabricWeight": "260 g/m²",
-        "fitType": "Comfort Fit",
-        "neckStyle": "N/A",
-        "sleeveType": "N/A",
-        "careInstructions": "Machine wash cold",
-        "printingCompatibility": "Heat transfer",
-        "season": "All-season",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "55",
-      "shipPerUnit": 7,
-      "newPrice": "45",
-      "discountAmount": "10",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 50,
-      "colors": ["black", "gray"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 6,
-    "img": {
-      "url1": "https://i.imgur.com/mp3rUty.jpeg",
-      "url2": "https://m.media-amazon.com/images/I/51w1PyPNw1L._AC_SX679_.jpg",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Comfort Drawstring Joggers",
-    "info": {
-      "name": "Classic Comfort Drawstring Joggers",
-      "category": "Joggers",
-      "desc": "Soft drawstring joggers offering flexibility and all-day comfort. A must-have for relaxed outfits.",
-
-      "description": {
-        "h4_1": "Soft Touch Fabric",
-        "p_1": "Gentle on the skin for long wear.",
-        "h4_2": "Drawstring Waist",
-        "p_2": "Adjustable fit for maximum comfort.",
-        "h4_3": "Relaxed Style",
-        "p_3": "Perfect for laid-back outfits.",
-        "h4_4": "Everyday Wear",
-        "p_4": "Ideal for lounging or casual outings.",
-        "h4_5": "Reliable Quality",
-        "p_5": "Maintains shape over time."
-      },
-
-      "productDetails": {
-        "material": "Cotton Blend",
-        "fabricWeight": "250 g/m²",
-        "fitType": "Relaxed Fit",
-        "neckStyle": "N/A",
-        "sleeveType": "N/A",
-        "careInstructions": "Machine wash cold",
-        "printingCompatibility": "Heat transfer",
-        "season": "All-season",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "55",
-      "shipPerUnit": 7,
-      "newPrice": "45",
-      "discountAmount": "10",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 45,
-      "colors": ["gray", "navy"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 7,
-    "img": {
-      "url1": "https://i.imgur.com/9LFjwpI.jpeg",
-      "url2": "https://i.ebayimg.com/images/g/aA0AAOSw3GZmh7xC/s-l1600.webp",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Red Jogger Sweatpants",
-    "info": {
-      "name": "Classic Red Jogger",
-      "category": "Sweatpants",
-      "desc": "Stylish red jogger sweatpants designed for comfort and movement. Perfect for sporty and casual fits.",
-
-      "description": {
-        "h4_1": "Bold Red Color",
-        "p_1": "Standout look with sporty vibes.",
-        "h4_2": "Comfortable Fit",
-        "p_2": "Designed for ease of movement.",
-        "h4_3": "Elastic Cuffs",
-        "p_3": "Modern jogger-style finish.",
-        "h4_4": "Versatile Use",
-        "p_4": "Great for workouts or casual wear.",
-        "h4_5": "Durable Fabric",
-        "p_5": "Holds up after repeated washing."
-      },
-
-      "productDetails": {
-        "material": "Cotton & Polyester Blend",
-        "fabricWeight": "270 g/m²",
-        "fitType": "Jogger Fit",
-        "neckStyle": "N/A",
-        "sleeveType": "N/A",
-        "careInstructions": "Machine wash cold",
-        "printingCompatibility": "Heat transfer",
-        "season": "All-season",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "50",
-      "shipPerUnit": 7,
-      "newPrice": "40",
-      "discountAmount": "10",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 35,
-      "colors": ["red"],
-      "sizes": ["S", "M", "L", "XL"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 8,
-    "img": {
-      "url1": "https://i.imgur.com/R3iobJA.jpeg",
-      "url2": "https://fireknott.com/cdn/shop/files/126-1.webp?v=1729241945&width=1346",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Navy Blue Baseball Cap",
-    "info": {
-      "name": "Classic Navy Blue",
-      "category": "Baseball Cap",
-      "desc": "A classic navy blue baseball cap with an adjustable strap. Lightweight and perfect for daily wear.",
-
-      "description": {
-        "h4_1": "Classic Cap Design",
-        "p_1": "Timeless silhouette for everyday wear.",
-        "h4_2": "Adjustable Strap",
-        "p_2": "Ensures a comfortable fit.",
-        "h4_3": "Lightweight Feel",
-        "p_3": "Comfortable for long use.",
-        "h4_4": "Easy Styling",
-        "p_4": "Complements any casual outfit.",
-        "h4_5": "Durable Build",
-        "p_5": "Designed for daily wear."
-      },
-
-      "productDetails": {
-        "material": "Cotton Twill",
-        "fabricWeight": "N/A",
-        "fitType": "Adjustable",
-        "neckStyle": "N/A",
-        "sleeveType": "N/A",
-        "careInstructions": "Hand wash recommended",
-        "printingCompatibility": "Embroidery",
-        "season": "All-season",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "25",
-      "shipPerUnit": 7,
-      "newPrice": "20",
-      "discountAmount": "5",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 60,
-      "colors": ["navy blue"],
-      "sizes": ["Size One", "Size Two", "Size Three"],
-      "reviewsNmb": 0,
-      "reviews": []
-    }
-  },
-
-  {
-    "id": 9,
-    "img": {
-      "url1": "https://i.imgur.com/wXuQ7bm.jpeg",
-      "url2": "https://i.imgur.com/R3iobJA.jpeg",
-      "url3": "",
-      "url4": "",
-      "url5": "",
-      "url6": "",
-      "url7": ""
-    },
-    "createdAt": "2023-12-05T09:15:00Z",
-    "alt": "Classic Blue Baseball Cap",
-    "info": {
-      "name": "Classic Blue",
-      "category": "Baseball Cap",
-      "desc": "A clean and minimal blue baseball cap made for comfort and durability. A simple accessory that fits any outfit.",
-
-      "description": {
-        "h4_1": "Minimal Look",
-        "p_1": "Clean design with everyday appeal.",
-        "h4_2": "Adjustable Fit",
-        "p_2": "Fits most head sizes comfortably.",
-        "h4_3": "Lightweight Fabric",
-        "p_3": "Easy to wear all day.",
-        "h4_4": "Versatile Accessory",
-        "p_4": "Pairs well with any outfit.",
-        "h4_5": "Built to Last",
-        "p_5": "Durable stitching and materials."
-      },
-
-      "productDetails": {
-        "material": "Cotton Twill",
-        "fabricWeight": "N/A",
-        "fitType": "Adjustable",
-        "neckStyle": "N/A",
-        "sleeveType": "N/A",
-        "careInstructions": "Hand wash recommended",
-        "printingCompatibility": "Embroidery",
-        "season": "All-season",
-        "gender": "Unisex",
-        "origin": "Imported",
-        "packageType": "Single Item"
-      },
-
-      "oldPrice": "25",
-      "shipPerUnit": 7,
-      "newPrice": "20",
-      "discountAmount": "5",
-      "brand": "Inner Wolf",
-      "rating": 4,
-      "available": true,
-      "stock": 55,
-      "colors": ["blue"],
-      "sizes": ["Size One", "Size Two", "Size Three"],
-      "reviewsNmb": 0,
-      "reviews": []
+      "reviews": [
+        {
+          "id": "rev_001",
+          "userName": "Michael R.",
+          "avatar": "https://i.pravatar.cc/100?img=12",
+          "rating": 5,
+          "title": "Excellent quality and fit",
+          "comment": "Fuck you",
+          "verifiedPurchase": true,
+          "createdAt": "2023-10-15T14:30:00Z"
+        },
+        {
+          "id": "rev_002",
+          "userName": "Sarah K.",
+          "avatar": "https://i.pravatar.cc/100?img=47",
+          "rating": 4,
+          "title": "Very comfortable",
+          "comment": "Comfortable and breathable. The design looks great and the size fits perfectly. Would buy again.",
+          "verifiedPurchase": true,
+          "createdAt": "2023-10-18T09:20:00Z"
+        },
+        {
+          "id": "rev_003",
+          "userName": "Daniel M.",
+          "avatar": "https://i.pravatar.cc/100?img=32",
+          "rating": 3,
+          "title": "Good but a bit thick",
+          "comment": "Quality is solid, but the fabric is slightly heavier than expected. Still a good everyday shirt.",
+          "verifiedPurchase": false,
+          "createdAt": "2023-10-20T18:45:00Z"
+        }
+      ]
     }
   }
 ]

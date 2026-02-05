@@ -38,7 +38,7 @@ function Modal({
 
           {/* ==================== Product Zoom Section ==================== */}
           <div className="col-1 w-[40%]">
-            <ProductZoom />
+            <ProductZoom product={selectedProduct} />
           </div>
 
           {/* ==================== Product Details Section ==================== */}

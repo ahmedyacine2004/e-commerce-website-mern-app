@@ -9,7 +9,7 @@ import ProductOptions from "./ProductOptions";
 import ProductActions from "./ProductActions";
 
 function ProductDetails({ selectedProduct }) {
-  const info = selectedProduct?.info || {};
+  const { colors, sizes, stock } = selectedProduct;
 
   const [orderInfo, setOrderInfo] = useState({
     amount: 1,
@@ -21,18 +21,18 @@ function ProductDetails({ selectedProduct }) {
   const { handleCloseProductDetailsModal } = useContext(ModalContext);
 
   useEffect(() => {
-    if (!info) return;
+    if (!colors || !sizes) return;
     setOrderInfo({
       amount: 1,
-      selectedColor: info.colors?.[0] || "",
-      selectedSize: info.sizes?.[0] || "",
+      selectedColor: colors?.[0] || "",
+      selectedSize: sizes?.[0] || "",
     });
   }, [selectedProduct]);
 
   const increaseAmount = () => {
     setOrderInfo((p) => ({
       ...p,
-      amount: p.amount < (info.stock || 1) ? p.amount + 1 : p.amount,
+      amount: p.amount < (stock || 1) ? p.amount + 1 : p.amount,
     }));
   };
 
@@ -55,12 +55,12 @@ function ProductDetails({ selectedProduct }) {
 
   return (
     <div className="product-details">
-      <ProductHeader info={info} />
-      <ProductPrice info={info} />
-      <p className="text-[14px] mt-3">{info.desc}</p>
+      <ProductHeader product={selectedProduct} />
+      <ProductPrice product={selectedProduct} />
+      <p className="text-[14px] mt-3">{selectedProduct.desc}</p>
 
       <ProductOptions
-        info={info}
+        info={{ colors, sizes }}
         orderInfo={orderInfo}
         setOrderInfo={setOrderInfo}
       />

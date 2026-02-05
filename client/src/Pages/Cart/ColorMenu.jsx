@@ -4,7 +4,6 @@ import StyledMenu from "./StyledMenu";
 
 function ColorMenu({ order, menuState, openMenu, closeMenu, getBgClass, context }) {
   const open = Boolean(menuState.anchorEl);
-
   return (
     <div className="color flex items-center">
       <Button

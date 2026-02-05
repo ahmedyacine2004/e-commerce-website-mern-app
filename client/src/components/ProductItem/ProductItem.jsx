@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import ProductImage from "./ProductImage";
 import ProductInfo from "./ProductInfo";
+import { useContext } from "react";
+import ModalContext from "../../Contexts/ModalContext";
 
 import "./style.css";
 
 function ProductItem({ product }) {
   const navigate = useNavigate();
+  const { setSelectedProduct } = useContext(ModalContext);
 
   const goToProductDetails = () => {
+    setSelectedProduct(product);
     navigate(`/product-details/${product.id}`);
   };
 

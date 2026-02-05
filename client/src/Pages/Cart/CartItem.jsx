@@ -26,7 +26,10 @@ function CartItem({ order, context, menuState, openMenu, closeMenu }) {
   return (
     <div className="cartItem w-full p-3 flex items-center gap-4 shadow rounded mb-2 relative bg-white">
       <div className="imageWrapper shadow-md w-[10%] h-[100px] overflow-hidden rounded group">
-        <Link to={`/product-details/${order.id}`} className="block w-full h-full">
+        <Link
+          to={`/product-details/${order.id}`}
+          className="block w-full h-full"
+        >
           <img
             src={order.img}
             alt={order.name}
@@ -38,21 +41,44 @@ function CartItem({ order, context, menuState, openMenu, closeMenu }) {
       <div className="info w-[90%] flex flex-col px-3">
         <span className="text-[14px]">{order.category}</span>
         <Link to={`/product-details/${order.id}`}>
-          <span className="text-[16px] link font-[600] cursor-pointer">{order.name}</span>
+          <span className="text-[16px] link font-[600] cursor-pointer">
+            {order.name}
+          </span>
         </Link>
         <Rating size="small" className="mb-1" value={order.rating} />
 
         <div className="flex gap-3 mt-1">
-          <ColorMenu order={order} menuState={menuState} openMenu={openMenu} closeMenu={closeMenu} getBgClass={getBgClass} context={context}/>
-          <SizeMenu order={order} menuState={menuState} openMenu={openMenu} closeMenu={closeMenu} context={context}/>
+          <ColorMenu
+            order={order}
+            menuState={menuState}
+            openMenu={openMenu}
+            closeMenu={closeMenu}
+            getBgClass={getBgClass}
+            context={context}
+          />
+          <SizeMenu
+            order={order}
+            menuState={menuState}
+            openMenu={openMenu}
+            closeMenu={closeMenu}
+            context={context}
+          />
           <div className="flex items-center gap-2">
             <span className="text-[14px] font-[600]">Qty :</span>
             <div className="flex items-center border border-black rounded overflow-hidden h-[30px]">
-              <button onClick={() => context.orders.reduce(order)} className="w-[28px] h-full flex items-center justify-center hover:bg-gray-100">
+              <button
+                onClick={() => context.orders.reduce(order)}
+                className="w-[28px] h-full flex items-center justify-center hover:bg-gray-100"
+              >
                 <FaMinus size={10} />
               </button>
-              <span className="w-[30px] h-full flex items-center justify-center text-[13px] font-[600]">{order.qty}</span>
-              <button onClick={() => context.orders.addOnly(order)} className="w-[28px] h-full flex items-center justify-center hover:bg-gray-100">
+              <span className="w-[30px] h-full flex items-center justify-center text-[13px] font-[600]">
+                {order.qty}
+              </span>
+              <button
+                onClick={() => context.orders.addOnly(order)}
+                className="w-[28px] h-full flex items-center justify-center hover:bg-gray-100"
+              >
                 <FaPlus size={10} />
               </button>
             </div>
@@ -60,11 +86,18 @@ function CartItem({ order, context, menuState, openMenu, closeMenu }) {
         </div>
 
         <div className="flex items-baseline py-2">
-          <h5 className="text-[14px] font-[400] line-through text-gray-500 mr-2">${order.oldPrice}</h5>
-          <span className="text-[16px] font-[600] mt-1 text-primary mr-2">${order.newPrice}</span>
+          <h5 className="text-[14px] font-[400] line-through text-gray-500 mr-2">
+            ${order.oldPrice}
+          </h5>
+          <span className="text-[16px] font-[600] mt-1 text-primary mr-2">
+            ${order.newPrice}
+          </span>
           <div className="flex items-center justify-center">
             <span className="discount text-[10px] bg-red-500 text-white font-[600] px-2 py-1 rounded-md">
-              {Math.round(((order.oldPrice - order.newPrice) / order.oldPrice) * 100)}% OFF
+              {Math.round(
+                ((order.oldPrice - order.newPrice) / order.oldPrice) * 100,
+              )}
+              % OFF
             </span>
           </div>
         </div>

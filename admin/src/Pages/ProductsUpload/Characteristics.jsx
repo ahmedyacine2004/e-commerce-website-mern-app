@@ -3,7 +3,6 @@ import { FaPlus, FaTrash } from "react-icons/fa";
 import Card from "./Card";
 
 export default function Characteristics({ product, update }) {
-  // Add a new empty characteristic
   const addCharacteristic = () => {
     update("characteristics", [
       ...(product.characteristics || []),
@@ -11,14 +10,12 @@ export default function Characteristics({ product, update }) {
     ]);
   };
 
-  // Update a specific characteristic
   const updateCharacteristic = (index, key, value) => {
     const copy = [...(product.characteristics || [])];
     copy[index][key] = value;
     update("characteristics", copy);
   };
 
-  // Remove a characteristic
   const removeCharacteristic = (index) => {
     const copy = [...(product.characteristics || [])];
     copy.splice(index, 1);

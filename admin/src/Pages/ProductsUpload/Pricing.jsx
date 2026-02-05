@@ -8,6 +8,7 @@ export default function Pricing({ product, update, hasVariants }) {
         <TextField
           label="Price"
           fullWidth
+          type="number"
           value={product.price}
           onChange={(e) => update("price", e.target.value)}
           InputProps={{ style: { backgroundColor: "#ffffff" } }}
@@ -15,6 +16,7 @@ export default function Pricing({ product, update, hasVariants }) {
         <TextField
           label="Compare at price"
           fullWidth
+          type="number"
           value={product.comparePrice}
           onChange={(e) => update("comparePrice", e.target.value)}
           InputProps={{ style: { backgroundColor: "#ffffff" } }}
@@ -22,11 +24,12 @@ export default function Pricing({ product, update, hasVariants }) {
         <TextField
           label="Stock"
           fullWidth
+          type="number"
           value={product.stock}
           onChange={(e) => update("stock", e.target.value)}
           InputProps={{
             style: { backgroundColor: "#ffffff" },
-            readOnly: hasVariants, // read-only if variants exist
+            readOnly: hasVariants,
           }}
         />
       </div>

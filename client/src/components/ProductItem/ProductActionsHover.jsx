@@ -30,8 +30,7 @@ const ActionButton = ({ title, children, onClick }) => (
 );
 
 function ProductActionsHover({ product }) {
-  const { handleClickOpenProductDetailsModal } =
-    useContext(ModalContext);
+  const { handleClickOpenProductDetailsModal } = useContext(ModalContext);
 
   return (
     <div className="actions absolute top-[-70%] right-2 group-hover:top-2 flex flex-col gap-2 transition-all">
@@ -45,7 +44,9 @@ function ProductActionsHover({ product }) {
 
       <ActionButton
         title="Zoom"
-        onClick={() => handleClickOpenProductDetailsModal(product)}
+        onClick={() => {
+          handleClickOpenProductDetailsModal(product);
+        }}
       >
         <MdOutlineZoomOutMap />
       </ActionButton>

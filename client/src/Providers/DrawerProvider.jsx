@@ -44,21 +44,22 @@ function DrawerProvider({ children }) {
             : order,
         );
       }
+
       // Add new product with only 4 fields + qty
       const newCartItem = {
         id: orderToAdd.id,
-        name: orderToAdd.info.name,
-        newPrice: orderToAdd.info.newPrice,
-        oldPrice: orderToAdd.info.oldPrice,
-        shipPerUnit: orderToAdd.info.shipPerUnit,
-        img: orderToAdd.img.url1,
+        name: orderToAdd.name,
+        newPrice: orderToAdd.price,
+        oldPrice: orderToAdd.additionalInfo.oldPrice ,
+        shipPerUnit: orderToAdd.additionalInfo.shipPerUnit,
+        img: orderToAdd.media[0],
         qty: object.amount,
         selectedColor: object.color,
-        sizes: orderToAdd.info.sizes,
+        sizes: orderToAdd.sizes,
         selectedSize: object.size,
-        colors: orderToAdd.info.colors,
+        colors: orderToAdd.colors,
         category: object.category,
-        rating: orderToAdd.info.rating,
+        rating: orderToAdd.rating,
       };
 
       return [...prevOrders, newCartItem];

@@ -27,6 +27,7 @@ function ModalProvider({ children }) {
         handleCloseProductDetailsModal,
         maxWidth,
         fullWidth,
+        setSelectedProduct
       }}
     >
       {children}

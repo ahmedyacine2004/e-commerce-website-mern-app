@@ -96,7 +96,17 @@ export const productsTableColumns = [
     width: 220,
     render: (name, row) => (
       <div className="flex items-center gap-2">
-        <img src={row.img} alt={name} className="w-8 h-8 rounded" />
+        {row.thumbnail ? (
+          <img
+            src={row.thumbnail}
+            alt={name}
+            className="w-8 h-8 object-cover rounded"
+          />
+        ) : (
+          <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">
+            No Img
+          </div>
+        )}
         <span className="link font-[500] cursor-pointer">{name}</span>
       </div>
     ),
@@ -207,7 +217,7 @@ export const productsTableColumns = [
 
       return (
         <div className="flex flex-col gap-1">
-          <span className="text-xs">{sales}</span>
+          <span className="text-xs">x{sales}</span>
           <LinearProgress
             variant="determinate"
             value={percentage}
@@ -223,9 +233,9 @@ export const productsTableColumns = [
   },
   {
     header: "Price",
-    accessor: "newPrice",
+    accessor: "price",
     width: 120,
-    render: (price) => `$${price}`,
+    render: (value) => `$${value || 0}`,
   },
 
   {
