@@ -1,9 +1,10 @@
-function DescriptionTab({ description, activeTab }) {
-  if (!description) return null; // safeguard if description is missing
+function DescriptionTab({ description}) {
+  if (!description || description.trim() === "") return null;
+
 
   return (
     <div
-      className={`desc ${activeTab !== "desc" ? "hidden" : "block"}`}
+      style={{ whiteSpace: "normal", color: "inherit" }}
       dangerouslySetInnerHTML={{ __html: description }}
     />
   );

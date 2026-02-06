@@ -1,4 +1,8 @@
 function DetailsTab({ productDetails }) {
+  if (!productDetails || Object.keys(productDetails).length === 0) {
+    return <p className="text-gray-500">No additional details available.</p>;
+  }
+
   return (
     <ul>
       {Object.entries(productDetails).map(([key, value]) => (

@@ -40,6 +40,8 @@ function ProductDetails() {
   if (loading) return <p className="text-center py-10">Loading...</p>;
   if (!product) return <NotFound />;
 
+  console.log(product);
+
   const {
     description,
     additionalInfo: { productDetails, reviews, reviewsNmb },
