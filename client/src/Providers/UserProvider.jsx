@@ -4,12 +4,12 @@ import UserContext from "../Contexts/UserContext";
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
     id: "USER_123",
-    isLogged: true,
+    isLogged: false,
     name: "Ahmed Yassine Abbane",
     email: "ahmedyacineabbane@gmail.com",
-    phone: "", // ✅ added phone
-    dob: "", // ✅ added date of birth
-    gender: "", // ✅ added gender
+    phone: "", 
+    dob: "", 
+    gender: "", 
     pfp: "./images/pfp-placeholder.png",
   });
 

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/product.routes.js";
+import clientAuthRoutes from "./routes/clientAuth.routes.js";
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
@@ -20,21 +21,21 @@ app.use(express.urlencoded({ limit: "50mb", extended: true })); // handle URL-en
 // Dynamic CORS for multiple allowed origins
 const allowedOrigins = ["http://localhost:3001", "http://localhost:5173"];
 
-app.use(cors({
-  origin: function(origin, callback){
-    // allow requests with no origin (like Postman)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      return callback(new Error('CORS not allowed for this origin'), false);
-    }
-    return callback(null, true);
-  },
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
-
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(new Error("CORS not allowed for this origin"), false);
+      }
+      return callback(null, true);
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
 
 // Serve uploaded images
 app.use("/uploads", express.static("uploads"));
@@ -42,6 +43,7 @@ app.use("/uploads", express.static("uploads"));
 // Routes
 app.use("/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/client", clientAuthRoutes); // Client authentication routes
 
 app.get("/", (req, res) => {
   res.send("Server running ✅");

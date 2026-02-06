@@ -1,31 +1,37 @@
-// TODO: Read this AI generated component
-
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import shield from "../../assets/lottie/shield.json";
 import OtpBox from "../../components/OtpBox";
 import { notify } from "../../utils/toastUtils";
-import { useNavigate } from "react-router-dom";
+import { verifyOtp } from "../../utils/clientAuthApi";
 
 function Verify() {
-  const [_, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Extract full signup info from state
+  const { fullName, email, password } = location.state || {};
 
   const handleOtpComplete = async (code) => {
-    setOtp(code);
-    setLoading(true);
+    if (!email || !fullName || !password) {
+      notify("Signup data missing. Please register again.", "error");
+      navigate("/signup");
+      return;
+    }
 
+    setLoading(true);
     try {
-      // fake verification (replace with API call)
-      if (code === "123456") {
-        notify("OTP verified successfully", "success");
-        history("/forgot-password");
-      } else {
-        notify("Invalid OTP code", "error");
-      }
-    } catch {
-      notify("Something went wrong", "error");
+      // Pass email + OTP to backend which will create the user after verification
+      const _userData = await verifyOtp(email, code, { fullName, password });
+
+      notify("OTP verified successfully. Account created!", "success");
+
+      // Redirect to login or profile
+      navigate("/login");
+    } catch (err) {
+      notify(err.response?.data?.message || "Invalid OTP code", "error");
     } finally {
       setLoading(false);
     }
@@ -50,8 +56,8 @@ function Verify() {
             )}
 
             <p className="text-xs text-gray-500 text-center mt-3">
-              Note: Please make sure to verify your email to complete the
-              verification process.
+              Note: Please verify your email to complete the registration
+              process.
             </p>
           </form>
         </div>
