@@ -11,59 +11,63 @@ import DetailsTab from "./Tabs/DetailsTab";
 import ReviewsTab from "./Tabs/ReviewsTab";
 import RelatedProducts from "./RelatedProducts";
 import NotFound from "../NotFound";
-import ModalContext from "../../Contexts/ModalContext";
-import products from "../../data/products.json";
+
+import { getProductById } from "../../api/products.api";
 
 function ProductDetails() {
   const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [activeTab, setActiveTab] = useState("desc");
+  const [loading, setLoading] = useState(true);
 
-  // Look up product based on route id
-  const productFromRoute = products.find((p) => p.id === Number(id));
-
-  // Scroll on route change
   useEffect(() => {
     window.scrollTo({ top: 200, behavior: "smooth" });
+
+    const fetchProduct = async () => {
+      try {
+        const data = await getProductById(id);
+        setProduct(data);
+      } catch {
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
-  if (!productFromRoute) return <NotFound />;
+  if (loading) return <p className="text-center py-10">Loading...</p>;
+  if (!product) return <NotFound />;
 
-  // Use the one from context (it’s guaranteed to be set now)
-  const product = productFromRoute;
-  const { productDetails, reviews, reviewsNmb } = productFromRoute.additionalInfo;
+  const {
+    description,
+    additionalInfo: { productDetails, reviews, reviewsNmb },
+  } = product;
 
   return (
     <div className="py-5">
-      {/* Breadcrumbs */}
       <Stack spacing={2} className="container !mb-4">
         <Breadcrumbs separator="|" aria-label="breadcrumb">
           <Link to="/" className="link">
             Home
           </Link>
-          <Link to="/" className="link">
-            Fashion
-          </Link>
-          <Typography
-            sx={{ color: "text.primary" }}
-            className="link cursor-pointer"
-          >
-            T-shirt
+          <Typography sx={{ color: "text.primary" }} className="link">
+            {product.name}
           </Typography>
         </Breadcrumbs>
       </Stack>
 
       <section className="bg-white py-5">
-        {/* Product main */}
         <div className="container flex items-center gap-5">
           <div className="productZoomContainer w-[40%]">
-            <ProductZoom product={productFromRoute} />
+            <ProductZoom product={product} />
           </div>
           <div className="productContent w-[60%] pr-20">
-            <ProductDetailsComponent selectedProduct={productFromRoute} />
+            <ProductDetailsComponent selectedProduct={product} />
           </div>
         </div>
 
-        {/* Tabs */}
         <div className="container pt-10">
           <div className="flex items-center gap-8 mb-5">
             <span
@@ -88,10 +92,7 @@ function ProductDetails() {
 
           <div className="shadow-md w-[90%] py-5 px-8 rounded-md">
             {activeTab === "desc" && (
-              <DescriptionTab
-                description={product.description}
-                activeTab={activeTab}
-              />
+              <DescriptionTab description={description} />
             )}
             {activeTab === "details" && (
               <DetailsTab productDetails={productDetails} />

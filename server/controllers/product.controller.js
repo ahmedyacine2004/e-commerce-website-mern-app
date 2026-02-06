@@ -7,8 +7,8 @@ export const createProduct = async (req, res, next) => {
       name,
       sku,
       category,
-      brand,
       subcategory,
+      brand,
       price,
       comparePrice,
       stock,
@@ -18,9 +18,9 @@ export const createProduct = async (req, res, next) => {
       tags,
       options,
       variants,
-      characteristics,
       colors,
       sizes,
+      additionalInfo,
     } = req.body;
 
     // Validation
@@ -35,31 +35,43 @@ export const createProduct = async (req, res, next) => {
     }
 
     const product = await Product.create({
+      // Basic info
       name,
       sku,
       category,
-      brand: brand || "",
       subcategory: subcategory || "",
+      brand: brand || "",
+
+      // Pricing & stock
       price,
       comparePrice: comparePrice || 0,
       stock,
+
+      // Content & media
       description: description || "",
-      active: active !== undefined ? active : true,
       media: Array.isArray(media) ? media : [],
+
+      // Attributes
+      colors: Array.isArray(colors) ? colors : [],
+      sizes: Array.isArray(sizes) ? sizes : [],
       tags: Array.isArray(tags) ? tags : [],
       options: Array.isArray(options) ? options : [],
       variants: Array.isArray(variants) ? variants : [],
-      characteristics: Array.isArray(characteristics) ? characteristics : [],
-      colors: Array.isArray(colors) ? colors : [],
-      sizes: Array.isArray(sizes) ? sizes : [],
+
+      // Extra frontend data
+      additionalInfo: additionalInfo || {},
+
+      // Analytics
       sales: 0,
-      rating: 0,
+
+      // Status
+      active: active !== undefined ? active : true,
     });
 
     res.status(201).json(product);
   } catch (err) {
     console.error("Error creating product:", err);
-    next(err); // This will be handled by your errorHandler middleware
+    next(err);
   }
 };
 

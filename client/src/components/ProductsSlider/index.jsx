@@ -1,32 +1,28 @@
-// ==================== ProductsSlider Component ====================
-
 import { Swiper, SwiperSlide } from "swiper/react";
-import products from "../../data/products.json";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-
-// Import required modules
 import { Navigation } from "swiper/modules";
 
-// Import ProductItem component
 import ProductItem from "../ProductItem";
+import useProducts from "../../hooks/useProducts";
 
 function ProductsSlider({ items }) {
+  const { products, loading, error } = useProducts();
+
+  if (loading) return <p>Loading products...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="productsSlider !overflow-hidden">
-      {/* ==================== Swiper Container ==================== */}
       <Swiper
-        slidesPerView={items} // Number of items visible per view
-        modules={[Navigation]} // Swiper modules used
-        className="mySwiperCat my-5" // Swiper container classes
-        spaceBetween={10} // Gap between slides
-        navigation={true} // Enable navigation arrows
+        slidesPerView={items}
+        modules={[Navigation]}
+        className="mySwiperCat my-5"
+        spaceBetween={10}
+        navigation
       >
-        {/* ==================== Loop over products ==================== */}
-        {products.map((product, index) => (
-          <SwiperSlide key={index}>
+        {products.map((product) => (
+          <SwiperSlide key={product._id}>
             <ProductItem product={product} />
           </SwiperSlide>
         ))}
