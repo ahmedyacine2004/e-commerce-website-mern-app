@@ -1,12 +1,11 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-
-import authRoutes from "./routes/auth.js";
-import productRoutes from "./routes/product.routes.js";
-import clientAuthRoutes from "./routes/clientAuth.routes.js";
-import connectDB from "./config/db.js";
-import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
+import authRoutes from "./src/routes/admin.auth.routes.js";
+import productRoutes from "./src/routes/product.routes.js";
+import clientAuthRoutes from "./src/routes/client.auth.routes.js";
+import connectDB from "./src/config/db.js";
+import { notFound, errorHandler } from "./src/middlewares/errorMiddleware.js";
 
 dotenv.config();
 const app = express();
@@ -19,7 +18,7 @@ app.use(express.json({ limit: "50mb" })); // allow JSON bodies up to 50MB
 app.use(express.urlencoded({ limit: "50mb", extended: true })); // handle URL-encoded bodies
 
 // Dynamic CORS for multiple allowed origins
-const allowedOrigins = ["http://localhost:3001", "http://localhost:5173"];
+const allowedOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL];
 
 app.use(
   cors({

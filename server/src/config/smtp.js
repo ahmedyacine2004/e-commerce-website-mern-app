@@ -12,5 +12,5 @@ export const transporter = nodemailer.createTransport({
 
 transporter.verify((error) => {
   if (error) console.error("SMTP VERIFY ERROR:", error);
-  else console.log("SMTP READY ✅ Gmail connected");
+  else console.log("SMTP READY");
 });
