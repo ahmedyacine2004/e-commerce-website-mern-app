@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { notify } from "../../utils/toastUtils";
 import { signupClient } from "../../utils/clientAuthApi";
 
@@ -14,18 +13,15 @@ function ClientSignup() {
     email: "",
     password: "",
   });
+
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      // Call signup API which now only sends OTP
       await signupClient(inputFields);
-
-      notify("OTP sent to your email. Please verify.", "success");
-
-      // Pass all signup data to verify page via route state
-      navigate("/verify", { state: { ...inputFields } });
+      notify("Signup saved. Complete your profile next.", "success");
+      navigate("/profile-setup", { state: { email: inputFields.email } });
     } catch (err) {
       notify(err.response?.data?.message || "Signup failed", "error");
     }
@@ -36,42 +32,32 @@ function ClientSignup() {
       <div className="container">
         <div className="card shadow-md w-[500px] m-auto rounded-md bg-white p-4">
           <h3 className="text-center text-[28px] font-[600]">
-            Register a new account
+            Create your account
           </h3>
-          <form className="w-full mt-3" onSubmit={handleSignup}>
-            <div className="form-group mb-5">
-              <TextField
-                id="fullName"
-                label="Full Name *"
-                variant="outlined"
-                type="text"
-                className="w-full"
-                value={inputFields.fullName}
-                onChange={(e) =>
-                  setInputFields({ ...inputFields, fullName: e.target.value })
-                }
-              />
-            </div>
 
-            <div className="form-group mb-5">
-              <TextField
-                id="email"
-                label="Email *"
-                variant="outlined"
-                type="email"
-                className="w-full"
-                value={inputFields.email}
-                onChange={(e) =>
-                  setInputFields({ ...inputFields, email: e.target.value })
-                }
-              />
-            </div>
+          <form onSubmit={handleSignup} className="mt-4">
+            <TextField
+              label="Full Name"
+              className="w-full !mb-3"
+              value={inputFields.fullName}
+              onChange={(e) =>
+                setInputFields({ ...inputFields, fullName: e.target.value })
+              }
+            />
 
-            <div className="form-group mb-5 relative">
+            <TextField
+              label="Email"
+              type="email"
+              className="w-full !mb-3"
+              value={inputFields.email}
+              onChange={(e) =>
+                setInputFields({ ...inputFields, email: e.target.value })
+              }
+            />
+
+            <div className="relative !mb-3">
               <TextField
-                id="password"
-                label="Password *"
-                variant="outlined"
+                label="Password"
                 type={visibility ? "text" : "password"}
                 className="w-full"
                 value={inputFields.password}
@@ -80,36 +66,23 @@ function ClientSignup() {
                 }
               />
               <Button
-                className="!absolute translate-y-[25%] !right-[5px] !min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-primary"
-                onClick={() => setVisibility((prev) => !prev)}
+                onClick={() => setVisibility((v) => !v)}
+                className="!text-black !w-[35px] !min-w-[35px] !h-[35px] !rounded-full !absolute !right-2 !top-[20%]"
               >
                 {visibility ? <FaRegEye /> : <FaRegEyeSlash />}
               </Button>
             </div>
 
-            <div className="flex items-center w-full my-3">
-              <Button type="submit" className="btn-org btn-lg w-full">
-                Register
-              </Button>
-            </div>
+            <Button type="submit" className="btn-org btn-lg w-full">
+              Continue
+            </Button>
 
-            <p className="text-[14px] ">
-              Already have account &nbsp;
-              <Link className="link cursor-pointer font-[500]" to={"/login"}>
-                Log in ?
+            <p className="text-[14px] mt-3 text-center">
+              Already have an account?{" "}
+              <Link to="/login" className="link font-[500]">
+                Log in
               </Link>
             </p>
-
-            <p className="text-[16px] font-[500] text-center py-2">
-              Or continue with social media
-            </p>
-            <Button
-              type="button"
-              startIcon={<FcGoogle size={20} />}
-              className="btn-lg w-full !text-black !bg-[#f1f1f1]"
-            >
-              Sign up with Google
-            </Button>
           </form>
         </div>
       </div>

@@ -30,7 +30,7 @@ function UserMenu() {
 
         <Box px={1}>
           <Typography fontSize={12} fontWeight={600}>
-            {user.name || "User"}
+            {user.fullName || "User"}
           </Typography>
           <Typography fontSize={11} color="text.secondary">
             {user.email || "user@email.com"}
@@ -42,19 +42,26 @@ function UserMenu() {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
+        PaperProps={{ sx: { width: 200 } }} // set width here
       >
-        <MenuItem component={Link} to="/profile">
-          <ListItemIcon><FaUser /></ListItemIcon>
+        <MenuItem component={Link} to="/profile" className="!w-full">
+          <ListItemIcon>
+            <FaUser />
+          </ListItemIcon>
           My Profile
         </MenuItem>
 
-        <MenuItem component={Link} to="/list">
-          <ListItemIcon><FaHeart /></ListItemIcon>
+        <MenuItem component={Link} to="/list" className="!w-full">
+          <ListItemIcon>
+            <FaHeart />
+          </ListItemIcon>
           Wishlist
         </MenuItem>
 
-        <MenuItem component={Link} to="/orders">
-          <ListItemIcon><FaShoppingBag /></ListItemIcon>
+        <MenuItem component={Link} to="/orders" className="!w-full">
+          <ListItemIcon>
+            <FaShoppingBag />
+          </ListItemIcon>
           My Orders
         </MenuItem>
 

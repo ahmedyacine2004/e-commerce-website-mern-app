@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@mui/material";
 import {
   FaUser,
@@ -7,16 +8,60 @@ import {
   FaUpload,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { notify } from "../../utils/toastUtils";
 
 function ProfileSidebar({
   user,
   activeTab,
   setActiveTab,
-  handlePfpChange,
   logout,
   isPfpEdit = true,
+  updateUser,
 }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handlePfpChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      const res = await axios.put(
+        "http://localhost:5000/api/client/update-profile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      // convert to full URL
+      const newPfpUrl = res.data.client.profilePicture
+        ? `http://localhost:5000/${res.data.client.profilePicture.replace("\\", "/")}`
+        : "./images/pfp-placeholder.png";
+
+      // update context immediately
+      updateUser({ pfp: newPfpUrl });
+      notify("Profile picture updated successfully", "success");
+    } catch (err) {
+      console.error(err);
+      notify(
+        err.response?.data?.message || "Failed to update profile picture",
+        "error",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="card bg-white shadow-md rounded-md">
@@ -24,7 +69,7 @@ function ProfileSidebar({
       <div className="w-full p-3 flex items-center justify-center flex-col gap-2">
         <div className="w-[80px] h-[80px] rounded-full overflow-hidden relative group">
           <img
-            src={user.pfp}
+            src={user.pfp || "/images/pfp-placeholder.png"}
             alt="pfp"
             className="w-full h-full object-cover"
           />
@@ -36,6 +81,7 @@ function ProfileSidebar({
                 accept="image/*"
                 onChange={handlePfpChange}
                 className="absolute inset-0 opacity-0 cursor-pointer"
+                disabled={loading}
               />
             </div>
           )}
@@ -63,7 +109,7 @@ function ProfileSidebar({
           </Link>
         </li>
 
-        {/* My List */}
+        {/* Wishlist */}
         <li className="w-full">
           <Link to="/list">
             <Button
@@ -80,7 +126,7 @@ function ProfileSidebar({
           </Link>
         </li>
 
-        {/* My Orders */}
+        {/* Orders */}
         <li className="w-full">
           <Link to="/orders">
             <Button

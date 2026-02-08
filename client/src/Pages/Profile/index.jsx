@@ -13,6 +13,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import ProfileSidebar from "../../components/ProfileSidebar";
+import axios from "axios";
 
 function Profile() {
   const { user, updateUser, logout } = useContext(UserContext);
@@ -29,7 +30,7 @@ function Profile() {
   // Sync form with context on mount / user change
   useEffect(() => {
     setFormData({
-      name: user.name || "",
+      fullName: user.fullName || "",
       email: user.email || "",
       phone: user.phone || "",
       dob: user.dob || "",
@@ -37,28 +38,42 @@ function Profile() {
     });
   }, [user]);
 
-  const handlePfpChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    updateUser({ pfp: imageUrl });
-    notify("Profile Picture saved", "success");
-  };
-
   // Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // <-- use 'name' here
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value, // <-- update the correct field
     }));
   };
 
-  // Save changes to context
-  const handleSave = () => {
-    updateUser(formData);
-    notify("Your infos are Saved", "success");
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      // Send updated profile to backend
+      const res = await axios.put(
+        "http://localhost:5000/api/client/update-profile",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      // Update context with returned user
+      updateUser(res.data.client);
+
+      notify("Your profile has been updated successfully", "success");
+    } catch (err) {
+      console.error("Profile update error:", err);
+      notify(
+        err.response?.data?.message || "Failed to update profile",
+        "error",
+      );
+    }
   };
 
   return (
@@ -67,7 +82,7 @@ function Profile() {
         <div className="col-1 w-[20%]">
           <ProfileSidebar
             user={user}
-            handlePfpChange={handlePfpChange}
+            updateUser={updateUser} // ✅ add this
             logout={logout}
             isPfpEdit={true}
             activeTab="profile"
@@ -78,8 +93,8 @@ function Profile() {
             <Stack spacing={3}>
               <TextField
                 label="Full Name"
-                name="name"
-                value={formData.name}
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
                 fullWidth
               />

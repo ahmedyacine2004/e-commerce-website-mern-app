@@ -6,9 +6,13 @@ import productRoutes from "./src/routes/product.routes.js";
 import clientAuthRoutes from "./src/routes/client.auth.routes.js";
 import connectDB from "./src/config/db.js";
 import { notFound, errorHandler } from "./src/middlewares/errorMiddleware.js";
+import path from "path";
 
 dotenv.config();
 const app = express();
+
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 
 // DB
 connectDB();

@@ -9,6 +9,12 @@ const ClientPrivateRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
+  // Optional: force profile setup
+  if (!user.phone || !user.gender) {
+    return <Navigate to="/profile-setup" replace />;
+  }
+
+
   return children;
 };
 
