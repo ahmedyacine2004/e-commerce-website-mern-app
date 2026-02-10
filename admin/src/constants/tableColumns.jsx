@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { createRowActions } from "../utils/Table/tableUtils";
 
+
 /* ===================== RECENT ORDERS TABLE ===================== */
 
 export const ordersTableColumns = (updateOrderStatus) => [
@@ -288,3 +289,4 @@ export const productsTableColumns = [
     ),
   },
 ];
+

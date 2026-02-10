@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./src/routes/admin.auth.routes.js";
 import productRoutes from "./src/routes/product.routes.js";
 import clientAuthRoutes from "./src/routes/client.auth.routes.js";
+import bannersRoutes from "./src/routes/banners.routes.js";
 import connectDB from "./src/config/db.js";
 import { notFound, errorHandler } from "./src/middlewares/errorMiddleware.js";
 import path from "path";
@@ -47,6 +48,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/client", clientAuthRoutes); // Client authentication routes
+// Routes
+app.use("/api/banners", bannersRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server running ✅");

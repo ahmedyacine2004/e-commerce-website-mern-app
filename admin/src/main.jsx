@@ -7,6 +7,7 @@ import { OrdersProvider } from "./Providers/OrdersProvider.jsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { SalesProvider } from "./Providers/SalesProvider.jsx";
+import ModalProvider from "./Providers/ModalProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")).render(
       <AdminProvider>
         <OrdersProvider>
           <SalesProvider>
-            <App />
+            <ModalProvider>
+              <App />
+            </ModalProvider>
           </SalesProvider>
         </OrdersProvider>
       </AdminProvider>

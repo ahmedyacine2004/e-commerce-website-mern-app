@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
@@ -7,6 +8,7 @@ import Login from "./Pages/Login";
 
 import { Header } from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
+import ModalProvider from "./Providers/ModalProvider";
 
 // Pages
 import Dashboard from "./Pages/Dashboard";
@@ -18,6 +20,11 @@ import Products from "./Pages/Products";
 import NotFound from "./Pages/NotFound";
 import ProductsUpload from "./Pages/ProductsUpload";
 import ProductsEdit from "./Pages/ProductsEdit";
+import HomeBanners from "./Pages/HomeBanners";
+import { useContext } from "react";
+import ModalContext from "./Contexts/ModalContext";
+import Modal from "./Components/Modal";
+import Toast from "./Components/Toast";
 
 // ---------- Layout ----------
 function Layout() {
@@ -63,6 +70,7 @@ const router = createBrowserRouter([
       { path: "categories", element: <Categories /> },
       { path: "categories/create", element: <Categories /> },
       { path: "orders", element: <Orders /> },
+      { path: "home-slides", element: <HomeBanners /> },
       { path: "/*", element: <NotFound /> },
     ],
   },
@@ -70,9 +78,31 @@ const router = createBrowserRouter([
 
 // ---------- App ----------
 function App() {
+  const {
+    openProductDetailsModal,
+    handleCloseProductDetailsModal,
+    maxWidth,
+    fullWidth,
+
+    // ===== GENERIC MODAL =====
+    open,
+    modalPayload,
+    modalContent,
+    closeModal,
+  } = useContext(ModalContext);
+
   return (
     <AdminProvider>
       <RouterProvider router={router} />
+      <Modal
+        open={open}
+        onClose={closeModal}
+        payload={modalPayload}
+        content={modalContent}
+        maxWidth={maxWidth}
+        fullWidth={fullWidth}
+      />
+      <Toast position="bottom-center" />
     </AdminProvider>
   );
 }

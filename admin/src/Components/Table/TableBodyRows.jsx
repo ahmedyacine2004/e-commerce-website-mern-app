@@ -1,6 +1,14 @@
 import { Fragment } from "react";
-import { TableBody, TableRow, TableCell, Button, Checkbox } from "@mui/material";
+import {
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
+  Checkbox,
+} from "@mui/material";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import Lottie from "lottie-react";
+import blueSpinner from "../../assets/lottie/Loading animation blue.json"; // adjust the path if needed
 
 export default function TableBodyRows({
   groupedPaginatedData,
@@ -12,6 +20,7 @@ export default function TableBodyRows({
   renderExpandable,
   renderRowActions,
   categoryColumn,
+  isLoading, // <-- add a prop to know if fetching
 }) {
   const isSelected = (id) => selected.includes(id);
 
@@ -19,8 +28,22 @@ export default function TableBodyRows({
     <TableBody>
       {Object.keys(groupedPaginatedData).length === 0 && (
         <TableRow>
-          <TableCell colSpan={columns.length + 3} align="center" sx={{ py: 4, color: "text.secondary" }}>
-            No results found
+          <TableCell
+            colSpan={columns.length + 3}
+            align="center"
+            sx={{ py: 4, color: "text.secondary" }}
+          >
+            {isLoading ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Lottie
+                  animationData={blueSpinner}
+                  style={{ width: 100, height: 100 }}
+                  loop
+                />
+              </div>
+            ) : (
+              "No results found"
+            )}
           </TableCell>
         </TableRow>
       )}
@@ -35,7 +58,7 @@ export default function TableBodyRows({
             </TableRow>
           )}
 
-          {rows.map(row => {
+          {rows.map((row) => {
             const rowWithToggle = {
               ...row,
               isExpanded: expandedRows.includes(row.id),
@@ -44,30 +67,43 @@ export default function TableBodyRows({
             return (
               <Fragment key={row.id}>
                 <TableRow hover>
-                  {columns.some(c => c.renderExpandable) && (
+                  {columns.some((c) => c.renderExpandable) && (
                     <TableCell>
-                      <Button size="small" onClick={() => rowWithToggle.toggleRow(row.id)} sx={{ minWidth: 0, padding: "4px" }}>
+                      <Button
+                        size="small"
+                        onClick={() => rowWithToggle.toggleRow(row.id)}
+                        sx={{ minWidth: 0, padding: "4px" }}
+                      >
                         {rowWithToggle.isExpanded ? <FiEyeOff /> : <FiEye />}
                       </Button>
                     </TableCell>
                   )}
 
                   <TableCell padding="checkbox">
-                    <Checkbox checked={isSelected(row.id)} onChange={() => toggleRowSelection(row.id)} />
+                    <Checkbox
+                      checked={isSelected(row.id)}
+                      onChange={() => toggleRowSelection(row.id)}
+                    />
                   </TableCell>
 
-                  {columns.map(col => (
+                  {columns.map((col) => (
                     <TableCell key={col.accessor}>
-                      {col.render ? col.render(row[col.accessor], rowWithToggle) : row[col.accessor]}
+                      {col.render
+                        ? col.render(row[col.accessor], rowWithToggle)
+                        : row[col.accessor]}
                     </TableCell>
                   ))}
 
-                  {renderRowActions && <TableCell>{renderRowActions(rowWithToggle)}</TableCell>}
+                  {renderRowActions && (
+                    <TableCell>{renderRowActions(rowWithToggle)}</TableCell>
+                  )}
                 </TableRow>
 
                 {rowWithToggle.isExpanded && renderExpandable && (
                   <TableRow>
-                    <TableCell colSpan={columns.length + 2}>{renderExpandable(rowWithToggle)}</TableCell>
+                    <TableCell colSpan={columns.length + 2}>
+                      {renderExpandable(rowWithToggle)}
+                    </TableCell>
                   </TableRow>
                 )}
               </Fragment>

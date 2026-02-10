@@ -24,6 +24,7 @@ export default function GenericTable({
   categoryColumns,
   serachMetric,
   search,
+  isLoading,
 }) {
   // ===== State =====
   const [filters, setFilters] = useState(() =>
@@ -220,6 +221,7 @@ export default function GenericTable({
           renderExpandable={renderExpandable}
           renderRowActions={renderRowActions}
           categoryColumn={categoryColumn}
+          isLoading={isLoading}
         />
       </Table>
 
