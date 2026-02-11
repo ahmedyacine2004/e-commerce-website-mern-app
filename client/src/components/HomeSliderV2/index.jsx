@@ -17,37 +17,42 @@ import Button from "@mui/material/Button";
 
 // Import custom styles
 import "./style.css";
+import useBanners from "../../hooks/useBanners";
 
 function HomeSliderV2() {
-  // ==================== Slides Data Array ====================
-  // Keep all content exactly the same as original JSX
-  const slides = [
-    {
-      imgSrc: "/images/HomeSliderV2/01.jpg",
-      alt: "slide n01",
-      h4: "Big saving Days Sale",
-      h2: (
-        <>
-          Woman Solid Round <br /> Green T-shirt
-        </>
-      ),
-      h3Text: "Starting At Only",
-      h3Price: "70.00$",
-    },
-    {
-      imgSrc: "/images/HomeSliderV2/02.jpg",
-      alt: "slide n02",
-      h4: "Big saving Days Sale",
-      h2: (
-        <>
-          Buy Modern Chair In <br /> Back Color
-        </>
-      ),
-      h3Text: "Starting At Only",
-      h3Price: "90.00$",
-    },
-  ];
+  const { Banners, loading, error } = useBanners();
 
+  // ==================== Slides Data Array ====================
+  const slides = Banners.map((banner) => ({
+    imgSrc: banner.imgSrc,
+    alt: banner.alt,
+    h4: banner.h4,
+    h2: banner.h2,
+    h3Text: banner.h3Text,
+    h3Price: banner.h3Price,
+  }));
+
+  console.log("Banners Data:", Banners);
+
+  // Show loading state outside Swiper
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[440px]">
+        Loading...
+      </div>
+    );
+  }
+
+  // Show error state outside Swiper
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-[440px] text-red-500">
+        Error loading banners
+      </div>
+    );
+  }
+
+  // Only render Swiper when we have data
   return (
     <div>
       {/* ==================== Swiper Container ==================== */}

@@ -1,17 +1,11 @@
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { createBanner } from "../../api/banners";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { notify } from "../../utils/ToastUtils";
 
-export default function AddBannerForm({ onSave }) {
-  const [imgSrc, setImgSrc] = useState("");
-  const [alt, setAlt] = useState("");
-  const [h4, setH4] = useState("");
-  const [h2, setH2] = useState("");
-  const [h3Text, setH3Text] = useState("");
-  const [h3Price, setH3Price] = useState("");
+export default function EditMainBannerForm({ slide, onSubmit }) {
+  const [imgSrc, setImgSrc] = useState(slide.imgSrc);
+  const [alt, setAlt] = useState(slide.alt || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFileChange = (e) => {
@@ -24,28 +18,17 @@ export default function AddBannerForm({ onSave }) {
   };
 
   const handleSave = async () => {
-    if (!imgSrc || !h2 || !h3Price) {
-      notify("Please fill all required fields", "warning");
+    if (!imgSrc) {
+      alert("Please upload an image");
       return;
     }
 
     setIsSubmitting(true);
 
-    const newBanner = { imgSrc, alt, h4, h2, h3Text, h3Price };
-
     try {
-      const savedBanner = await createBanner(newBanner);
-      notify("Banner added successfully!", "success");
-      if (onSave) onSave(savedBanner);
-      setImgSrc("");
-      setAlt("");
-      setH4("");
-      setH2("");
-      setH3Text("");
-      setH3Price("");
-    } catch (err) {
-      console.error(err);
-      notify("Failed to add banner", "error");
+      await onSubmit({ imgSrc, alt });
+    } catch (error) {
+      console.error("Error updating banner:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -53,7 +36,7 @@ export default function AddBannerForm({ onSave }) {
 
   return (
     <div className="flex flex-col gap-6 w-full p-6">
-      <h2 className="text-xl font-bold text-primary">Add New Banner</h2>
+      <h2 className="text-xl font-bold text-primary">Edit Main Banner</h2>
 
       <div className="flex flex-row gap-6 w-full">
         <div className="flex-1 flex flex-col gap-4">
@@ -65,52 +48,7 @@ export default function AddBannerForm({ onSave }) {
               onChange={(e) => setAlt(e.target.value)}
               disabled={isSubmitting}
               className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">Small Heading (h4)</label>
-            <input
-              type="text"
-              value={h4}
-              onChange={(e) => setH4(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">Main Heading (h2)</label>
-            <input
-              type="text"
-              value={h2}
-              onChange={(e) => setH2(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">
-              Label Before Price (h3Text)
-            </label>
-            <input
-              type="text"
-              value={h3Text}
-              onChange={(e) => setH3Text(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">Price (h3Price)</label>
-            <input
-              type="text"
-              value={h3Price}
-              onChange={(e) => setH3Price(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              placeholder="Image description"
             />
           </div>
         </div>
@@ -120,7 +58,7 @@ export default function AddBannerForm({ onSave }) {
             className={`border-2 border-dashed rounded-xl h-48 w-full flex flex-col items-center justify-center cursor-pointer hover:border-primary !bg-white ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             <FaCloudUploadAlt size={28} />
-            <span className="mt-2 text-sm">Click to upload image</span>
+            <span className="mt-2 text-sm">Click to change image</span>
             <input
               type="file"
               accept="image/*"
@@ -133,7 +71,7 @@ export default function AddBannerForm({ onSave }) {
           {imgSrc && (
             <LazyLoadImage
               src={imgSrc}
-              alt="Banner Preview"
+              alt={alt || "Banner Preview"}
               effect="blur"
               className="w-full h-48 object-cover rounded mt-4 border"
             />
@@ -141,7 +79,7 @@ export default function AddBannerForm({ onSave }) {
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
         <button
           onClick={handleSave}
           disabled={isSubmitting}
@@ -173,10 +111,10 @@ export default function AddBannerForm({ onSave }) {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-              Adding...
+              Updating...
             </>
           ) : (
-            "Add Banner"
+            "Update Banner"
           )}
         </button>
       </div>

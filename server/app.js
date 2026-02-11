@@ -6,6 +6,7 @@ import productRoutes from "./src/routes/product.routes.js";
 import clientAuthRoutes from "./src/routes/client.auth.routes.js";
 import bannersRoutes from "./src/routes/banners.routes.js";
 import connectDB from "./src/config/db.js";
+import mainBannerRoutes from "./src/routes/mainBanner.routes.js";
 import { notFound, errorHandler } from "./src/middlewares/errorMiddleware.js";
 import path from "path";
 
@@ -50,6 +51,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/client", clientAuthRoutes); // Client authentication routes
 // Routes
 app.use("/api/banners", bannersRoutes);
+app.use('/api/main-banners', mainBannerRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server running ✅");

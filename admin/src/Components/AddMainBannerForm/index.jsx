@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { createBanner } from "../../api/banners";
+import { createMainBanner } from "../../api/mainBanners";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { notify } from "../../utils/ToastUtils";
 
-export default function AddBannerForm({ onSave }) {
+export default function AddMainBannerForm({ onSave }) {
   const [imgSrc, setImgSrc] = useState("");
   const [alt, setAlt] = useState("");
-  const [h4, setH4] = useState("");
-  const [h2, setH2] = useState("");
-  const [h3Text, setH3Text] = useState("");
-  const [h3Price, setH3Price] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFileChange = (e) => {
@@ -24,28 +20,24 @@ export default function AddBannerForm({ onSave }) {
   };
 
   const handleSave = async () => {
-    if (!imgSrc || !h2 || !h3Price) {
-      notify("Please fill all required fields", "warning");
+    if (!imgSrc) {
+      notify("Please upload an image", "warning");
       return;
     }
 
     setIsSubmitting(true);
 
-    const newBanner = { imgSrc, alt, h4, h2, h3Text, h3Price };
+    const newBanner = { imgSrc, alt };
 
     try {
-      const savedBanner = await createBanner(newBanner);
-      notify("Banner added successfully!", "success");
+      const savedBanner = await createMainBanner(newBanner);
+      notify("Main banner added successfully!", "success");
       if (onSave) onSave(savedBanner);
       setImgSrc("");
       setAlt("");
-      setH4("");
-      setH2("");
-      setH3Text("");
-      setH3Price("");
     } catch (err) {
       console.error(err);
-      notify("Failed to add banner", "error");
+      notify("Failed to add main banner", "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -53,7 +45,7 @@ export default function AddBannerForm({ onSave }) {
 
   return (
     <div className="flex flex-col gap-6 w-full p-6">
-      <h2 className="text-xl font-bold text-primary">Add New Banner</h2>
+      <h2 className="text-xl font-bold text-primary">Add New Main Banner</h2>
 
       <div className="flex flex-row gap-6 w-full">
         <div className="flex-1 flex flex-col gap-4">
@@ -65,52 +57,7 @@ export default function AddBannerForm({ onSave }) {
               onChange={(e) => setAlt(e.target.value)}
               disabled={isSubmitting}
               className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">Small Heading (h4)</label>
-            <input
-              type="text"
-              value={h4}
-              onChange={(e) => setH4(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">Main Heading (h2)</label>
-            <input
-              type="text"
-              value={h2}
-              onChange={(e) => setH2(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">
-              Label Before Price (h3Text)
-            </label>
-            <input
-              type="text"
-              value={h3Text}
-              onChange={(e) => setH3Text(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="font-semibold mb-1">Price (h3Price)</label>
-            <input
-              type="text"
-              value={h3Price}
-              onChange={(e) => setH3Price(e.target.value)}
-              disabled={isSubmitting}
-              className="border rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/70 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              placeholder="Image description"
             />
           </div>
         </div>
@@ -133,7 +80,7 @@ export default function AddBannerForm({ onSave }) {
           {imgSrc && (
             <LazyLoadImage
               src={imgSrc}
-              alt="Banner Preview"
+              alt={alt || "Banner Preview"}
               effect="blur"
               className="w-full h-48 object-cover rounded mt-4 border"
             />
@@ -176,7 +123,7 @@ export default function AddBannerForm({ onSave }) {
               Adding...
             </>
           ) : (
-            "Add Banner"
+            "Add Main Banner"
           )}
         </button>
       </div>
