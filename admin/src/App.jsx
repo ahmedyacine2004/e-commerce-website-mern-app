@@ -14,17 +14,18 @@ import ModalProvider from "./Providers/ModalProvider";
 import Dashboard from "./Pages/Dashboard";
 import Categories from "./Pages/Categories";
 import Orders from "./Pages/Orders";
-import Slides from "./Pages/Slides";
+import MainBanners from "./Pages/MainBanners";
+import SecondaryBanners from "./Pages/SecondaryBanners";
 import Users from "./Pages/Users";
 import Products from "./Pages/Products";
 import NotFound from "./Pages/NotFound";
 import ProductsUpload from "./Pages/ProductsUpload";
-import ProductsEdit from "./Pages/ProductsEdit";
-import HomeBanners from "./Pages/HomeBanners";
+import ProductsUpdate from "./Pages/ProductsUpdate";
 import { useContext } from "react";
 import ModalContext from "./Contexts/ModalContext";
 import Modal from "./Components/Modal";
 import Toast from "./Components/Toast";
+import SubCategories from "./Pages/SubCategories";
 
 // ---------- Layout ----------
 function Layout() {
@@ -61,16 +62,16 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "slides", element: <Slides /> },
-      { path: "slides/create", element: <Slides /> },
+      { path: "main-slides", element: <MainBanners /> },
+      { path: "secondary-slides", element: <SecondaryBanners /> },
       { path: "users", element: <Users /> },
       { path: "products", element: <Products /> },
       { path: "products/create", element: <ProductsUpload /> },
-      { path: "products/edit", element: <ProductsEdit /> },
+      { path: "products/edit", element: <ProductsUpdate /> },
+      { path: "products/edit/:id", element: <ProductsUpdate /> },
       { path: "categories", element: <Categories /> },
-      { path: "categories/create", element: <Categories /> },
+      { path: "categories/subcategories", element: <SubCategories/> },
       { path: "orders", element: <Orders /> },
-      { path: "home-slides", element: <HomeBanners /> },
       { path: "/*", element: <NotFound /> },
     ],
   },

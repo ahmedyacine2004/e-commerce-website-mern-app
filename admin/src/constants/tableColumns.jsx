@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { createRowActions } from "../utils/Table/tableUtils";
-
+import { useNavigate } from "react-router-dom";
 
 /* ===================== RECENT ORDERS TABLE ===================== */
 
@@ -88,7 +88,6 @@ export const ordersTableColumns = (updateOrderStatus) => [
 ];
 
 /* ===================== PRODUCTS TABLE ===================== */
-
 export const productsTableColumns = [
   {
     header: "Product",
@@ -112,14 +111,12 @@ export const productsTableColumns = [
       </div>
     ),
   },
-
   {
     header: "Category",
     accessor: "category",
     filter: "select",
     width: 160,
   },
-
   {
     header: "Subcategory",
     accessor: "subcategory",
@@ -127,7 +124,6 @@ export const productsTableColumns = [
     width: 160,
     render: (value) => value || "_",
   },
-
   {
     header: "Colors",
     accessor: "colors",
@@ -146,7 +142,6 @@ export const productsTableColumns = [
         "—"
       ),
   },
-
   {
     header: "Sizes",
     accessor: "sizes",
@@ -203,18 +198,14 @@ export const productsTableColumns = [
     accessor: "sales",
     width: 140,
     render: (sales) => {
-      const maxSales = 250; // adjust based on your max sales range
+      const maxSales = 250;
       const percentage = Math.min((sales / maxSales) * 100, 100);
 
-      // dynamic color logic
       let barColor;
-      if (percentage <= 20)
-        barColor = "error.main"; // red
-      else if (percentage <= 50)
-        barColor = "warning.main"; // orange
-      else if (percentage <= 70)
-        barColor = "info.main"; // yellow-ish
-      else barColor = "success.main"; // green
+      if (percentage <= 20) barColor = "error.main";
+      else if (percentage <= 50) barColor = "warning.main";
+      else if (percentage <= 70) barColor = "info.main";
+      else barColor = "success.main";
 
       return (
         <div className="flex flex-col gap-1">
@@ -242,14 +233,13 @@ export const productsTableColumns = [
     width: 120,
     render: (value) => `$${value || 0}`,
   },
-
   {
     header: "Rating",
     accessor: "avgRating",
     filter: "select",
     width: 150,
     render: (rating) =>
-      rating == null || rating === 0 ? ( // <- null or 0
+      rating == null || rating === 0 ? (
         <span className="text-xs text-gray-500">No reviews</span>
       ) : (
         <Rating value={rating} precision={0.5} size="small" readOnly />
@@ -259,34 +249,35 @@ export const productsTableColumns = [
     header: "Actions",
     accessor: "actions",
     width: 150,
-    render: (
-      cell,
-      row, // row here is the full row object
-    ) => (
-      <TableActions
-        actions={[
-          {
-            type: "icon",
-            icon: <VisibilityIcon fontSize="small" />,
-            label: "View",
-            onClick: () => alert(`View ${row.name}`),
-          },
-          {
-            type: "icon",
-            icon: <EditIcon fontSize="small" />,
-            label: "Edit",
-            onClick: () => alert(`Edit ${row.name}`),
-          },
-          {
-            type: "icon",
-            icon: <DeleteIcon fontSize="small" />,
-            label: "Delete",
-            color: "error.main",
-            onClick: () => alert(`Delete ${row.name}`),
-          },
-        ]}
-      />
-    ),
+    render: (cell, row) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const navigate = useNavigate();
+      console.log("Rendering actions for row:", row) // Debug log to check row data
+      return (
+        <TableActions
+          actions={[
+            {
+              type: "icon",
+              icon: <VisibilityIcon fontSize="small" />,
+              label: "View",
+              onClick: () => alert(`View ${row.name}`),
+            },
+            {
+              type: "icon",
+              icon: <EditIcon fontSize="small" />,
+              label: "Edit",
+              onClick: () => navigate(`/products/edit/${row.id}`),
+            },
+            {
+              type: "icon",
+              icon: <DeleteIcon fontSize="small" />,
+              label: "Delete",
+              color: "error.main",
+              onClick: () => alert(`Delete ${row.name}`),
+            },
+          ]}
+        />
+      );
+    },
   },
 ];
-

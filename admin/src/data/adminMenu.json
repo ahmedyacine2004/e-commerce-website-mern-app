@@ -9,8 +9,8 @@
     "icon": "MdHome",
     "path": "/home-slides",
     "children": [
-      { "label": "Home Banners List", "path": "/home-slides" },
-      { "label": "Add Home Banner Slide", "path": "/home-slides/create" }
+      { "label": "Home Main slider", "path": "/main-slides" },
+      { "label": "Home Secondary slider", "path": "/secondary-slides" }
     ]
   },
   {
@@ -33,15 +33,10 @@
     "icon": "MdCategory",
     "path": "/categories",
     "children": [
-      { "label": "Category List", "path": "/categories" },
-      { "label": "Add Category", "path": "/categories/create" },
+      { "label": "Categories List", "path": "/categories" },
       {
-        "label": "Sub Category List",
+        "label": "Subcategories List",
         "path": "/categories/subcategories"
-      },
-      {
-        "label": "Add Sub Category",
-        "path": "/categories/subcategories/create"
       }
     ]
   },
