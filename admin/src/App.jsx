@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-
 import AdminProvider from "./Providers/AdminProvider";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from "./Pages/Login";
-
 import { Header } from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
-import ModalProvider from "./Providers/ModalProvider";
 
 // Pages
 import Dashboard from "./Pages/Dashboard";

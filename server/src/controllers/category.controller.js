@@ -20,33 +20,34 @@ export const createCategory = async (req, res) => {
 };
 
 /* GET ALL CATEGORIES WITH SUBCATEGORIES */
+
 export const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find().lean();
-
     const subcategories = await SubCategory.find().lean();
 
     const result = categories.map((cat) => ({
       ...cat,
-      submenus: subcategories.filter(
-        (sub) => sub.category.toString() === cat._id.toString()
-      ),
+      submenus: subcategories
+        .filter((sub) => sub.category.toString() === cat._id.toString())
+        .map((sub) => ({
+          title: sub.title,
+          inner: sub.inner || [],
+        })),
     }));
 
     res.json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
 /* UPDATE CATEGORY */
 export const updateCategory = async (req, res) => {
   try {
-    const category = await Category.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
     res.json(category);
   } catch (error) {

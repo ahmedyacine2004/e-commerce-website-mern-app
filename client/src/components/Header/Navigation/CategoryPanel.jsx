@@ -17,6 +17,9 @@ import {
   FaGem,
 } from "react-icons/fa";
 
+// import your hook
+import { useCategories } from "../../../hooks/useCategories";
+
 const iconMap = {
   FaTshirt,
   FaLaptop,
@@ -27,19 +30,12 @@ const iconMap = {
   FaGem,
 };
 
-// ==================== Dynamic Categories Data ====================
-import categoriesData from "../../../data/categoriesData.json";
-
 function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
-  // Track open submenu per category
   const [openSubmenuIndex, setOpenSubmenuIndex] = useState(null);
-
-  // Track open inner submenu per category
   const [openInnerIndex, setOpenInnerIndex] = useState({});
 
   const toggleSubmenu = (index) => {
     setOpenSubmenuIndex(openSubmenuIndex === index ? null : index);
-    // Reset inner submenu when switching submenu
     setOpenInnerIndex((prev) => ({ ...prev, [index]: null }));
   };
 
@@ -50,10 +46,12 @@ function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
     }));
   };
 
-  // ==================== Drawer Content ====================
+  // ==================== FETCH CATEGORIES ====================
+  const { categories, loading } = useCategories();
+  console.log(categories);
+
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" className="categoryPanel">
-      {/* Header */}
       <h3 className="p-3 text-[18px] font-[500] flex items-center justify-between">
         Shopping by Categories
         <IoClose
@@ -64,83 +62,81 @@ function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
 
       <Divider />
 
-      {/* Category List */}
       <div className="scroll">
         <ul className="menu w-full">
-          {categoriesData.map((category, catIndex) => {
-            const Icon = iconMap[category.icon];
-            return (
-              <li key={catIndex} className="list-none relative">
-                <Link className="w-full" to="/">
-                  <Button className="w-full !justify-start !px-3 !py-3 !text-black flex items-center">
-                    {Icon && <Icon className="mr-2 text-[18px]" />}
-                    {category.title}
-                  </Button>
-                </Link>
+          {loading ? (
+            <li className="p-3 text-gray-500">Loading categories...</li>
+          ) : (
+            categories.map((category, catIndex) => {
+              const Icon = iconMap[category.icon];
+              return (
+                <li key={catIndex} className="list-none relative">
+                  <Link className="w-full" to="/">
+                    <Button className="w-full !justify-start !px-3 !py-3 !text-black flex items-center">
+                      {Icon && <Icon className="mr-2 text-[18px]" />}
+                      {category.title}
+                    </Button>
+                  </Link>
 
-                {/* Toggle Icon */}
-                {openSubmenuIndex === catIndex ? (
-                  <FaRegSquareMinus
-                    className="absolute top-[15px] right-[15px] cursor-pointer"
-                    onClick={() => toggleSubmenu(catIndex)}
-                  />
-                ) : (
-                  <FaRegPlusSquare
-                    className="absolute top-[15px] right-[15px] cursor-pointer"
-                    onClick={() => toggleSubmenu(catIndex)}
-                  />
-                )}
+                  {openSubmenuIndex === catIndex ? (
+                    <FaRegSquareMinus
+                      className="absolute top-[15px] right-[15px] cursor-pointer"
+                      onClick={() => toggleSubmenu(catIndex)}
+                    />
+                  ) : (
+                    <FaRegPlusSquare
+                      className="absolute top-[15px] right-[15px] cursor-pointer"
+                      onClick={() => toggleSubmenu(catIndex)}
+                    />
+                  )}
 
-                {/* Submenus */}
-                {openSubmenuIndex === catIndex && (
-                  <ul className="submenuDrawer w-full pl-3">
-                    {category.submenus.map((submenu, subIndex) => (
-                      <li key={subIndex} className="list-none relative">
-                        <div className="relative w-full">
-                          {/* Submenu Button */}
-                          <Button
-                            className="w-full !justify-start !px-3 !text-black"
-                            onClick={() => toggleInner(catIndex, subIndex)}
-                          >
-                            {submenu.title}
-                          </Button>
-
-                          {/* Toggle Icon */}
-                          {openInnerIndex[catIndex] === subIndex ? (
-                            <FaRegSquareMinus
-                              className="absolute top-[10px] right-[15px] cursor-pointer"
+                  {openSubmenuIndex === catIndex && (
+                    <ul className="submenuDrawer w-full pl-3">
+                      {category.submenus.map((submenu, subIndex) => (
+                        <li key={subIndex} className="list-none relative">
+                          <div className="relative w-full">
+                            <Button
+                              className="w-full !justify-start !px-3 !text-black"
                               onClick={() => toggleInner(catIndex, subIndex)}
-                            />
-                          ) : (
-                            <FaRegPlusSquare
-                              className="absolute top-[10px] right-[15px] cursor-pointer"
-                              onClick={() => toggleInner(catIndex, subIndex)}
-                            />
+                            >
+                              {submenu.title}
+                            </Button>
+
+                            {openInnerIndex[catIndex] === subIndex ? (
+                              <FaRegSquareMinus
+                                className="absolute top-[10px] right-[15px] cursor-pointer"
+                                onClick={() => toggleInner(catIndex, subIndex)}
+                              />
+                            ) : (
+                              <FaRegPlusSquare
+                                className="absolute top-[10px] right-[15px] cursor-pointer"
+                                onClick={() => toggleInner(catIndex, subIndex)}
+                              />
+                            )}
+                          </div>
+
+                          {openInnerIndex[catIndex] === subIndex && (
+                            <ul className="inner-submenu w-full pl-5 mt-1 text-[14px] font-[500]">
+                              {submenu.inner.map((item, innerIndex) => (
+                                <li key={innerIndex} className="py-1">
+                                  <Link
+                                    to="/"
+                                    className="w-full !justify-start block px-2 py-1 hover:bg-gray-100 rounded"
+                                  >
+                                    {item}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
                           )}
-                        </div>
-
-                        {/* Inner submenu items */}
-                        {openInnerIndex[catIndex] === subIndex && (
-                          <ul className="inner-submenu w-full pl-5 mt-1 text-[14px] font-[500]">
-                            {submenu.inner.map((item, innerIndex) => (
-                              <li key={innerIndex} className="py-1">
-                                <Link
-                                  to="/"
-                                  className="w-full !justify-start block px-2 py-1 hover:bg-gray-100 rounded"
-                                >
-                                  {item}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })
+          )}
         </ul>
       </div>
     </Box>

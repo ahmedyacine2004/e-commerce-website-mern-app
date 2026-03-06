@@ -32,8 +32,6 @@ function HomeSliderV2() {
     h3Price: banner.h3Price,
   }));
 
-  console.log("Banners Data:", Banners);
-
   // Show loading state outside Swiper
   if (loading) {
     return (

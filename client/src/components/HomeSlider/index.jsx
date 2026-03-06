@@ -25,8 +25,6 @@ function HomeSlider() {
     alt: banner.alt,
   }));
 
-  console.log("Main Banners Data:", MainBanners);
-
   // Show loading state outside Swiper
   if (loading) {
     return (
@@ -81,7 +79,7 @@ function HomeSlider() {
                 alt={slide.alt || `Main Banner ${index + 1}`}
                 className="w-full !h-full object-cover"
               />
-              
+
               {/* Optional overlay - you can remove this if not needed */}
               <div className="absolute inset-0 bg-black bg-opacity-10"></div>
             </div>

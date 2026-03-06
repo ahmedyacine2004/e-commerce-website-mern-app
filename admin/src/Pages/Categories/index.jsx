@@ -35,7 +35,7 @@ export default function Categories() {
   const columns = categoryTableColumns(null, handleDelete);
 
   return (
-    <div className="min-h-screen p-6 border bg-white border-[rgba(0,0,0,0.1)] rounded-lg">
+    <div className="min-h-[84vh] p-6 border bg-white border-[rgba(0,0,0,0.1)] rounded-lg">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-primary">Categories</h1>
         <Button
@@ -72,6 +72,8 @@ export default function Categories() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         content={modalContent}
+        fullWidth
+        maxWidth="sm"
       />
     </div>
   );
