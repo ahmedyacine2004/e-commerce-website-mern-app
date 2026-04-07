@@ -20,6 +20,7 @@ function ClientSignup() {
     e.preventDefault();
     try {
       await signupClient(inputFields);
+      sessionStorage.setItem("signupEmail", inputFields.email);
       notify("Signup saved. Complete your profile next.", "success");
       navigate("/profile-setup", { state: { email: inputFields.email } });
     } catch (err) {

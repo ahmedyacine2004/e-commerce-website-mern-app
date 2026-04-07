@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { notify } from "../../utils/toastUtils";
@@ -10,7 +10,14 @@ function ClientVerify() {
   const location = useLocation();
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
-  const email = location.state?.email;
+  const email = location.state?.email || sessionStorage.getItem("signupEmail");
+
+  useEffect(() => {
+    if (!email) {
+      notify("Signup data missing. Please register again.", "error");
+      navigate("/register");
+    }
+  }, [email, navigate]);
 
   const OTP_LENGTH = 6;
   const [otpValues, setOtpValues] = useState(Array(OTP_LENGTH).fill(""));
@@ -58,8 +65,7 @@ function ClientVerify() {
       notify("OTP verified! You are logged in.", "success");
 
       login(res.data);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data));
+      sessionStorage.removeItem("signupEmail");
 
       navigate("/"); // go home
     } catch (err) {

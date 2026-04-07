@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { notify } from "../../utils/toastUtils";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import UserContext from "../../Contexts/UserContext";
 
 function ClientProfileSetup() {
+  const { user } = useContext(UserContext);
   const [profilePicture, setProfilePicture] = useState(null);
   const [preview, setPreview] = useState(null);
   const [phone, setPhone] = useState("");
@@ -13,7 +15,16 @@ function ClientProfileSetup() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const email = location.state?.email;
+  const email =
+    location.state?.email ||
+    sessionStorage.getItem("signupEmail") ||
+    user?.email;
+
+  useEffect(() => {
+    if (location.state?.email) {
+      sessionStorage.setItem("signupEmail", location.state.email);
+    }
+  }, [location.state?.email]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -24,6 +35,7 @@ function ClientProfileSetup() {
   const handleSubmit = async () => {
     if (!email) {
       notify("Email not found. Go back to signup.", "error");
+      navigate("/register");
       return;
     }
 
@@ -37,20 +49,21 @@ function ClientProfileSetup() {
       await axios.put(
         "http://localhost:5000/api/client/complete-profile",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { headers: { "Content-Type": "multipart/form-data" } },
       );
 
       notify(
         "Profile saved! OTP has been sent to your email for verification.",
-        "success"
+        "success",
       );
 
+      sessionStorage.setItem("signupEmail", email);
       navigate("/verify", { state: { email } });
     } catch (err) {
       console.error(err);
       notify(
         err.response?.data?.message || "Failed to complete profile",
-        "error"
+        "error",
       );
     }
   };
