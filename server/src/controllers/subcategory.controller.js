@@ -66,14 +66,16 @@ export const deleteSubCategory = async (req, res) => {
   }
 };
 
-
 export const getSubCategories = async (req, res) => {
   try {
     const { category } = req.query; // optional filter
     const filter = category ? { category } : {};
 
     // populate category for frontend filtering
-    const subcategories = await SubCategory.find(filter).populate("category", "title");
+    const subcategories = await SubCategory.find(filter).populate(
+      "category",
+      "title",
+    );
     res.status(200).json(subcategories);
   } catch (err) {
     console.error(err);

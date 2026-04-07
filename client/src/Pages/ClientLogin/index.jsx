@@ -1,9 +1,8 @@
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { useState, useContext } from "react";
+import { TextField, Button } from "@mui/material";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from "react-router-dom";
 import { notify } from "../../utils/toastUtils";
 import { loginClient } from "../../utils/clientAuthApi";
 import UserContext from "../../Contexts/UserContext";
@@ -17,8 +16,11 @@ function ClientLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const userData = await loginClient(inputFields.email, inputFields.password);
-      login(userData); // update UserProvider state
+      const userData = await loginClient(
+        inputFields.email,
+        inputFields.password,
+      );
+      login(userData); // UserProvider handles socket online emit
       notify("Logged in successfully", "success");
       navigate("/profile");
     } catch (err) {
@@ -26,15 +28,15 @@ function ClientLogin() {
     }
   };
 
-  const handleClearInputs = () => {
-    setInputFields({ email: "", password: "" });
-  };
+  const handleClearInputs = () => setInputFields({ email: "", password: "" });
 
   return (
     <section className="section py-10">
       <div className="container">
         <div className="card shadow-md w-[500px] m-auto rounded-md bg-white p-4">
-          <h3 className="text-center text-[28px] font-[600]">Sign in to your account</h3>
+          <h3 className="text-center text-[28px] font-[600]">
+            Sign in to your account
+          </h3>
           <form className="w-full mt-3" onSubmit={handleLogin}>
             <div className="form-group mb-5">
               <TextField
@@ -44,7 +46,9 @@ function ClientLogin() {
                 type="email"
                 className="w-full"
                 value={inputFields.email}
-                onChange={(e) => setInputFields({ ...inputFields, email: e.target.value })}
+                onChange={(e) =>
+                  setInputFields({ ...inputFields, email: e.target.value })
+                }
               />
             </div>
             <div className="form-group mb-5 relative">
@@ -55,7 +59,9 @@ function ClientLogin() {
                 type={visibility ? "text" : "password"}
                 className="w-full"
                 value={inputFields.password}
-                onChange={(e) => setInputFields({ ...inputFields, password: e.target.value })}
+                onChange={(e) =>
+                  setInputFields({ ...inputFields, password: e.target.value })
+                }
               />
               <Button
                 className="!absolute translate-y-[25%] !right-[5px] !min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-primary"
@@ -64,19 +70,26 @@ function ClientLogin() {
                 {visibility ? <FaRegEye /> : <FaRegEyeSlash />}
               </Button>
             </div>
-            <a onClick={handleClearInputs} className="link cursor-pointer text-[14px] font-[500]">
+            <a
+              onClick={handleClearInputs}
+              className="link cursor-pointer text-[14px] font-[500]"
+            >
               Forget Password ?
             </a>
             <div className="flex items-center w-full my-3">
-              <Button type="submit" className="btn-org btn-lg w-full">Login</Button>
+              <Button type="submit" className="btn-org btn-lg w-full">
+                Login
+              </Button>
             </div>
-            <p className="text-[14px] ">
+            <p className="text-[14px]">
               Not registered &nbsp;
               <Link className="link cursor-pointer font-[500]" to={"/register"}>
                 Sign Up ?
               </Link>
             </p>
-            <p className="text-[16px] font-[500] text-center py-2">Or continue with social media</p>
+            <p className="text-[16px] font-[500] text-center py-2">
+              Or continue with social media
+            </p>
             <Button
               type="button"
               startIcon={<FcGoogle size={20} />}

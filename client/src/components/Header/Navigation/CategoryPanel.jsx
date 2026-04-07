@@ -48,7 +48,6 @@ function CategoryPanel({ openCategoryPanel, isOpenCatPanel }) {
 
   // ==================== FETCH CATEGORIES ====================
   const { categories, loading } = useCategories();
-  console.log(categories);
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" className="categoryPanel">

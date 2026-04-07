@@ -6,6 +6,8 @@ function StatusBadge({ status }) {
     pending: "bg-yellow-100 text-yellow-800",
     determined: "bg-green-100 text-green-800",
     cancelled: "bg-red-100 text-red-800",
+    online: "bg-green-100 text-green-800",
+    offline: "bg-red-100 text-red-800",
   };
 
   return (

@@ -1,4 +1,4 @@
-import Client from "../models/clientModel.js";
+import Client from "../models/client.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/clientTokenUtils.js";
 import { generateOTP, saveOTP, verifyOTP } from "../utils/otp.js";

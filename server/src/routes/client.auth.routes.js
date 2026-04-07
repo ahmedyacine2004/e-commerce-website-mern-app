@@ -8,9 +8,9 @@ import {
   forgotPassword,
   resetPassword,
   updateClientProfile,
-} from "../controllers/clientAuthController.js";
-import upload from "../middlewares/uploadMiddleware.js";
-import { clientAuthMiddleware } from "../middlewares/clientAuthMiddleware.js"; // ✅ add this
+} from "../controllers/clientAuth.controller.js";
+import upload from "../middlewares/upload.middleware.js";
+import { clientAuthMiddleware } from "../middlewares/clientAuth.middleware.js"; // ✅ add this
 
 const router = express.Router();
 

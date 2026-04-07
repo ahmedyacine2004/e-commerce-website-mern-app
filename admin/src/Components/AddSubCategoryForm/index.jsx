@@ -14,7 +14,8 @@ export default function AddSubCategoryForm({
   defaultValues,
 }) {
   const [title, setTitle] = useState(defaultValues?.title || "");
-  const [categoryId, setCategoryId] = useState(defaultValues?.categoryId || "");
+  // With this:
+  const [categoryId, setCategoryId] = useState(defaultValues?.category?._id);
   const [inner, setInner] = useState(defaultValues?.inner?.join(", ") || ""); // optional
 
   const handleSubmit = (e) => {

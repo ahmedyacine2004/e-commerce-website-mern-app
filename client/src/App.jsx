@@ -18,16 +18,20 @@ import ClientProfileSetup from "./Pages/ClientSignup/ClientProfileSetup";
 import ClientVerify from "./Pages/ClientSignup/ClientVerify";
 import ProductList from "./Pages/List";
 
-import ClientPrivateRoute from "./components/ClientPrivateRoute"; // AuthGuard
-import ClientPublicRoute from "./components/ClientPublicRoute"; // blocks logged-in users
-import SignupGuard from "./components/SignupGuard"; // guards profile-setup & verify
+import ClientPrivateRoute from "./components/ClientPrivateRoute";
+import ClientPublicRoute from "./components/ClientPublicRoute";
+import SignupGuard from "./components/SignupGuard";
 
 import { useContext } from "react";
 import ModalContext from "./Contexts/ModalContext";
 import DrawerContext from "./Contexts/DrawerContext";
+import UserContext from "./Contexts/UserContext"; // ✅ import UserContext
 import Modal from "./components/Modal";
 import CartDrawer from "./components/CartDrawer";
 import Toast from "./components/Toast";
+
+// ✅ Import socket hook
+import { useClientSocket } from "./hooks/useClientSocket";
 
 function App() {
   const {
@@ -39,6 +43,11 @@ function App() {
   } = useContext(ModalContext);
 
   const { drawer, orders } = useContext(DrawerContext);
+
+  const { user } = useContext(UserContext); // ✅ get user from UserContext
+
+  // ✅ Call the socket hook with user's id if logged in
+  useClientSocket(user?.id);
 
   return (
     <BrowserRouter>
@@ -53,7 +62,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/list" element={<ProductList />} />
 
-        {/* Auth routes - blocked if already logged in */}
+        {/* Auth routes */}
         <Route
           path="/login"
           element={
@@ -71,7 +80,7 @@ function App() {
           }
         />
 
-        {/* Profile setup - only after signup, blocked if already done */}
+        {/* Profile setup & OTP verification */}
         <Route
           path="/profile-setup"
           element={
@@ -80,8 +89,6 @@ function App() {
             </SignupGuard>
           }
         />
-
-        {/* OTP verification - only after profile setup */}
         <Route
           path="/verify"
           element={
@@ -91,7 +98,7 @@ function App() {
           }
         />
 
-        {/* Protected client routes */}
+        {/* Protected routes */}
         <Route
           path="/profile"
           element={

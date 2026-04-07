@@ -61,7 +61,9 @@ function Dashboard() {
       </div>
 
       {/* Dashboard Boxes */}
-      <DashboardBoxes />
+      <div className="pb-5">
+        <DashboardBoxes />
+      </div>
 
       {/* Products Table */}
       <div className="w-full p-5 border bg-white border-[rgba(0,0,0,0.1)] flex flex-col items-center gap-8 mb-5 rounded-lg">

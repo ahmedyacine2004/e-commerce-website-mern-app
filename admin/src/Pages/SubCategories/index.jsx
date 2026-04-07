@@ -24,15 +24,15 @@ export default function SubCategories() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  // refetch categories on page load and every time modal closes
   useEffect(() => {
     refetchCategories();
   }, [modalOpen]);
 
+  // Add modal
   const handleAddClick = () => {
     setModalContent(
       <AddSubCategoryForm
-        categories={categories} // pass categories to modal so dropdown works there
+        categories={categories}
         onSubmit={async (newSub) => {
           await fetch(
             `${import.meta.env.VITE_API_BASE_URL}/api/subcategories`,
@@ -51,6 +51,30 @@ export default function SubCategories() {
     setModalOpen(true);
   };
 
+  // Edit modal
+  const handleEditClick = (subcategory) => {
+    setModalContent(
+      <AddSubCategoryForm
+        categories={categories}
+        defaultValues={subcategory} // prefill form
+        onSubmit={async (updatedSub) => {
+          await fetch(
+            `${import.meta.env.VITE_API_BASE_URL}/api/subcategories/${subcategory._id}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updatedSub),
+            },
+          );
+          refetchSub();
+          setModalOpen(false);
+        }}
+        onClose={() => setModalOpen(false)}
+      />,
+    );
+    setModalOpen(true);
+  };
+
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure?")) {
       await deleteSubCategory(id);
@@ -58,9 +82,8 @@ export default function SubCategories() {
     }
   };
 
-  const columns = subcategoryTableColumns(null, handleDelete);
+  const columns = subcategoryTableColumns(handleEditClick, handleDelete); // <-- pass edit here
 
-  // filter subcategories by selected category
   const filteredSubcategories = selectedCategory
     ? subcategories.filter(
         (sub) => String(sub.category?._id) === String(selectedCategory),

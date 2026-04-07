@@ -3,16 +3,24 @@ import { Button } from "@mui/material";
 import { FaPlus } from "react-icons/fa6";
 import GenericTable from "../../Components/Table";
 import Modal from "../../Components/Modal";
-import AddCategoryForm from "../../Components/AddCategoryForm";
+import AddCategoryForm from "../../Components/AddCategoryForm"; // reuse for edit
 import { useCategories } from "../../hooks/useCategories";
 import { categoryTableColumns } from "../../constants/categoryTableColumns";
 
 export default function Categories() {
-  const { categories, loading, createCategory, deleteCategory, refetch } =
-    useCategories();
+  const {
+    categories,
+    loading,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+    refetch,
+  } = useCategories();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
+  // Handle opening the modal for Add
   const handleAddCategory = () => {
     setModalContent(
       <AddCategoryForm
@@ -27,12 +35,29 @@ export default function Categories() {
     setModalOpen(true);
   };
 
+  // Handle opening the modal for Edit
+  const handleEditCategory = (category) => {
+    setModalContent(
+      <AddCategoryForm
+        defaultValues={category} // prefill the form
+        onSubmit={async (data) => {
+          await updateCategory(category._id, data);
+          refetch();
+          setModalOpen(false);
+        }}
+        onClose={() => setModalOpen(false)}
+      />,
+    );
+    setModalOpen(true);
+  };
+
   const handleDelete = async (id) => {
     await deleteCategory(id);
     refetch();
   };
 
-  const columns = categoryTableColumns(null, handleDelete);
+  // Pass the edit handler to the table columns
+  const columns = categoryTableColumns(handleEditCategory, handleDelete);
 
   return (
     <div className="min-h-[84vh] p-6 border bg-white border-[rgba(0,0,0,0.1)] rounded-lg">

@@ -1,4 +1,4 @@
-import MainBanner from "../models/MainBanner.js";
+import MainBanner from "../models/mainBanner.model.js";
 
 // @desc    Get all main banners
 // @route   GET /api/main-banners

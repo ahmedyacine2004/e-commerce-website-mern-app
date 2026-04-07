@@ -9,7 +9,9 @@ import connectDB from "./src/config/db.js";
 import mainBannerRoutes from "./src/routes/mainBanner.routes.js";
 import categoryRoutes from "./src/routes/category.routes.js";
 import subcategoryRoutes from "./src/routes/subcategory.routes.js";
-import { notFound, errorHandler } from "./src/middlewares/errorMiddleware.js";
+import clientsRoutes from "./src/routes/clients.routes.js"; // <-- import your routes
+
+import { notFound, errorHandler } from "./src/middlewares/error.middleware.js";
 import bulkImportRoutes from "./src/routes/bulkImport.routes.js";
 
 import path from "path";
@@ -59,6 +61,8 @@ app.use('/api/main-banners', mainBannerRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
 app.use("/api/bulk-import", bulkImportRoutes);
+app.use("/api/clients", clientsRoutes); // <-- use the imported routes
+
 
 app.get("/", (req, res) => {
   res.send("Server running ✅");

@@ -20,9 +20,7 @@ export const useCategories = () => {
       // Ensure we always work with an array
       const data = Array.isArray(res.data) ? res.data : [];
       setCategories(data);
-      console.log("Fetched categories:", data); // ✅ Debug log
     } catch (err) {
-      console.error("Failed to fetch categories:", err); // ✅ Debug log
       setError(err);
       setCategories([]);
     } finally {
