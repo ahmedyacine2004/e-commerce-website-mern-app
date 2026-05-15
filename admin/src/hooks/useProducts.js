@@ -10,8 +10,7 @@ export const useProducts = () => {
     setLoading(true);
     try {
       const data = await productService.getProducts();
-      console.log("Fetched products:", data);
-      setProducts(data); // <- Set raw API array directly
+      setProducts(data);
     } catch (err) {
       setError(err.message || "Failed to fetch products");
     } finally {
